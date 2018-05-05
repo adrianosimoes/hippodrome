@@ -9,7 +9,7 @@ import { playerOne } from '../model/repository';
 })
 export class MainScreenComponent implements OnInit {
   currPlayer = playerOne;
-  warningText: '';
+  warningText: string = '';
 
   constructor() { }
 
