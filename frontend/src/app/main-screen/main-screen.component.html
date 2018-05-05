@@ -1,0 +1,15 @@
+<div id="app-main-screen">
+	<h3>Main Screen</h3>
+	Welcome to main screen.<br>
+	Your Family Coat of Arms:
+	<div class="coatOfArms">
+		<div class="silk" [style.backgroundColor]="currPlayer.color"  [style.background]="currPlayer.calculateBackground"></div>
+		<div class="name">{{currPlayer.name}}</div>
+	</div>
+	<div class="formButtonArea">
+		<button (click)="gotoRace()">RACE</button>
+	</div>
+	<div class="warnings">
+	{{warningText}}
+	</div>
+</div>

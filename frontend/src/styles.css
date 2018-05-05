@@ -1,23 +1,67 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+html{
+	 background: #447744;
+	  height: 100%;
 }
-h2, h3 {
-  color: #444;
+
+
+h3 {
+	margin-top: 8px;
+	margin-bottom: 8px;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
 body {
-  margin: 2em;
+  margin: 5px;
 }
-body, input[text], button {
-  color: #888;
+body{
+  color: #fff;
   font-family: Cambria, Georgia;
 }
+
+input[text], button {
+	color: #111;
+	font-size: 1em;
+	font-family: Cambria, Georgia;
+}
+
+.formButtonArea{
+	clear: both;
+}
+
 /* everywhere else */
 * {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.coatOfArms{
+	width: 200px;
+	margin: 0 auto;
+	margin-top: 10px;
+	padding: 5px;
+	 background: linear-gradient(to bottom right, #fff, #ccc);
+}
+/*Coat of Arms and Silk */
+.coatOfArms .silk{
+	width: 200px;
+	height: 200px;
+	background-color: #f0f;
+
+	-webkit-clip-path: polygon(14px 93px,40px 55px,40px 200px,160px 200px,160px 55px,184px 92px,200px 60px,160px 4px,120px 4px,100px 31px,80px 4px,40px 4px,0px 60px);
+	clip-path: polygon(14px 93px,40px 55px,40px 200px,160px 200px,160px 55px,184px 92px,200px 60px,160px 4px,120px 4px,100px 31px,80px 4px,40px 4px,0px 60px);
+}
+
+.coatOfArms .name{
+	margin-top: 5px;
+	color: #222;
+	text-align: center;
+	font-style: italic;
+	font-weight: bold;
+	//margin: 0 auto;
+}
+
+.warnings{
+	background-color: #fff;
+	color: red;
 }

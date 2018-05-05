@@ -1,0 +1,45 @@
+<div id="app-login">
+	<h3>Horse Breeding Family Info</h3>
+	<div class="form">
+	 <div class="label">
+	    <label>Team Name:
+	      <input [(ngModel)]="player.name" placeholder="name">
+	    </label>
+      </div>
+    <div class="label">
+	     <label>Main Color:
+	      <input [(ngModel)]="player.color" placeholder="color">
+	    </label>
+    <!-- </div>
+     <div class="label">
+	     <label>Secondary Color:
+	      <input [(ngModel)]="player.secColor" placeholder="color">
+	    </label>
+    </div> -->
+	</div>
+	Coat of Arms:
+	<div class="coatOfArms">
+		<div class="silk" [style.backgroundColor]="player.color"  [style.background]="player.calculateBackground">
+		</div>
+		<div class="name">{{player.name}}</div>
+	</div>
+	<h3>Select Horse</h3>
+		<div class="pickHorse"><div class="title">Ace Bolt</div><br/>
+		Speed: 11<br/>
+		Stamina: 20<br />
+		</div>
+		<div class="pickHorse"><div class="title">Elmer Steel</div><br/>
+		Speed: 8<br/>
+		Stamina: 25 <br />
+		</div>
+		<div class="pickHorse"><div class="title">Caspian Grey</div><br/>
+		Speed: 15<br/>
+		Stamina: 14 <br />
+		</div>
+	<div>
+	
+	</div>
+	<div class="formButtonArea">
+		<button (click)="saveForm()">Continue</button>
+	</div>
+</div>
