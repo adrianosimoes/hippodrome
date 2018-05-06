@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { playerOne } from '../model/repository';
+import { playerOne, date } from '../../model/repository';
 
 
 @Component({
@@ -10,6 +10,8 @@ import { playerOne } from '../model/repository';
 export class MainScreenComponent implements OnInit {
     currPlayer = playerOne;
     warningText: string = '';
+    loading: boolean = false;
+    currDate: Date = date;
 
     constructor() { }
 
@@ -18,6 +20,13 @@ export class MainScreenComponent implements OnInit {
 
     gotoRace(): void {
         this.warningText = 'Not implemented yet';
+    }
+    
+     skipDay(): void {
+        this.loading = true;
+        setTimeout(() => { this.loading = false;}, 400);
+        this.currDate = new Date(this.currDate.getTime()+1000*60*60*24);
+        this.currPlayer.horses[0].calculateForm();
     }
 
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Horse } from '../model/horse';
-import { HORSES_IN_SHOP } from '../model/repository';
+import { Horse } from '../../model/horse';
+import { HORSES_IN_SHOP } from '../../model/repository';
 
 
 @Component({

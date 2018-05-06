@@ -1,13 +1,13 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router} from "@angular/router";
-import { Horse } from '../model/horse';
-import { Player } from '../model/player';
-import { playerOne } from '../model/repository';
+import { Horse } from '../../model/horse';
+import { Player } from '../../model/player';
+import { playerOne } from '../../model/repository';
 
 
 
 @Component({
-    selector: 'app-buy-horse',
+    selector: 'horse',
     templateUrl: './buy-horse.component.html',
     styleUrls: ['./buy-horse.component.css']
 })

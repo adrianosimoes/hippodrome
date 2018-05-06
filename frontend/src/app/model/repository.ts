@@ -3,6 +3,12 @@ import { Horse } from './horse';
 
 export let playerOne: Player = new Player();
 
+export let date: Date = new Date();
+
+function increaseDate() {
+    return Math.floor((Math.random() * max + initial - 1) + initial);
+}
+
 export const HORSES_IN_SHOP: Horse[] = [
     {
         id: 1,

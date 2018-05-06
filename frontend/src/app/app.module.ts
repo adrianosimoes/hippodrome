@@ -2,12 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './login/login.component';
-import { ShopComponent } from './shop/shop.component'; 
-import { BuyHorseComponent } from './buy-horse/buy-horse.component';
+import { LoginComponent } from './screens/login/login.component';
+import { ShopComponent } from './screens/shop/shop.component'; 
+import { BuyHorseComponent } from './widget//buy-horse/buy-horse.component';
 
 import { FormsModule } from '@angular/forms';
-import { MainScreenComponent } from './main-screen/main-screen.component';
+import { MainScreenComponent } from './screens/main-screen/main-screen.component';
 import { AppRoutingModule } from './/app-routing.module';
 
 

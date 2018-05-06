@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
-import { Player } from '../model/player';
-import { playerOne } from '../model/repository';
+import { Player } from '../../model/player';
+import { playerOne } from '../../model/repository';
 
 
 @Component({
