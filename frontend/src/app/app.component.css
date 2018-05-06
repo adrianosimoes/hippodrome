@@ -1,9 +1,28 @@
-:host {
-	height: 100%;
+
+
+:host, #titleArea{
+	width: 100%;
 }
 
-#titleArea{
-	border-bottom: 5px solid #ffd700
+#topMenu{
+	border: 2px solid #ffd700;
+	background-color:   #ffd700;
+	padding: 5px;
+	margin: 5px;
+	width: 97%;
+}
+
+#topMenu .menuItem{
+	margin-left: 20px;
+}
+
+#topMenu .menuItem:before {
+	margin-right: 20px;
+	content: "|"
+}
+
+#topMenu .menuItem:first-child:before {
+	content: ""
 }
 
 h1 {

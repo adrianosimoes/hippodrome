@@ -72,14 +72,16 @@ export class CommonService {
         }
     }
 
-    addHorseToPlayer(horse: Horse): void {
+    addHorseToPlayer(horse: Horse): boolean {
         if (this.playerOne.money >= horse.price) {
             this.playerOne.money -= horse.price;
             let newHorse = new Horse(this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.price, horse.form);
             newHorse.owned = true;
             newHorse.calculateForm();
             this.playerOne.horses.push(newHorse);
+            return true;
         }
+        return false;
     }
 
 }

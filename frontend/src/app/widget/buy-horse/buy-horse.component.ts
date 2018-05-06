@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import {Router} from "@angular/router";
+import { Router } from "@angular/router";
 import { CommonService } from '../../model/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
@@ -20,8 +20,12 @@ export class BuyHorseComponent implements OnInit {
     }
 
     buyHorse(): void {
-        this.commonService.addHorseToPlayer(this.horse);
-        this.router.navigate(['main']);
+        let success = this.commonService.addHorseToPlayer(this.horse);
+        if (success) {
+            this.router.navigate(['main']);
+        } else {
+            alert('Not enough money');
+        }
     }
-
+    
 }
