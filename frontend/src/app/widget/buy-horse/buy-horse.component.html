@@ -3,5 +3,5 @@
 		Stamina: {{horse.stamina}}<br />
 		<span *ngIf="horse.owned">	Form: {{horse.form}}<br/></span>
 		<span class="price" *ngIf="!horse.owned">Price: {{horse.price | currency: 'EUR'}}<br /></span> 
-		<button  *ngIf="!horse.owned" (click)="buyHorse()" >Buy</button>
+		<div class="buttonArea"><button  *ngIf="!horse.owned" (click)="buyHorse()" >Buy</button></div>
 </div>

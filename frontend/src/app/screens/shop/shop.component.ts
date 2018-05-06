@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Horse } from '../../model/horse';
-import { HORSES_IN_SHOP } from '../../model/repository';
+import { CommonService } from '../../model/common.service';
+
 
 
 @Component({
@@ -9,11 +10,12 @@ import { HORSES_IN_SHOP } from '../../model/repository';
     styleUrls: ['./shop.component.css']
 })
 export class ShopComponent implements OnInit {
-    horses = HORSES_IN_SHOP;
+    horses: Horse[];
 
-    constructor() { }
+    constructor(private commonService: CommonService) { }
 
     ngOnInit() {
+        this.horses = this.commonService.getHorsesInShop();
     }
     
     

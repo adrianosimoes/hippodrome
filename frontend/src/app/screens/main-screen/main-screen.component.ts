@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { playerOne, date } from '../../model/repository';
-
+import { Player } from '../../model/player';
+import { CommonService } from '../../model/common.service';
 
 @Component({
     selector: 'app-main-screen',
@@ -8,25 +8,27 @@ import { playerOne, date } from '../../model/repository';
     styleUrls: ['./main-screen.component.css']
 })
 export class MainScreenComponent implements OnInit {
-    currPlayer = playerOne;
+    currPlayer: Player;
+    currGame: GameInstance;
     warningText: string = '';
     loading: boolean = false;
-    currDate: Date = date;
 
-    constructor() { }
+
+    constructor(private commonService: CommonService) { }
 
     ngOnInit() {
+        this.currPlayer = this.commonService.getPlayer();
+        this.currGame = this.commonService.getGameInstance();
     }
 
     gotoRace(): void {
         this.warningText = 'Not implemented yet';
     }
-    
-     skipDay(): void {
+
+    skipDay(): void {
         this.loading = true;
-        setTimeout(() => { this.loading = false;}, 400);
-        this.currDate = new Date(this.currDate.getTime()+1000*60*60*24);
-        this.currPlayer.horses[0].calculateForm();
+        setTimeout(() => { this.loading = false; }, 100);
+        this.commonService.nextDay();
     }
 
 }

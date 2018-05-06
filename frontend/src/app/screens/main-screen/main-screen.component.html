@@ -1,22 +1,24 @@
-<div id="main-screen">
+<div id="main-screen"  class="screen">
 	<h3>Main Screen</h3>
-	<div class="horseView"><h4>Horse</h4>
-		<horse [horse]="currPlayer.horses[0]"></horse><br/>
-		Date: {{currDate | date: "longDate" }}
-	</div>
-	<div class="playerView"><h4>Family</h4>
-		<div class="coatOfArms">
-			<div class="silk" [style.backgroundColor]="currPlayer.color"  [style.background]="currPlayer.calculateBackground"></div>
-			<div class="name">{{currPlayer.name}}</div>
+	<div class="mainContainer">
+		<div class="playerView"><h4>Family</h4>
+			<div class="coatOfArms">
+				<div class="silk"  [style.background]="currPlayer.calculateBackground ? currPlayer.calculateBackground : currPlayer.color"></div>
+				<div class="name">{{currPlayer.name}}</div>
+			</div>
+			Money: {{currPlayer.money | currency: 'EUR'}}<br/>
 		</div>
-		Money: {{currPlayer.money}}<br/>
+		<div class="horseView"><h4>Horses</h4>
+			<div *ngFor="let currHorse of currPlayer.horses"><horse [horse]="currHorse"></horse><br/></div>
+		</div>
+		<div class="nextArea">
+			<h4>{{currGame.date | date: "longDate" }}</h4>
+			<div class="mainButtonArea">
+				<button class="race" (click)="gotoRace()">RACE</button>
+				<button (click)="skipDay()">Skip Day</button>
+			</div>
+		</div>
 	</div>
-	<div class="formButtonArea">
-		<button class="race" (click)="gotoRace()">RACE</button>
-		<button (click)="skipDay()">Skip Day</button>
-	</div>
-	<div class="warnings">
-	{{warningText}}
-	</div>
+	<div class="warnings">{{warningText}}</div>
 </div>
 <div id="overlay" *ngIf="loading"></div>

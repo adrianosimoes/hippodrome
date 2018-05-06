@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import {Router} from "@angular/router";
+import { CommonService } from '../../model/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
-import { playerOne } from '../../model/repository';
 
 
 
@@ -14,14 +14,13 @@ import { playerOne } from '../../model/repository';
 export class BuyHorseComponent implements OnInit {
     @Input() horse: Horse;
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private commonService: CommonService) { }
 
     ngOnInit() {
     }
 
     buyHorse(): void {
-        
-        playerOne.addHorse(this.horse);
+        this.commonService.addHorseToPlayer(this.horse);
         this.router.navigate(['main']);
     }
 

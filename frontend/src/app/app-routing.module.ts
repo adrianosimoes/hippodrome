@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { MainScreenComponent }      from './screens/main-screen/main-screen.component';
 import { LoginComponent }      from './screens/login/login.component';
 import { ShopComponent }      from './screens/shop/shop.component';
-import { BuyHorseComponent } from './buy-horse/buy-horse.component';
+import { BuyHorseComponent } from './widget/buy-horse/buy-horse.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

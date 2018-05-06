@@ -16,3 +16,16 @@
 .price {
 	font-weight: bold;
 }
+
+button {
+	text-align:center;
+	background-color: #fff;
+	color: #222;
+}
+
+.buttonArea{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+  	justify-content: center;
+}

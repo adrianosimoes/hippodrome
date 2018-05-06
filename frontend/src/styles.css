@@ -2,7 +2,6 @@
 /* Application-wide Styles */
 html{
 	 background: #447744;
-	  height: 100%;
 }
 
 
@@ -12,12 +11,29 @@ h3 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: lighter;
 }
+
 body {
   margin: 5px;
-}
-body{
-  color: #fff;
+   color: #fff;
   font-family: Cambria, Georgia;
+}
+
+.screen {
+	display: block;
+	padding-left: 10px;
+	background-color: #f1f1f1;
+	color: #000;
+	margin: 0 auto;
+	margin-top: 20px;
+	margin-top: 20px;
+	padding-bottom: 10px;
+	width: 750px;
+	border: 1px solid #aaa;
+	min-height: 90%;
+}
+
+button{
+	padding: 5px 20px 5px 20px;
 }
 
 input[text], button {
@@ -66,6 +82,7 @@ input[text], button {
 }
 
 .warnings{
+	margin-top: 20px;
 	background-color: #fff;
 	color: red;
 }

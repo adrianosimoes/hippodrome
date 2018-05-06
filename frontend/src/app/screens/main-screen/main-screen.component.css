@@ -1,5 +1,5 @@
-#main-screen {
-	padding-left: 10px;
+.mainContainer{
+	display: flex;
 }
 
 #overlay {
@@ -7,16 +7,22 @@
 	background-color: rgba(30,30,30,0.7);
 }
 
-#main-screen .horseView{
-	width: 300px;
-	float: left;
+.title{
 }
 
-#main-screen .playerView {
-	width: 300px;
+.horseView{
+	width: 250px;
 	float: left;
-	padding-left: 10px;
-	border-left: 1px solid #ddd;
+	margin-left: 10px;
+	border-right: 1px solid #aaa;
+}
+
+.playerView {
+	width: 250px;
+	float: left;
+	margin-left: 10px;
+	border-right: 1px solid #aaa;
+	clear: both;
 }
 
 .coatOfArms{
@@ -24,7 +30,6 @@
 }
 
 button{
-	margin-right: 30px;
 	padding: 5px 20px 5px 20px;
 	background-color: #000;
 	color: #ddd;
@@ -33,6 +38,17 @@ button{
 button.race{
 	background-color: #00ca00;
 	color: #333;
+}
+
+.nextArea {
+	float: left;
+	width: 150px;
+	margin-left: 10px;
+}
+
+.mainButtonArea button{
+	margin-bottom: 20px;
+	width: 120px;
 }
 
 

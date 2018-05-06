@@ -1,4 +1,4 @@
-<div id="login">
+<div id="login" class="screen">
 	<h3>Horse Breeding Family Info</h3>
 	<div class="form">
 	 <div class="label">
@@ -18,10 +18,12 @@
     </div> -->
 	</div>
 	Coat of Arms:
-	<div class="coatOfArms">
-		<div class="silk" [style.backgroundColor]="player.color"  [style.background]="player.calculateBackground">
+	<div class="coatOfArmsContainer">
+		<div class="coatOfArms">
+			<div class="silk" [style.background]="player.calculateBackground ? player.calculateBackground : player.color">
+			</div>
+			<div class="name">{{player.name}}</div>
 		</div>
-		<div class="name">{{player.name}}</div>
 	</div>
 	
 	<div class="formButtonArea">
