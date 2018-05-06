@@ -30,6 +30,11 @@ input[text], button {
 	clear: both;
 }
 
+.formButtonArea button {
+	margin-top: 20px;
+}
+
+
 /* everywhere else */
 * {
   font-family: Arial, Helvetica, sans-serif;

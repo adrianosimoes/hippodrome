@@ -1,0 +1,18 @@
+.pickHorse{
+	border: 2px solid #ccc;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding: 5px;
+	width: 140px;
+	float: left;
+}
+
+
+.pickHorse .title {
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.price {
+	font-weight: bold;
+}

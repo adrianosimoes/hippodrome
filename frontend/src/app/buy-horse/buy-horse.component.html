@@ -1,0 +1,6 @@
+<div class="pickHorse" [style.float]="horse.owned ? 'none' : 'left' "><div class="title">{{horse.name}}</div>
+		Speed: {{horse.speed}}<br/>
+		Stamina: {{horse.stamina}}<br />
+		<span class="price">Price: {{horse.price | currency: 'EUR'}}<br /></span> 
+		<button  *ngIf="!horse.owned" (click)="buyHorse()" >Buy</button>
+</div>

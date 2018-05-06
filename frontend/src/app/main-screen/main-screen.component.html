@@ -1,10 +1,13 @@
-<div id="app-main-screen">
+<div id="main-screen">
 	<h3>Main Screen</h3>
-	Welcome to main screen.<br>
+	Money: {{currPlayer.money}}<br/>
 	Your Family Coat of Arms:
 	<div class="coatOfArms">
 		<div class="silk" [style.backgroundColor]="currPlayer.color"  [style.background]="currPlayer.calculateBackground"></div>
 		<div class="name">{{currPlayer.name}}</div>
+	</div>
+	<div>Horse:
+		<app-buy-horse [horse]="currPlayer.horses[0]"></app-buy-horse>
 	</div>
 	<div class="formButtonArea">
 		<button (click)="gotoRace()">RACE</button>
