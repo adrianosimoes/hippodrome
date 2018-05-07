@@ -17,7 +17,15 @@ export class CommonService {
     nextHorseID: number;
     horseNames: string[] = ['Annabel', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Onix', 'Sugarbolt', 'Colby',
         'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
-        'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana']
+        'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand',
+        'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso' ];
+
+    colors: string[] = [
+        /*Reds and yellows:*/ '#ff0000', '#ff00ff', '#FA8072', '#800000', '#800080',  '#ff6600', '#8B0000',
+       /* Yellows */ '#f7cda8', '#EDDA74', '#c5c54f', '#FBB117', '#C2B280', '#C58917',
+        /*Greens */ '#00ff00', '#aaaa00', '#808000',  '#00dddd', '#556B2F', '#6B8E23',
+        /* Blues */  '#000080',
+        /* Grey and Brown */ '#000000',  '#999999' ,'##966F33', '#6F4E37', '##7F5217' ]
 
     constructor() {
         this.initHorsesInShop();
@@ -102,10 +110,13 @@ export class CommonService {
         return this.races[raceId - 1];
     }
 
-    createRandomHorse(num: number): Horse {
-        let rnd: number = getRandomInt(0, this.horseNames.length)
-        let name: string = this.horseNames[rnd];
-        return new Horse(1000 + num, name, 11, 20, 0, 4);
+    createRandomColor(): string {
+        return this.colors[getRandomInt(0, this.colors.length)];
+    }
+
+    createRandomHorse(num: number, raceId: number): Horse {
+        let name: string = this.horseNames[getRandomInt(0, this.horseNames.length)];
+        return new Horse(1000 + num, name, raceId * 10 + getRandomInt(0, 8), raceId * 10 + getRandomInt(0, 8), 0, 4);
     }
 
     randomizeArray(a): void {//array,placeholder,placeholder,placeholder

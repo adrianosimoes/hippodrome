@@ -21,6 +21,23 @@ export class Horse {
     }
 }
 
+export class HorseInRace {
+    id: number;
+    name: string;
+    speed: number;
+    stamina: number;
+    form: number;
+    color: string;
+    
+     constructor(horse: Horse, color: string) {
+        this.id = horse.id;
+        this.name = horse.name;
+        this.speed = horse.speed;
+        this.stamina = horse.stamina;
+        this.color = color;         
+     }
+}
+
 
 export function getRandomInt(initial: number, max: number) {
     return Math.floor((Math.random() * max + initial) + initial);
