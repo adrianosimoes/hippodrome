@@ -9,6 +9,8 @@ export class Player {
     calculateBackground: string;
     horses: Horse[];
     money: number;
+    victories: number;
 }
+
 
 

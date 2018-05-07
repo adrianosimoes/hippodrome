@@ -7,6 +7,7 @@
 				<div class="name">{{currPlayer.name}}</div>
 			</div>
 			Money: {{currPlayer.money | currency: 'EUR'}}<br/>
+			Victores: {{currPlayer.victories}}<br/>
 		</div>
 		<div class="horseView"><h4>Horses</h4>
 			<div *ngFor="let currHorse of currPlayer.horses"><horse [horse]="currHorse"></horse><br/></div>

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GameInstance } from './gameinstance';
 import { Player } from './player';
-import { Horse } from './horse';
+import { Horse, getRandomInt } from './horse';
+import { Race } from './race';
 
 @Injectable({
     providedIn: 'root'
@@ -10,12 +11,17 @@ export class CommonService {
 
     gameInitialized: boolean = false;
     horsesInShop: Horse[] = [];
+    races: Race[] = [];
     gameInstance: GameInstance;
     playerOne: Player;
     nextHorseID: number;
+    horseNames: string[] = ['Annabel', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Onix', 'Sugarbolt', 'Colby',
+        'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
+        'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana']
 
     constructor() {
         this.initHorsesInShop();
+        this.initRaces();
 
         this.gameInstance = { date: new Date() };
 
@@ -29,6 +35,7 @@ export class CommonService {
         this.playerOne.calculateBackground = '';
         this.playerOne.horses = [];
         this.playerOne.money = 5000;
+        this.playerOne.victories = 0;
     }
 
     initHorsesInShop(): void {
@@ -50,6 +57,13 @@ export class CommonService {
         this.nextHorseID = 5;
     }
 
+    initRaces(): void {
+        let race = new Race(1, 'Hurst Park Racecourse', 750, '#338833', 10, [32, 15, 7]);
+        this.races.push(race);
+
+        race = new Race(2, 'Shirley Racecourse', 600, '#338833', 20, [64, 30, 14]);
+        this.races.push(race);
+    };
 
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
@@ -82,6 +96,21 @@ export class CommonService {
             return true;
         }
         return false;
+    }
+
+    getRace(raceId: number): Race {
+        return this.races[raceId - 1];
+    }
+
+    createRandomHorse(num: number): Horse {
+        let rnd: number = getRandomInt(0, this.horseNames.length)
+        let name: string = this.horseNames[rnd];
+        return new Horse(1000 + num, name, 11, 20, 0, 4);
+    }
+
+    randomizeArray(a): void {//array,placeholder,placeholder,placeholder
+        let b, c, d;
+        c = a.length; while (c) b = Math.random() * (--c + 1) | 0, d = a[c], a[c] = a[b], a[b] = d;
     }
 
 }

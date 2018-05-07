@@ -1,0 +1,56 @@
+#race {
+	
+}
+
+.raceStadium{
+	margin: 0 auto;
+	margin-top: 20px;
+	height:150px;
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #fff;
+}
+
+.raceTrack{
+	margin-left: 30px;
+	margin-top: 8px;
+}
+
+.prizeValue{
+	margin-left: 15px;
+}
+
+.raceLine:first-child{
+	border-top: 1px solid #fff;
+}
+
+.raceLine{
+	float: left;
+	display: flex;
+	border-left: 1px solid #fff;
+	border-right: 3px dashed #fff;
+	border-bottom: 1px solid #fff;
+	height: 24px;
+	margin-left: 0px;
+	align-items: center;
+}
+
+
+.horseName {
+	margin-left: 10px;
+}
+
+.silks {
+	float: left;
+	
+}
+
+.silkContainer {
+	clear: left;
+	transform: scale(0.09);
+	position: relative;
+	width: 20px;
+	height:25px;
+	top: 0px;
+	left: 4px;
+}

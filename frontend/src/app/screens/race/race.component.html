@@ -1,0 +1,31 @@
+<div id="race"  class="screen" [ngStyle]="{'width.px': currRace.distance+100}">
+<h3>{{currRace.name}}</h3>
+	Distance: {{currRace.distance/100}} Furlongs.<br/>
+	Entrace fee: {{currRace.entranceFee | currency: 'EUR' }}<br/>
+	Prizes: <div class="prizes" *ngFor="let currPrize of currRace.prizes; index as i" [attr.data-index]="i">
+		<div class="prizeValue">{{i+1}}: {{currPrize | currency: 'EUR'}}; </div>
+		</div>
+	<div class="raceStadium" [ngStyle]="{'width.px': currRace.distance + 60}" [style.backgroundColor]="currRace.color" >
+		
+		<div class="silks">
+			<div class="silkContainer" id="silk1"><div class="silk"></div></div>
+			<div class="silkContainer" id="silk2"><div class="silk"></div></div>
+			<div class="silkContainer" id="silk3"><div class="silk"></div></div>
+			<div class="silkContainer" id="silk4"><div class="silk"></div></div>
+			<div class="silkContainer" id="silk5"><div class="silk"></div></div>
+			<div class="silkContainer" id="silk6"><div class="silk"></div></div>
+		</div>
+		<div class="raceTrack">
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 1</div>
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 2</div>
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 3</div>
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 4</div>
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 5</div>
+			<div class="raceLine" [ngStyle]="{'width.px': currRace.distance}"> 6</div>
+		</div>
+	</div> 
+	Horses:<br />
+	<div class="participants" *ngFor="let currHorse of horses; index as i" [attr.data-index]="i">
+	<div class="horseName" [style.color]="currHorse === playerHorse ? playerColor: '#000'">{{i+1}}: {{currHorse.name}}</div>
+	</div>
+</div>

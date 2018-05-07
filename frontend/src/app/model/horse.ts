@@ -23,5 +23,5 @@ export class Horse {
 
 
 export function getRandomInt(initial: number, max: number) {
-    return Math.floor((Math.random() * max + initial - 1) + initial);
+    return Math.floor((Math.random() * max + initial) + initial);
 }

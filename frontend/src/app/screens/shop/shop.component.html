@@ -1,5 +1,6 @@
 <div id="shop"  class="screen">
 	<h3>Horse Shop</h3>
+	Money: {{currPlayer.money | currency: 'EUR'}}
   	<div  class="horsesContainer" *ngFor="let currHorse of horses"><horse [horse]="currHorse"></horse></div> 
 <div class="formButtonArea">
 	</div>
