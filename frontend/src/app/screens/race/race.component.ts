@@ -50,7 +50,7 @@ export class RaceComponent implements OnInit {
     updateRace(): void {
         let allFinished: boolean = true;
         for (let i = 0; i < 6; i++) {
-            if ($('#silk' + (i + 1)).position().left - 115 > this.currRace.distance) {
+            if ($('#silk' + (i + 1)).position().left > $(".raceStadium").position().left + $(".raceStadium").width() - 5) {
                 continue;
             } else {
                 allFinished = false;
