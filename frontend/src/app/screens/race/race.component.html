@@ -34,7 +34,7 @@
 			</div>
 		</div> 
 		Horses:<br />
-		<div class="participants" *ngFor="let currHorse of horses; index as i" [attr.data-index]="i">
+		<div class="participants" *ngFor="let currHorse of sortedHorses; index as i" [attr.data-index]="i">
 			<div class="playerHorseMarker" *ngIf="currHorse === playerHorse"  [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}}</div>
 		</div>
 	</div>

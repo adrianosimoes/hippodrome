@@ -28,13 +28,15 @@ export class HorseInRace {
     stamina: number;
     form: number;
     color: string;
+    distanceDone: number;
     
      constructor(horse: Horse, color: string) {
         this.id = horse.id;
         this.name = horse.name;
         this.speed = horse.speed;
         this.stamina = horse.stamina;
-        this.color = color;         
+        this.color = color;     
+        this.distanceDone = 0;    
      }
 }
 
