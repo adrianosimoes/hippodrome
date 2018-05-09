@@ -69,7 +69,7 @@ export class CommonService {
         let race = new Race( 1, 'Hurst Park Racecourse', 500, '#338833', 10, 6, [32, 15, 7] );
         this.races[race.id] = race;
 
-        race = new Race( 2, 'Shirley Racecourse', 700, '#338833', 20, 6, [64, 30, 14] );
+        race = new Race( 2, 'Shirley Racecourse', 700, '#626f3d', 20, 6, [64, 30, 14] );
         this.races[race.id] = race;
     };
 
