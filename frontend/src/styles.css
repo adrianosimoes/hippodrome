@@ -86,3 +86,7 @@ input[text], button {
 	background-color: #fff;
 	color: red;
 }
+
+.clear {
+	clear: both;
+}

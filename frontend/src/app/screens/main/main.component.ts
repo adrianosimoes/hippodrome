@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { Player } from '../../model/player';
+import { getRandomInt } from '../../model/horse';
+
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/common.service';
+
 
 @Component({
     selector: 'app-main',
@@ -15,7 +18,6 @@ export class MainComponent implements OnInit {
     warningText: string = '';
     loading: boolean = false;
 
-
     constructor(private router: Router, private commonService: CommonService) { }
 
     ngOnInit() {
@@ -24,7 +26,7 @@ export class MainComponent implements OnInit {
     }
 
     gotoRace(): void {
-        this.router.navigate(['race', 1]);
+        this.router.navigate(['race', 1 + getRandomInt(0,2)]);
     }
 
     skipDay(): void {

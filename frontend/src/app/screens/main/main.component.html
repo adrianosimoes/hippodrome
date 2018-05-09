@@ -15,7 +15,8 @@
 		<div class="nextArea">
 			<h4>{{currGame.date | date: "longDate" }}</h4>
 			<div class="mainButtonArea">
-				<button class="race" (click)="gotoRace()">RACE</button>
+				<button [class.disabled]="!(this.currPlayer.horses.length >= 1)" [disabled]="!(this.currPlayer.horses.length >= 1)" class="race" (click)="gotoRace()">RACE</button>
+				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race.</div>
 				<button (click)="skipDay()">Skip Day</button>
 			</div>
 		</div>

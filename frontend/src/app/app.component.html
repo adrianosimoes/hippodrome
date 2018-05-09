@@ -5,6 +5,11 @@
 	<div id="topMenu">
 		<a class="menuItem" routerLink="/main">Home</a>
 		<a class="menuItem" routerLink="/shop">Shop</a>
+		<div class="rightMenu">
+			<span>{{this.currPlayer.name}}</span>
+			<span>Money: {{this.currPlayer.money | currency: 'EUR'}}</span>
+			<span>Victories: {{this.currPlayer.victories}}</span>
+		</div>
 	</div>
 </div>
 <router-outlet></router-outlet>

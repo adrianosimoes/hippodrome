@@ -4,14 +4,14 @@ import { Player } from './player';
 import { Horse, getRandomInt } from './horse';
 import { Race } from './race';
 
-@Injectable({
+@Injectable( {
     providedIn: 'root'
-})
+} )
 export class CommonService {
 
     gameInitialized: boolean = false;
     horsesInShop: Horse[] = [];
-    races: Race[] = [];
+    races = new Map<number, Race>();
     gameInstance: GameInstance;
     playerOne: Player;
     nextHorseID: number;
@@ -48,29 +48,29 @@ export class CommonService {
 
     initHorsesInShop(): void {
         //Initialize Horses in Shop:
-        let horse = new Horse(1, 'Mayana Bolt', 11, 20, 4000, 3);
-        this.horsesInShop.push(horse);
+        let horse = new Horse( 1, 'Mayana Bolt', 11, 20, 4000, 3 );
+        this.horsesInShop.push( horse );
 
-        horse = new Horse(2, 'Elmer Steel', 8, 25, 4000, 3);
-        this.horsesInShop.push(horse);
+        horse = new Horse( 2, 'Elmer Steel', 8, 25, 4000, 3 );
+        this.horsesInShop.push( horse );
 
-        horse = new Horse(3, 'Caspian Grey', 15, 14, 4000, 3);
-        this.horsesInShop.push(horse);
+        horse = new Horse( 3, 'Caspian Grey', 15, 14, 4000, 3 );
+        this.horsesInShop.push( horse );
 
-        horse = new Horse(4, 'Scarlett Diamond', 14, 20, 4500, 3);
-        this.horsesInShop.push(horse);
+        horse = new Horse( 4, 'Scarlett Diamond', 14, 20, 4500, 3 );
+        this.horsesInShop.push( horse );
 
-        horse = new Horse(4, 'Aeria King', 11, 25, 4500, 3);
-        this.horsesInShop.push(horse);
+        horse = new Horse( 4, 'Aeria King', 11, 25, 4500, 3 );
+        this.horsesInShop.push( horse );
         this.nextHorseID = 5;
     }
 
     initRaces(): void {
-        let race = new Race(1, 'Hurst Park Racecourse', 750, '#338833', 10, [32, 15, 7]);
-        this.races.push(race);
+        let race = new Race( 1, 'Hurst Park Racecourse', 500, '#338833', 10, 6, [32, 15, 7] );
+        this.races[race.id] = race;
 
-        race = new Race(2, 'Shirley Racecourse', 600, '#338833', 20, [64, 30, 14]);
-        this.races.push(race);
+        race = new Race( 2, 'Shirley Racecourse', 700, '#338833', 20, 6, [64, 30, 14] );
+        this.races[race.id] = race;
     };
 
     getHorsesInShop(): Horse[] {
@@ -86,68 +86,74 @@ export class CommonService {
     }
 
     nextDay(): void {
-        this.gameInstance.date.setDate(this.gameInstance.date.getDate() + 1);
+        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         ///Only copied date is updated in the interface.
-        this.gameInstance.date = new Date(this.gameInstance.date);
-        for (let currHorse in this.playerOne.horses) {
+        this.gameInstance.date = new Date( this.gameInstance.date );
+        for ( let currHorse in this.playerOne.horses ) {
             this.playerOne.horses[0].calculateForm();
         }
     }
 
-    addHorseToPlayer(horse: Horse): boolean {
-        if (this.playerOne.money >= horse.price) {
+    addHorseToPlayer( horse: Horse ): boolean {
+        if ( this.playerOne.money >= horse.price ) {
             this.playerOne.money -= horse.price;
-            let newHorse = new Horse(this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.price, horse.form);
+            let newHorse = new Horse( this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.price, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
-            this.playerOne.horses.push(newHorse);
+            this.playerOne.horses.push( newHorse );
             return true;
         }
         return false;
     }
 
-    getRace(raceId: number): Race {
-        return this.races[raceId - 1];
+    getRace( raceId: number ): Race {
+        return this.races[raceId];
     }
 
     createRandomColor(): string {
-        return this.colors[getRandomInt(0, this.colors.length)];
+        return this.colors[getRandomInt( 0, this.colors.length )];
     }
 
-    createRandomHorse(num: number, raceId: number): Horse {
-        let name: string = this.horseNames[getRandomInt(0, this.horseNames.length)];
-        return new Horse(1000 + num, name, raceId * 10 + getRandomInt(0, 8), raceId * 10 + getRandomInt(0, 8), 0, 4);
+    createRandomHorse( num: number, raceId: number ): Horse {
+        let name: string = this.horseNames[getRandomInt( 0, this.horseNames.length )];
+        return new Horse( 1000 + num, name, raceId * 10 + getRandomInt( 0, 8 ), raceId * 10 + getRandomInt( 0, 8 ), 0, 4 );
     }
 
-    randomizeArray(a): void {//array,placeholder,placeholder,placeholder
+    chargeEntranceFee( race: Race ) {
+        this.playerOne.money -= race.entranceFee;
+    }
+
+    randomizeArray( a ): void {//array,placeholder,placeholder,placeholder
         let b, c, d;
-        c = a.length; while (c) b = Math.random() * (--c + 1) | 0, d = a[c], a[c] = a[b], a[b] = d;
+        c = a.length; while ( c ) b = Math.random() * ( --c + 1 ) | 0, d = a[c], a[c] = a[b], a[b] = d;
     }
 
-    stableSort<T>(self: T[], cmp: Comparator<T> = defaultCmp): T[] {
-        let stabilized = self.map((el, index) => <[T, number]>[el, index]);
-        let stableCmp: Comparator<[T, number]> = (a, b) => {
-            let order = cmp(a[0], b[0]);
-            if (order != 0) return order;
+    stableSort<T>( self: T[], cmp: Comparator<T> = defaultCmp ): T[] {
+        let stabilized = self.map(( el, index ) => <[T, number]>[el, index] );
+        let stableCmp: Comparator<[T, number]> = ( a, b ) => {
+            let order = cmp( a[0], b[0] );
+            if ( order != 0 ) return order;
             return a[1] - b[1];
         }
 
-        stabilized.sort(stableCmp);
-        for (let i = 0; i < self.length; i++) {
+        stabilized.sort( stableCmp );
+        for ( let i = 0; i < self.length; i++ ) {
             self[i] = stabilized[i][0];
         }
 
         return self;
-    }   
+
+    }
+
 }
 
 interface Comparator<T> {
-    (a: T, b: T): number
+    ( a: T, b: T ): number
 }
 
-let defaultCmp: Comparator<any> = (a, b) => {
-    if (a < b) return -1;
-    if (a > b) return 1;
+let defaultCmp: Comparator<any> = ( a, b ) => {
+    if ( a < b ) return -1;
+    if ( a > b ) return 1;
     return 0;
 }
 

@@ -1,4 +1,4 @@
-<div id="race"  class="screen" [ngStyle]="{'width.px': currRace.distance+100}">
+<div id="race"  class="screen" [ngStyle]="{'min-width.px': currRace.distance + 100}">
 <h3>{{currRace.name}}</h3>
 
 	<div class="margintop" *ngIf="preRace">
@@ -16,11 +16,13 @@
 					</span>
 				</div>
 		</div>
-		<div class="buttonArea"><button (click)="startRace()">Start Race</button></div> 		
+		<div class="buttonArea"><button  [disabled]="this.currPlayer.money < this.currRace.entranceFee" (click)="startRace()">Start Race</button>
+		<span *ngIf="this.currPlayer.money < this.currRace.entranceFee">Not enough money to pay entrance fee.</span>
+		</div> 		
 	</div>
 	<div class="margintop" *ngIf="!preRace">
 		Race Time: {{raceTimer | number:'2.1-1'}}
-		<div class="raceStadium" [ngStyle]="{'width.px': currRace.distance + 60}" [style.backgroundColor]="currRace.color" >
+		<div class="raceStadium" [ngStyle]="{'width.px': currRace.distance + 80}" [style.backgroundColor]="currRace.color" >
 			
 			<div class="silks">
 				<span *ngFor="let currHorse of horses; index as i" [attr.data-index]="i">
@@ -33,9 +35,17 @@
 				</div>
 			</div>
 		</div> 
-		Horses:<br />
-		<div class="participants" *ngFor="let currHorse of sortedHorses; index as i" [attr.data-index]="i">
-			<div class="playerHorseMarker" *ngIf="currHorse === playerHorse"  [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}}</div>
+		<div class="liveClassification">
+			Live Classification:<br />
+			<div class="participants" *ngFor="let currHorse of sortedHorses; index as i" [attr.data-index]="i">
+				<div class="playerHorseMarker" *ngIf="currHorse === playerHorse"  [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}}</div>
+			</div>
 		</div>
+		<div *ngIf="raceFinished" class="endRace">
+			<div>You finished in place: {{place}}</div>
+			<div *ngIf="wonPrize > 0">Congratulations! You won {{wonPrize | currency: 'EUR'}}</div>
+			<button (click)="exitRace()">Continue</button>
+		</div>
+		<div class="clear"></div>
 	</div>
 </div>

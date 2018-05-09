@@ -100,6 +100,10 @@
 	clear: left;
 }
 
+.buttonArea span {
+	margin-left: 10px;
+}
+
 .raceStadium{
 	margin: 0 auto;
 	margin-top: 20px;
@@ -111,24 +115,9 @@
 }
 
 .raceTrack{
-	margin-left: 30px;
+	margin-left: 40px;
 	margin-top: 7px;
-}
-
-.raceTrack:after { 
-  content: "";
-  visibility: hidden;
-  display: block;
-  height: 0;
-  clear: both;
-}
-
-.raceStadium:after { 
-  content: "";
-  visibility: hidden;
-  display: block;
-  height: 0;
-  clear: both;
+	margin-right: 40px;
 }
 
 .prizeValue{
@@ -178,4 +167,19 @@
 	margin-top: 15px;
 	margin-bottom: -25px;
 	left: 8px;
+}
+
+
+.liveClassification{
+	float: left;
+}
+
+.endRace {
+	float: left;
+	margin-left: 20px;
+}
+
+.endRace div{
+	padding: 10px;
+	margin-bottom: 10px;
 }

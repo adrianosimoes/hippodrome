@@ -34,3 +34,24 @@ h2 {
   margin-top: 0px;
   margin-bottom: 5px;
 }
+
+.rightMenu {
+	float: right;
+	color: #000;
+	margin-right: 60px;
+}
+
+.rightMenu span {
+	margin-right: 30px;
+	float: left;
+}
+
+.rightMenu span:after {
+	margin-left: 30px;
+	content: "|"
+}
+
+.rightMenu span:last-child:after {
+	margin-left: 30px;
+	content: "";
+}

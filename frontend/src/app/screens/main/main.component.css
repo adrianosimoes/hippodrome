@@ -29,17 +29,6 @@
 	margin-bottom: 15px;
 }
 
-button{
-	padding: 5px 20px 5px 20px;
-	background-color: #000;
-	color: #ddd;
-}
-
-button.race{
-	background-color: #00ca00;
-	color: #333;
-}
-
 .nextArea {
 	float: left;
 	width: 150px;
@@ -50,6 +39,30 @@ button.race{
 	margin-bottom: 20px;
 	width: 120px;
 }
+
+button{
+	padding: 5px 20px 5px 20px;
+	background-color: #000;
+	color: #ddd;
+}
+
+.mainButtonArea button.disabled{
+	background-color: #ccc;
+	color: #999;
+	margin-bottom: 5px;
+}
+
+button.race{
+	background-color: #00ca00;
+	color: #333;
+	
+}
+
+.buttonWarning{
+	margin-bottom: 20px;
+}
+
+
 
 
 
