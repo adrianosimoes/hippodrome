@@ -33,7 +33,7 @@ export class RaceInstance {
         this.horses.push( this.playerHorse );
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
-            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.id ), this.commonService.createRandomColor() );
+            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), this.commonService.createRandomColor() );
             this.addHorse( horse );
         }
 
@@ -75,8 +75,8 @@ export class RaceInstance {
             } else {
                 allFinished = false;
             }
-            
-            let step : number = this.getMovementStep(this.horses[i]);
+
+            let step: number = this.getMovementStep( this.horses[i] );
             this.raceView.moveHorse( this.horses[i], step );
 
             this.horses[i].distanceDone += step;
@@ -98,24 +98,29 @@ export class RaceInstance {
         }
         setTimeout(() => { this.updateRace() }, 30 );
     }
-    
-    getMovementStep(horse : HorseInRace) : number {
+
+    /*getMovementStep(horse : HorseInRace) : number {
         return Utils.getRandomInt(0,  horse.speed /4);
-    }
-    
-    /*
-     * Stamina calculatin 
-     * getMovementStep(horse : HorseInRace) : number {
-        let step = Utils.getRandomInt(0, horse.speed);
+    }*/
+
+    /* With Stamina calculation */
+    getMovementStep( horse: HorseInRace ): number {
+        let step = Utils.getRandomInt( 0, horse.speed );
         //If speed is bigger than 80%, reduce stamina:
-        if(step >= horse.speed* 0.91){
-            horse.stamina --;
+        if ( step >= horse.speed * 0.90 ) {
+            horse.tempStamina--;
+            if ( horse.tempStamina < 0 ) {
+                if(horse.speed > 10){
+                    horse.speed--;
+                }
+                horse.tempStamina = horse.fullStamina;
+            }
         }
-        if(step > 0){
-            step = Math.log(step);
+        if ( step > 0 ) {
+            step = Math.log( step );
         }
         return step / 2;
-    }*/
+    }
 
     getPlace( horse: HorseInRace, horses: HorseInRace[] ): number {
         for ( let i = 0; i <= this.horses.length; i++ ) {
@@ -126,7 +131,7 @@ export class RaceInstance {
         return -1;
     }
 
-    finishRace() : void {
+    finishRace(): void {
         this.raceFinished = true;
 
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );

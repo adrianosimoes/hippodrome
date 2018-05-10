@@ -67,10 +67,10 @@ export class CommonService {
     }
 
     initRaces(): void {
-        let race = new Race( 1, 'Hurst Park Racecourse', 500, '#338833', 10, 6, [32, 15, 7] );
+        let race = new Race( 1, 2, 'Hurst Park Racecourse', 500, '#338833', 10, 6, [32, 15, 7] );
         this.races[race.id] = race;
 
-        race = new Race( 2, 'Shirley Racecourse', 700, '#626f3d', 20, 6, [64, 30, 14] );
+        race = new Race( 2, 3, 'Shirley Racecourse', 700, '#626f3d', 20, 6, [64, 30, 14] );
         this.races[race.id] = race;
     };
 
@@ -119,9 +119,9 @@ export class CommonService {
         return this.colors[Utils.getRandomInt( 0, this.colors.length )];
     }
 
-    createRandomHorse( num: number, raceId: number ): Horse {
+    createRandomHorse( num: number, difficulty: number ): Horse {
         let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length )];
-        return new Horse( 1000 + num, name, raceId * 10 + Utils.getRandomInt( 0, 8 ), raceId * 10 + Utils.getRandomInt( 0, 8 ), 0, 4 );
+        return new Horse( 1000 + num, name, (difficulty * 5) + 1 + Utils.getRandomInt( 0, 7 ), (difficulty * 5) + 1  + Utils.getRandomInt( 0, 7 ), 0, 4 );
     }
 
     chargeEntranceFee( race: Race ) {
