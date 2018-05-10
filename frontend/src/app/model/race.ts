@@ -6,8 +6,8 @@ export class Race {
     entranceFee: number;
     numHorses: number;
     prizes: number[];
-    
-     constructor(id: number, name: string, distance: number, color: string, entranceFee: number, numHorses: number, prizes: number[]) {
+
+    constructor( id: number, name: string, distance: number, color: string, entranceFee: number, numHorses: number, prizes: number[] ) {
         this.id = id;
         this.name = name;
         this.distance = distance;
@@ -17,4 +17,6 @@ export class Race {
         this.numHorses = numHorses;
     }
 }
+
+
 

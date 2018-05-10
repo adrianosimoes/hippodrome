@@ -1,3 +1,6 @@
+import { Utils } from './utils';
+
+
 export class Horse {
     id: number;
     name: string;
@@ -7,7 +10,7 @@ export class Horse {
     owned: boolean;
     form: number;
     calculateForm(): void {
-        this.form = getRandomInt(3, 3);
+        this.form = Utils.getRandomInt(3, 3);
     };
 
     constructor(id: number, name: string, speed: number, stamina: number, price: number, form: number) {
@@ -22,7 +25,7 @@ export class Horse {
 }
 
 export class HorseInRace {
-    id: number;
+    track: number;
     name: string;
     speed: number;
     stamina: number;
@@ -31,16 +34,10 @@ export class HorseInRace {
     distanceDone: number;
     
      constructor(horse: Horse, color: string) {
-        this.id = horse.id;
         this.name = horse.name;
         this.speed = horse.speed;
         this.stamina = horse.stamina;
         this.color = color;     
         this.distanceDone = 0;    
      }
-}
-
-
-export function getRandomInt(initial: number, max: number) {
-    return Math.floor((Math.random() * max + initial) + initial);
 }

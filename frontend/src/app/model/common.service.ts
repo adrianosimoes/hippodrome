@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { GameInstance } from './gameinstance';
+import { Utils } from './utils';
 import { Player } from './player';
-import { Horse, getRandomInt } from './horse';
+import { Horse } from './horse';
 import { Race } from './race';
 
 @Injectable( {
@@ -31,7 +32,7 @@ export class CommonService {
         this.initHorsesInShop();
         this.initRaces();
 
-        this.gameInstance = { date: new Date() };
+        this.gameInstance = { date: new Date(), initialized: false };
 
         this.playerOne = new Player();
 
@@ -105,56 +106,33 @@ export class CommonService {
         }
         return false;
     }
+    
+    getRaces(): IterableIterator<Race> {
+        return this.races.values();
+    }
 
     getRace( raceId: number ): Race {
         return this.races[raceId];
     }
 
     createRandomColor(): string {
-        return this.colors[getRandomInt( 0, this.colors.length )];
+        return this.colors[Utils.getRandomInt( 0, this.colors.length )];
     }
 
     createRandomHorse( num: number, raceId: number ): Horse {
-        let name: string = this.horseNames[getRandomInt( 0, this.horseNames.length )];
-        return new Horse( 1000 + num, name, raceId * 10 + getRandomInt( 0, 8 ), raceId * 10 + getRandomInt( 0, 8 ), 0, 4 );
+        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length )];
+        return new Horse( 1000 + num, name, raceId * 10 + Utils.getRandomInt( 0, 8 ), raceId * 10 + Utils.getRandomInt( 0, 8 ), 0, 4 );
     }
 
     chargeEntranceFee( race: Race ) {
         this.playerOne.money -= race.entranceFee;
     }
-
-    randomizeArray( a ): void {//array,placeholder,placeholder,placeholder
-        let b, c, d;
-        c = a.length; while ( c ) b = Math.random() * ( --c + 1 ) | 0, d = a[c], a[c] = a[b], a[b] = d;
+    
+    setInitialized() {
+        this.gameInstance.initialized =  true;
     }
 
-    stableSort<T>( self: T[], cmp: Comparator<T> = defaultCmp ): T[] {
-        let stabilized = self.map(( el, index ) => <[T, number]>[el, index] );
-        let stableCmp: Comparator<[T, number]> = ( a, b ) => {
-            let order = cmp( a[0], b[0] );
-            if ( order != 0 ) return order;
-            return a[1] - b[1];
-        }
-
-        stabilized.sort( stableCmp );
-        for ( let i = 0; i < self.length; i++ ) {
-            self[i] = stabilized[i][0];
-        }
-
-        return self;
-
-    }
-
-}
-
-interface Comparator<T> {
-    ( a: T, b: T ): number
-}
-
-let defaultCmp: Comparator<any> = ( a, b ) => {
-    if ( a < b ) return -1;
-    if ( a > b ) return 1;
-    return 0;
+ 
 }
 
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from "@angular/router";
 import { Player } from '../../model/player';
-import { getRandomInt } from '../../model/horse';
+import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/common.service';
@@ -26,7 +26,7 @@ export class MainComponent implements OnInit {
     }
 
     gotoRace(): void {
-        this.router.navigate(['race', 1 + getRandomInt(0,2)]);
+        this.router.navigate(['race', 1 + Utils.getRandomInt(0,2)]);
     }
 
     skipDay(): void {
