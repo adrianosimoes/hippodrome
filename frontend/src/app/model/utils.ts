@@ -26,6 +26,11 @@ export class Utils {
 
     }
     
+    static precisionRound(number, precision) {
+        var factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
+      }
+    
     static devMode(){
        return window.location.href.startsWith("http://localhost", 0);
     }

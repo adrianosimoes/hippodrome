@@ -13,12 +13,12 @@ export class Horse {
         this.form = Utils.getRandomInt(3, 3);
     };
 
-    constructor(id: number, name: string, speed: number, stamina: number, price: number, form: number) {
+    constructor(id: number, name: string, speed: number, stamina: number, form: number) {
         this.id = id;
         this.name = name;
         this.speed = speed;
         this.stamina = stamina;
-        this.price = price;
+        this.price =  Math.round(((7 * (speed * (speed / 10))) + (4 * (stamina * (stamina /10)))) / 8) * 100;
         this.form = form;
         this.owned = false; 
     }
@@ -28,6 +28,7 @@ export class HorseInRace {
     track: number;
     name: string;
     speed: number;
+    displayStamina: number;
     fullStamina: number;
     tempStamina: number;
     form: number;
@@ -37,7 +38,8 @@ export class HorseInRace {
      constructor(horse: Horse, color: string) {
         this.name = horse.name;
         this.speed = horse.speed;
-        this.fullStamina = horse.stamina * 1.3;
+        this.displayStamina = horse.stamina;
+        this.fullStamina =  Math.round((horse.stamina * 1.7) - 8);
         this.tempStamina = this.fullStamina;
         this.color = color;     
         this.distanceDone = 0;    

@@ -75,7 +75,7 @@
 
 .participants {
 	clear: left;
-	width: 160px;
+	width: 330px;
 	border: 0;
 	height: 20px;
 	padding-top: 2px;
@@ -174,9 +174,6 @@
 	float: left;
 }
 
-.liveClassification .participants {
-	width: 250px;
-}
 
 .endRace {
 	float: left;

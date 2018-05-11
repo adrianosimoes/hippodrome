@@ -110,7 +110,7 @@ export class RaceInstance {
         if ( step >= horse.speed * 0.90 ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
-                if(horse.speed > 10){
+                if(horse.speed > (this.baseRace.difficulty * 5) + 1){
                     horse.speed--;
                 }
                 horse.tempStamina = horse.fullStamina;

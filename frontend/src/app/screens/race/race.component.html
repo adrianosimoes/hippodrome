@@ -12,7 +12,7 @@
 			<div class="label horsesLabel">Horses:</div>
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses; index as i" [attr.data-index]="i">
-						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}}</div>
+						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}} (Speed: {{currHorse.speed}}; Stamina: {{currHorse.displayStamina}})</div>
 					</span>
 				</div>
 		</div>
@@ -39,7 +39,7 @@
 			Live Classification:<br />
 			<div class="participants" *ngFor="let currHorse of currRace.sortedHorses; index as i" [attr.data-index]="i">
 				<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-				<div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.stamina}}</span></div>
+				<div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.fullStamina}}</span></div>
 			</div>
 		</div>
 		<div *ngIf="currRace.raceFinished" class="endRace">

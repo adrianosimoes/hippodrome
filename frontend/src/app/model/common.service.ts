@@ -49,20 +49,27 @@ export class CommonService {
 
     initHorsesInShop(): void {
         //Initialize Horses in Shop:
-        let horse = new Horse( 1, 'Mayana Bolt', 11, 20, 4000, 3 );
+        let horse = new Horse( 1, 'Tom Bolt', 12, 16, 3 );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 2, 'Elmer Steel', 8, 25, 4000, 3 );
+        horse = new Horse( 2, 'Bruce Steel', 11, 17, 3 );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 3, 'Caspian Grey', 15, 14, 4000, 3 );
+        horse = new Horse( 3, 'Sandra Flash', 15, 13, 3 );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 4, 'Scarlett Diamond', 14, 20, 4500, 3 );
+        horse = new Horse( 4, 'Jack Diamond', 14, 18, 3 );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 4, 'Aeria King', 11, 25, 4500, 3 );
+        horse = new Horse( 4, 'Scarlett King', 17, 26, 3 );
         this.horsesInShop.push( horse );
+        
+        horse = new Horse( 5, 'Brad Dynamite', 39, 55, 3 );
+        this.horsesInShop.push( horse );
+        
+        horse = new Horse( 5, 'Samuel Titanium', 72, 82, 3 );
+        this.horsesInShop.push( horse );
+        
         this.nextHorseID = 5;
     }
 
@@ -98,7 +105,7 @@ export class CommonService {
     addHorseToPlayer( horse: Horse ): boolean {
         if ( this.playerOne.money >= horse.price ) {
             this.playerOne.money -= horse.price;
-            let newHorse = new Horse( this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.price, horse.form );
+            let newHorse = new Horse( this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.playerOne.horses.push( newHorse );
@@ -121,7 +128,7 @@ export class CommonService {
 
     createRandomHorse( num: number, difficulty: number ): Horse {
         let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length )];
-        return new Horse( 1000 + num, name, (difficulty * 5) + 1 + Utils.getRandomInt( 0, 7 ), (difficulty * 5) + 1  + Utils.getRandomInt( 0, 7 ), 0, 4 );
+        return new Horse( 1000 + num, name, (difficulty * 5) + 1 + Utils.getRandomInt( 0, 7 ), (difficulty * 5) + 2  + Utils.getRandomInt( 0, 7 ), 4 );
     }
 
     chargeEntranceFee( race: Race ) {
