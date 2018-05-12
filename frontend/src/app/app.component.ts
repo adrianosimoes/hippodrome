@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Player } from './model/player';
+import { GameInstance } from './model/gameinstance';
 import { CommonService } from './model/common.service';
 
 
@@ -12,11 +13,14 @@ import { CommonService } from './model/common.service';
 export class AppComponent {
   title = 'Hippodrome';
   currPlayer: Player;
+  currGame: GameInstance;
+  public commonService;
   
-  constructor(private commonService: CommonService) { }
+  constructor(commService: CommonService) { this.commonService = commService;}
 
   
   ngOnInit() {
       this.currPlayer = this.commonService.getPlayer();
+      this.currGame = this.commonService.getGameInstance();
   }
 }

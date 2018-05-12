@@ -12,6 +12,12 @@ h3 {
   font-weight: lighter;
 }
 
+
+#overlay {
+	position: absolute; width: 100%; height: 100%; top: 0; left: 0;
+	background-color: rgba(30,30,30,0.7);
+}
+
 body {
   margin: 5px;
   color: #fff;
@@ -89,4 +95,41 @@ input[text], button {
 
 .clear {
 	clear: both;
+}
+
+.horsesContainer {
+	margin-top: 20px;
+}
+
+/* Horse View: */
+.pickHorse{
+	border: 2px solid #ccc;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding: 5px;
+	width: 140px;
+	float: left;
+}
+
+
+.pickHorse .title {
+	font-weight: bold;
+	padding-bottom: 5px;
+}
+
+.price {
+	font-weight: bold;
+}
+
+button {
+	text-align:center;
+	background-color: #fff;
+	color: #222;
+}
+
+.buttonArea{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: flex;
+  	justify-content: center;
 }

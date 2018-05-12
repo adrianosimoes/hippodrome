@@ -16,7 +16,6 @@ export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
     warningText: string = '';
-    loading: boolean = false;
 
     constructor(private router: Router, private commonService: CommonService) { }
 
@@ -28,10 +27,12 @@ export class MainComponent implements OnInit {
     gotoRace(): void {
         this.router.navigate(['race', 1 + Utils.getRandomInt(0,2)]);
     }
+    
+    gotoTraining(): void {
+        this.router.navigate(['stables']);
+    }
 
     skipDay(): void {
-        this.loading = true;
-        setTimeout(() => { this.loading = false; }, 100);
         this.commonService.nextDay();
     }
 

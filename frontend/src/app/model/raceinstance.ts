@@ -96,7 +96,7 @@ export class RaceInstance {
             this.finishRace();
             return;
         }
-        setTimeout(() => { this.updateRace() }, 30 );
+        setTimeout(() => { this.updateRace() }, Utils.devMode() ? 1 : 15 );
     }
 
     /*getMovementStep(horse : HorseInRace) : number {

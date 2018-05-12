@@ -9,10 +9,12 @@
 			<span>{{this.currPlayer.name}}</span>
 			<span>Money: {{this.currPlayer.money | currency: 'EUR'}}</span>
 			<span>Victories: {{this.currPlayer.victories}}</span>
+			<span>{{currGame.date | date: "longDate" }}</span>
 		</div>
 	</div>
 </div>
 <router-outlet></router-outlet>
+<div id="overlay" *ngIf="commonService.loading"></div>
 
 
 

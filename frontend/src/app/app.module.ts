@@ -9,9 +9,7 @@ import { LoginComponent } from './screens/login/login.component';
 import { ShopComponent } from './screens/shop/shop.component'; 
 import { BuyHorseComponent } from './widget//buy-horse/buy-horse.component';
 import { RaceComponent } from './screens/race/race.component';
-
-
-
+import { TrainingComponent } from './screens/training/training.component';
 
 
 @NgModule({
@@ -21,7 +19,8 @@ import { RaceComponent } from './screens/race/race.component';
     MainComponent,
     ShopComponent,
     BuyHorseComponent,
-    RaceComponent
+    RaceComponent,
+    TrainingComponent
   ],
   imports: [
       BrowserModule,

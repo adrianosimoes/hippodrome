@@ -4,6 +4,8 @@ import { MainComponent }      from './screens/main/main.component';
 import { LoginComponent }      from './screens/login/login.component';
 import { ShopComponent }      from './screens/shop/shop.component';
 import { RaceComponent } from './screens/race/race.component';
+import { TrainingComponent } from './screens/training/training.component';
+
 
 
 const routes: Routes = [
@@ -11,6 +13,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent },
   { path: 'shop', component: ShopComponent },
+  { path: 'stables', component: TrainingComponent },
   { path: 'race/:id', component: RaceComponent }
 ];
 

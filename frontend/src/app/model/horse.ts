@@ -1,5 +1,13 @@
 import { Utils } from './utils';
 
+const TRAINING_PRICE: number = 1.5;
+const SPEED_SKILL_PRICE: number = 7;
+const STAMINA_SKILL_PRICE: number = 4;
+const TOTAL_SKILL_PRICE: number = 8;
+const SKILL_TO_PRICE_MULTIPLIER: number = 100;
+
+
+
 
 export class Horse {
     id: number;
@@ -10,17 +18,18 @@ export class Horse {
     owned: boolean;
     form: number;
     calculateForm(): void {
-        this.form = Utils.getRandomInt(3, 3);
+        this.form = Utils.getRandomInt( 3, 3 );
     };
 
-    constructor(id: number, name: string, speed: number, stamina: number, form: number) {
+    constructor( id: number, name: string, speed: number, stamina: number, form: number ) {
         this.id = id;
         this.name = name;
         this.speed = speed;
         this.stamina = stamina;
-        this.price =  Math.round(((7 * (speed * (speed / 10))) + (4 * (stamina * (stamina /10)))) / 8) * 100;
+        this.price = Math.round(( ( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) )
+            + ( STAMINA_SKILL_PRICE * ( stamina * ( stamina / 10 ) ) ) ) / TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
         this.form = form;
-        this.owned = false; 
+        this.owned = false;
     }
 }
 
@@ -34,14 +43,34 @@ export class HorseInRace {
     form: number;
     color: string;
     distanceDone: number;
-    
-     constructor(horse: Horse, color: string) {
+
+    constructor( horse: Horse, color: string ) {
         this.name = horse.name;
         this.speed = horse.speed;
         this.displayStamina = horse.stamina;
-        this.fullStamina =  Math.round((horse.stamina * 1.7) - 8);
+        this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 8 );
         this.tempStamina = this.fullStamina;
-        this.color = color;     
-        this.distanceDone = 0;    
-     }
+        this.color = color;
+        this.distanceDone = 0;
+    }
+}
+
+export class TrainingHorse {
+    baseHorse: Horse;
+    trainSpeedPrice: number;
+    trainStaminaPrice: number;
+
+    constructor( horse: Horse ) {
+        this.baseHorse = horse;
+        this.trainSpeedPrice = getSpeedPrice( horse.speed ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
+        this.trainStaminaPrice = getStaminaPrice( horse.stamina ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
+    }
+}
+
+function getSpeedPrice( speed: number ) {
+    return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getStaminaPrice( stamina: number ) {
+    return Math.round( STAMINA_SKILL_PRICE * ( stamina * ( stamina / 10 ) ) / TOTAL_SKILL_PRICE ); 
 }

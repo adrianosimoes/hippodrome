@@ -1,0 +1,16 @@
+.buttonArea{
+	display: block;
+}
+
+.pickHorse{
+	width: 190px;
+}
+
+.buttonArea button{
+	margin-bottom: 15px;
+}
+ .buttonArea button:last-child {
+ 	margin-bottom: 0px;
+ }
+
+

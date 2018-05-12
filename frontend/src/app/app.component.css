@@ -38,20 +38,20 @@ h2 {
 .rightMenu {
 	float: right;
 	color: #000;
-	margin-right: 60px;
+	margin-right: 10px;
 }
 
 .rightMenu span {
-	margin-right: 30px;
+	margin-right: 15px;
 	float: left;
 }
 
 .rightMenu span:after {
-	margin-left: 30px;
+	margin-left: 15px;
 	content: "|"
 }
 
 .rightMenu span:last-child:after {
-	margin-left: 30px;
+	margin-left: 15px;
 	content: "";
 }
