@@ -1,4 +1,11 @@
 <div id="login" class="screen">
+	<div *ngIf="savedGame" class="savedGame" >
+		Saved Game:<br />
+		Team Name: {{savedGame.playerOne.name}} <br />
+		Money: {{savedGame.playerOne.money}} <br />
+		Date: {{savedGame.date | date: "longDate"}}<br />
+		<button (click)="loadGame()">Load Game</button>
+	</div>
 	<h3>Horse Breeding Family Info</h3>
 	<div class="form">
 	 <div class="label">

@@ -8,10 +8,10 @@ import { Player } from '../../model/player';
 
 @Component({
     selector: 'horse',
-    templateUrl: './buy-horse.component.html',
-    styleUrls: ['./buy-horse.component.css']
+    templateUrl: './horse.component.html',
+    styleUrls: ['./horse.component.css']
 })
-export class BuyHorseComponent implements OnInit {
+export class HorseComponent implements OnInit {
     @Input() horse: Horse;
 
     constructor(private router: Router, private commonService: CommonService) { }

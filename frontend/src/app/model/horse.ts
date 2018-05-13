@@ -6,10 +6,6 @@ const STAMINA_SKILL_PRICE: number = 4;
 const TOTAL_SKILL_PRICE: number = 8;
 const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
-
-
-
-
 export class Horse {
     static AVG_FORM: number = 11;
     

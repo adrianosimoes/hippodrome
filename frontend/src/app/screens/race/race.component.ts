@@ -24,6 +24,9 @@ export class RaceComponent implements OnInit {
     constructor( private router: Router, private activeRoute: ActivatedRoute, private commonService: CommonService ) { }
 
     ngOnInit() {
+        if ( !this.commonService.isInitialized() ) {
+            this.router.navigate( ['login'] );
+        }
         if ( this.commonService.getPlayer().horses.length <= 0 ) {
             return;
         }

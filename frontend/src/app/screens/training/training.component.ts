@@ -16,6 +16,9 @@ export class TrainingComponent implements OnInit {
     constructor( private router: Router, private commonService: CommonService ) { }
 
     ngOnInit() {
+        if ( !this.commonService.isInitialized() ) {
+            this.router.navigate( ['login'] );
+        }
         this.currPlayer = this.commonService.getPlayer();
         this.reload();
     }

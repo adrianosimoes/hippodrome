@@ -1,20 +1,23 @@
 import { Injectable } from '@angular/core';
+import { Router } from "@angular/router";
 import { GameInstance } from './gameinstance';
 import { Utils } from './utils';
 import { Player } from './player';
 import { Horse, TrainingHorse } from './horse';
 import { Race } from './race';
 
+declare var Cookies: any;
+declare var JSON: any;
+
 @Injectable( {
     providedIn: 'root'
 } )
 export class CommonService {
 
-    gameInitialized: boolean = false;
     horsesInShop: Horse[] = [];
     races = new Map<number, Race>();
     gameInstance: GameInstance;
-    playerOne: Player;
+    savedGame: GameInstance;
     nextHorseID: number;
     horseNames: string[] = ['Annabel', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Onix', 'Sugarbolt', 'Colby',
         'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
@@ -32,16 +35,37 @@ export class CommonService {
     static TRAIN_STAMINA: number = 2;
 
     public loading: boolean;
-    public loadingText : string;
+    public loadingText: string;
 
-    constructor() {
+    constructor( private router: Router ) {
         this.initHorsesInShop();
         this.initRaces();
         this.loading = false;
 
-        this.gameInstance = { date: new Date(), initialized: false };
+        let savedGameString: string = Cookies.get( 'gamev1' );
+        if ( savedGameString ) {
+            this.loadToSavedSlot( savedGameString );
+        }
 
-        this.playerOne = new Player(1, 'The McCoys', '#0077ee' , 5000);
+        let playerOne = new Player( 1, 'The McCoys', '#0077ee', 5000 );
+        this.gameInstance = new GameInstance( playerOne, new Date(), false );
+
+    }
+
+    loadToSavedSlot( savedGameString: string ): void {
+        this.savedGame = JSON.parse( savedGameString );
+        this.savedGame.date = new Date( this.savedGame.date );
+
+        //Load Horses:
+        let horsesJson: Horse[] = this.savedGame.playerOne.horses;
+        this.savedGame.playerOne.horses = [];
+
+        for ( let i = 0; i < horsesJson.length; i++ ) {
+            let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
+                horsesJson[i].speed, horsesJson[i].stamina, horsesJson[i].form );
+            horseInstance.owned = true;
+            this.savedGame.playerOne.horses.push( horseInstance );
+        }
     }
 
     initHorsesInShop(): void {
@@ -74,9 +98,9 @@ export class CommonService {
         let race = new Race( 1, 2, 'Hurst Park Racecourse', 500, '#338833', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
-        race = new Race( 2, 2, 'Shirley Racecourse', 600, '#626f3d', 100, 6, [1000, 450, 200]);
+        race = new Race( 2, 2, 'Shirley Racecourse', 600, '#626f3d', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
-        
+
         race = new Race( 3, 3, 'Level 2 Racecourse', 700, '#626f3d', 200, 6, [2000, 900, 400] );
         this.races[race.id] = race;
     };
@@ -86,44 +110,46 @@ export class CommonService {
     }
 
     getPlayer(): Player {
-        return this.playerOne;
+        return this.gameInstance.playerOne;
     }
 
     getGameInstance(): GameInstance {
         return this.gameInstance;
     }
-    
+
     exhibition(): void {
         this.loading = true;
-        this.playerOne.money+= 50;
-        this.simNextDay();
+        this.gameInstance.playerOne.money += 50;
+        this.nextDay();
         this.loadingText = "You participated in a exhibition and earned 50 €. \n Waiting 7 seconds."
-            
-        setTimeout(() => { this.loading = false;  this.loadingText = "";}, 7000);
+        setTimeout(() => { this.loading = false; this.loadingText = ""; }, 7000 );
     }
 
     nextDay(): void {
-        this.loading = true;
-        setTimeout(() => { this.loading = false; }, 200);
-        this.simNextDay();
-    }
-    
-    private simNextDay() {
+        if ( !this.loading ) {
+            this.loading = true;
+            setTimeout(() => { this.loading = false; }, 200 );
+        }
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
-        for ( let currHorse in this.playerOne.horses ) {
-            this.playerOne.horses[0].calculateForm();
+        for ( let currHorse in this.gameInstance.playerOne.horses ) {
+            this.gameInstance.playerOne.horses[0].calculateForm();
         }
+        this.saveGame();
+    }
+
+    saveGame(): void {
+        Cookies.set( 'gamev1', this.gameInstance, { expires: 7 } );
     }
 
     addHorseToPlayer( horse: Horse ): boolean {
-        if ( this.playerOne.money >= horse.price ) {
-            this.playerOne.money -= horse.price;
+        if ( this.gameInstance.playerOne.money >= horse.price ) {
+            this.gameInstance.playerOne.money -= horse.price;
             let newHorse = new Horse( this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
-            this.playerOne.horses.push( newHorse );
+            this.gameInstance.playerOne.horses.push( newHorse );
             return true;
         }
         return false;
@@ -138,16 +164,16 @@ export class CommonService {
     }
 
     createRandomColor(): string {
-        return this.colors[Utils.getRandomInt( 0, this.colors.length - 1)];
+        return this.colors[Utils.getRandomInt( 0, this.colors.length - 1 )];
     }
 
     createRandomHorse( num: number, difficulty: number ): Horse {
-        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length - 1)];
+        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length - 1 )];
         return new Horse( 1000 + num, name, ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ), ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ), Horse.AVG_FORM );
     }
 
     chargeEntranceFee( race: Race ) {
-        this.playerOne.money -= race.entranceFee;
+        this.gameInstance.playerOne.money -= race.entranceFee;
     }
 
     setInitialized() {
@@ -163,6 +189,10 @@ export class CommonService {
         } else {
             return false;
         }
+    }
+
+    isInitialized(): boolean {
+        return this.gameInstance.initialized;
     }
 
 }

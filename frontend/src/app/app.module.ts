@@ -9,7 +9,7 @@ import { FormStringPipe } from './model/formstring';
 import { MainComponent } from './screens/main/main.component';
 import { LoginComponent } from './screens/login/login.component';
 import { ShopComponent } from './screens/shop/shop.component'; 
-import { BuyHorseComponent } from './widget//buy-horse/buy-horse.component';
+import { HorseComponent } from './widget//horse/horse.component';
 import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 
@@ -21,7 +21,7 @@ import { TrainingComponent } from './screens/training/training.component';
     LoginComponent,
     MainComponent,
     ShopComponent,
-    BuyHorseComponent,
+    HorseComponent,
     RaceComponent,
     TrainingComponent
   ],

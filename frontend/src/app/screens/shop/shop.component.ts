@@ -6,24 +6,27 @@ import { CommonService } from '../../model/common.service';
 
 
 
-@Component({
+@Component( {
     selector: 'app-shop',
     templateUrl: './shop.component.html',
     styleUrls: ['./shop.component.css']
-})
+} )
 export class ShopComponent implements OnInit {
     horses: Horse[];
     currPlayer: Player;
 
-    constructor(private router: Router, private commonService: CommonService) { }
+    constructor( private router: Router, private commonService: CommonService ) { }
 
     ngOnInit() {
+        if ( !this.commonService.isInitialized() ) {
+            this.router.navigate( ['login'] );
+        }
         this.horses = this.commonService.getHorsesInShop();
         this.currPlayer = this.commonService.getPlayer();
     }
-    
+
     mainScreen(): void {
-         this.router.navigate(['main']);
-    }    
+        this.router.navigate( ['main'] );
+    }
 
 }

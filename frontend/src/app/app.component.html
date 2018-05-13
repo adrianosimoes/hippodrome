@@ -6,10 +6,10 @@
 		<a class="menuItem" routerLink="/main">Home</a>
 		<a class="menuItem" routerLink="/shop">Shop</a>
 		<div class="rightMenu">
-			<span>{{this.currPlayer.name}}</span>
-			<span>Money: {{this.currPlayer.money | currency: 'EUR'}}</span>
-			<span>Victories: {{this.currPlayer.victories}}</span>
-			<span>{{currGame.date | date: "longDate" }}</span>
+			<span>{{this.commonService.gameInstance.playerOne.name}}</span>
+			<span>Money: {{this.commonService.gameInstance.playerOne.money | currency: 'EUR'}}</span>
+			<span>Victories: {{this.commonService.gameInstance.playerOne.victories}}</span>
+			<span>{{this.commonService.gameInstance.date | date: "longDate" }}</span>
 		</div>
 	</div>
 </div>

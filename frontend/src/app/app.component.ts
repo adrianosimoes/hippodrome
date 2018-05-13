@@ -12,15 +12,12 @@ import { CommonService } from './model/common.service';
 })
 export class AppComponent {
   title = 'Hippodrome';
-  currPlayer: Player;
-  currGame: GameInstance;
   public commonService;
   
   constructor(commService: CommonService) { this.commonService = commService;}
 
   
   ngOnInit() {
-      this.currPlayer = this.commonService.getPlayer();
-      this.currGame = this.commonService.getGameInstance();
+      this.commonService.getGameInstance();
   }
 }
