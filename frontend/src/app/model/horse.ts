@@ -9,7 +9,10 @@ const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
 
 
+
 export class Horse {
+    static AVG_FORM: number = 11;
+    
     id: number;
     name: string;
     speed: number;
@@ -18,7 +21,7 @@ export class Horse {
     owned: boolean;
     form: number;
     calculateForm(): void {
-        this.form = Utils.getRandomInt( 3, 3 );
+        this.form = Utils.getRandomInt( 10, 12 );
     };
 
     constructor( id: number, name: string, speed: number, stamina: number, form: number ) {
@@ -34,10 +37,10 @@ export class Horse {
 }
 
 export class HorseInRace {
+    baseHorse: Horse;
     track: number;
     name: string;
     speed: number;
-    displayStamina: number;
     fullStamina: number;
     tempStamina: number;
     form: number;
@@ -45,9 +48,9 @@ export class HorseInRace {
     distanceDone: number;
 
     constructor( horse: Horse, color: string ) {
+        this.baseHorse = horse;
         this.name = horse.name;
-        this.speed = horse.speed;
-        this.displayStamina = horse.stamina;
+        this.speed = Utils.precisionRound((horse.speed * horse.form) / Horse.AVG_FORM , 2);
         this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 8 );
         this.tempStamina = this.fullStamina;
         this.color = color;

@@ -14,7 +14,7 @@
 	</div>
 </div>
 <router-outlet></router-outlet>
-<div id="overlay" *ngIf="commonService.loading"></div>
+<div id="overlay" *ngIf="commonService.loading">{{commonService.loadingText}}</div>
 
 
 

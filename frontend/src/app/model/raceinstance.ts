@@ -55,10 +55,13 @@ export class RaceInstance {
 
         this.preRace = false;
         this.raceTimer = 0;
-
+        
+        /* Order by speed on live tracking: */ 
+        Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.speed - h1.speed );
         this.raceStart = new Date();
         this.commonService.chargeEntranceFee( this.baseRace );
         setTimeout(() => { this.updateRace() }, 100 );
+        
     }
 
     updateRace(): void {
@@ -105,7 +108,7 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let step = Utils.getRandomInt( 0, horse.speed );
+        let step = Utils.getRandomInt( 0, horse.speed - 1);
         //If speed is bigger than 80%, reduce stamina:
         if ( step >= horse.speed * 0.90 ) {
             horse.tempStamina--;
@@ -133,7 +136,8 @@ export class RaceInstance {
 
     finishRace(): void {
         this.raceFinished = true;
-
+        
+        this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
         if ( this.baseRace.prizes.length >= this.place ) {
             this.wonPrize = this.baseRace.prizes[this.place - 1];

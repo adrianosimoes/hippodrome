@@ -30,7 +30,9 @@ export class CommonService {
 
     static TRAIN_SPEED: number = 1;
     static TRAIN_STAMINA: number = 2;
-    public loading;
+
+    public loading: boolean;
+    public loadingText : string;
 
     constructor() {
         this.initHorsesInShop();
@@ -39,17 +41,7 @@ export class CommonService {
 
         this.gameInstance = { date: new Date(), initialized: false };
 
-        this.playerOne = new Player();
-
-        this.playerOne.id = 1;
-        this.playerOne.name = 'The McCoys';
-        this.playerOne.color = '#0077ee';
-        this.playerOne.secColor = '#aaaaaa';
-        this.playerOne.silkType = 2;
-        this.playerOne.calculateBackground = '';
-        this.playerOne.horses = [];
-        this.playerOne.money = 5000;
-        this.playerOne.victories = 0;
+        this.playerOne = new Player(1, 'The McCoys', '#0077ee' , 5000);
     }
 
     initHorsesInShop(): void {
@@ -79,13 +71,13 @@ export class CommonService {
     }
 
     initRaces(): void {
-        let race = new Race( 1, 2, 'Hurst Park Racecourse', 500, '#338833', 100, 6, [650, 300, 150] );
+        let race = new Race( 1, 2, 'Hurst Park Racecourse', 500, '#338833', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
-        race = new Race( 2, 2, 'Shirley Racecourse', 600, '#626f3d', 100, 6, [650, 300, 150]);
+        race = new Race( 2, 2, 'Shirley Racecourse', 600, '#626f3d', 100, 6, [1000, 450, 200]);
         this.races[race.id] = race;
         
-        race = new Race( 3, 3, 'Level 2 Racecourse', 700, '#626f3d', 200, 6, [1300, 600, 300] );
+        race = new Race( 3, 3, 'Level 2 Racecourse', 700, '#626f3d', 200, 6, [2000, 900, 400] );
         this.races[race.id] = race;
     };
 
@@ -100,10 +92,23 @@ export class CommonService {
     getGameInstance(): GameInstance {
         return this.gameInstance;
     }
+    
+    exhibition(): void {
+        this.loading = true;
+        this.playerOne.money+= 50;
+        this.simNextDay();
+        this.loadingText = "You participated in a exhibition and earned 50 €. \n Waiting 7 seconds."
+            
+        setTimeout(() => { this.loading = false;  this.loadingText = "";}, 7000);
+    }
 
     nextDay(): void {
         this.loading = true;
-        setTimeout(() => { this.loading = false; }, 150);
+        setTimeout(() => { this.loading = false; }, 200);
+        this.simNextDay();
+    }
+    
+    private simNextDay() {
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
@@ -133,12 +138,12 @@ export class CommonService {
     }
 
     createRandomColor(): string {
-        return this.colors[Utils.getRandomInt( 0, this.colors.length )];
+        return this.colors[Utils.getRandomInt( 0, this.colors.length - 1)];
     }
 
     createRandomHorse( num: number, difficulty: number ): Horse {
-        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length )];
-        return new Horse( 1000 + num, name, ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 7 ), ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 7 ), 4 );
+        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length - 1)];
+        return new Horse( 1000 + num, name, ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ), ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ), Horse.AVG_FORM );
     }
 
     chargeEntranceFee( race: Race ) {

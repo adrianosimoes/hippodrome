@@ -11,13 +11,14 @@
 					</div>
 			<div class="label horsesLabel">Horses:</div>
 				<div class="horsesContainer">
-					<span class="participants" *ngFor="let currHorse of currRace.horses; index as i" [attr.data-index]="i">
-						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div><div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}} (Speed: {{currHorse.speed}}; Stamina: {{currHorse.displayStamina}})</div>
+					<span class="participants" *ngFor="let currHorse of currRace.horses">
+						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
+						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} (Speed: {{currHorse.baseHorse.speed}}; Stamina: {{currHorse.baseHorse.stamina}})</div>
 					</span>
 				</div>
 		</div>
-		<div class="buttonArea"><button  [disabled]="currRace.player.money < currRace.baseRace.entranceFee" (click)="startRace()">Start Race</button>
-		<span *ngIf="currRace.player.money < currRace.entranceFee">Not enough money to pay entrance fee.</span>
+		<div class="buttonArea"><button [class.disabled]="currRace.player.money < currRace.baseRace.entranceFee"  [disabled]="currRace.player.money < currRace.baseRace.entranceFee" (click)="startRace()">Start Race</button>
+		<span *ngIf="currRace.player.money < currRace.baseRace.entranceFee">Not enough money to pay entrance fee.</span>
 		</div> 		
 	</div>
 	<div class="margintop" *ngIf="!currRace.preRace">
@@ -25,21 +26,21 @@
 		<div class="raceStadium" [ngStyle]="{'width.px': currRace.baseRace.distance + 80}" [style.backgroundColor]="currRace.baseRace.color" >
 			
 			<div class="silks">
-				<span *ngFor="let currHorse of currRace.horses; index as i" [attr.data-index]="i">
-					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{i+1}}"><div class="silk"  [style.backgroundColor]="currHorse.color"></div></div>
+				<span *ngFor="let currHorse of currRace.horses">
+					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{currHorse.track}}"><div class="silk"  [style.backgroundColor]="currHorse.color"></div></div>
 				</span>
 			</div>
 			<div class="raceTrack">
-				<div *ngFor="let currHorse of currRace.horses; index as i" [attr.data-index]="i" class="raceLine" [ngStyle]="{'width.px': currRace.baseRace.distance}">
-					&nbsp;{{i+1}}
+				<div *ngFor="let currHorse of currRace.horses" class="raceLine" [ngStyle]="{'width.px': currRace.baseRace.distance}">
+					&nbsp;{{currHorse.track}}
 				</div>
 			</div>
 		</div> 
 		<div class="liveClassification">
 			Live Classification:<br />
-			<div class="participants" *ngFor="let currHorse of currRace.sortedHorses; index as i" [attr.data-index]="i">
+			<div class="participants" *ngFor="let currHorse of currRace.sortedHorses">
 				<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-				<div class="horseName" [style.color]="currHorse.color">{{i+1}}: {{currHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.fullStamina}}</span></div>
+				<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.fullStamina}}</span></div>
 			</div>
 		</div>
 		<div *ngIf="currRace.raceFinished" class="endRace">

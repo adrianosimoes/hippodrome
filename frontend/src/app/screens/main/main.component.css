@@ -41,12 +41,6 @@ button{
 	color: #ddd;
 }
 
-.mainButtonArea button.disabled{
-	background-color: #ccc;
-	color: #999;
-	margin-bottom: 5px;
-}
-
 button.race{
 	background-color: #00ca00;
 	color: #222;
@@ -56,6 +50,12 @@ button.race{
 button.training{
 	background-color: #30c0f7;
 	color: #222;
+	
+}
+
+button.exhibition{
+	background-color: #006df2;
+	color: #ddd;
 	
 }
 

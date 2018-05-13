@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
 
+import { FormStringPipe } from './model/formstring';
+
 import { MainComponent } from './screens/main/main.component';
 import { LoginComponent } from './screens/login/login.component';
 import { ShopComponent } from './screens/shop/shop.component'; 
@@ -14,6 +16,7 @@ import { TrainingComponent } from './screens/training/training.component';
 
 @NgModule({
   declarations: [
+    FormStringPipe,
     AppComponent,
     LoginComponent,
     MainComponent,

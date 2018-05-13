@@ -1,7 +1,7 @@
 export class Utils {
     
     static getRandomInt(initial: number, max: number) : number {
-        return Math.floor((Math.random() * max + initial) + initial);
+        return Math.floor((Math.random() * (max - initial + 1)) + initial);
     }
 
     static randomizeArray( a ): void {

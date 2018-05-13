@@ -25,11 +25,17 @@ export class MainComponent implements OnInit {
     }
 
     gotoRace(): void {
-        this.router.navigate(['race', 1 + Utils.getRandomInt(0,2)]);
+        this.router.navigate(['race', Utils.getRandomInt(1, 2)]);
     }
     
     gotoTraining(): void {
         this.router.navigate(['stables']);
+    }
+    
+    gotoExhibition(): void {
+       //alert("You participated in a exhibition and earned 50 €.");
+       //this.commonService.nextDay();
+       this.commonService.exhibition();
     }
 
     skipDay(): void {
