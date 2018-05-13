@@ -15,11 +15,13 @@ import { CommonService } from '../../model/common.service';
 export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
+    public commonService;
     warningText: string = '';
 
-    constructor(private router: Router, private commonService: CommonService) { }
+    constructor(private router: Router, private commService: CommonService) { }
 
     ngOnInit() {
+        this.commonService = this.commService;
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
     }
@@ -33,8 +35,6 @@ export class MainComponent implements OnInit {
     }
     
     gotoExhibition(): void {
-       //alert("You participated in a exhibition and earned 50 €.");
-       //this.commonService.nextDay();
        this.commonService.exhibition();
     }
 

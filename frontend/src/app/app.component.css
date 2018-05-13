@@ -38,16 +38,16 @@ h2 {
 .rightMenu {
 	float: right;
 	color: #000;
-	margin-right: 10px;
+	margin-right: 5px;
 }
 
 .rightMenu span {
-	margin-right: 15px;
+	margin-right: 5px;
 	float: left;
 }
 
 .rightMenu span:after {
-	margin-left: 15px;
+	margin-left: 5px;
 	content: "|"
 }
 
