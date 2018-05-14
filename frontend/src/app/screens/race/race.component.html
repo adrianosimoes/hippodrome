@@ -27,7 +27,7 @@
 			
 			<div class="silks">
 				<span *ngFor="let currHorse of currRace.horses">
-					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{currHorse.track}}"><div class="silk"  [style.backgroundColor]="currHorse.color"></div></div>
+					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft"><div class="silk"  [style.backgroundColor]="currHorse.color"></div></div>
 				</span>
 			</div>
 			<div class="raceTrack">

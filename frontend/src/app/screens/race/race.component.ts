@@ -8,8 +8,6 @@ import { Race } from '../../model/race';
 import { RaceInstance } from '../../model/raceinstance';
 import { CommonService } from '../../model/common.service';
 
-declare var $: any;
-
 @Component( {
     selector: 'app-race',
     templateUrl: './race.component.html',
@@ -42,17 +40,6 @@ export class RaceComponent implements OnInit {
     exitRace() {
         this.commonService.nextDay();
         this.router.navigate( ['main'] );
-    }
-
-    isFinished( horse: HorseInRace ): boolean {
-        if ( this.maxDistance === null ) {
-            this.maxDistance = this.currRace.baseRace.distance + parseInt( $( '.raceTrack' ).css( 'marginLeft' ), 10 );
-        }
-        return parseInt( $( '#horse' + ( horse.track ) ).css( 'left' ), 10 ) >= this.maxDistance;
-    }
-
-    moveHorse( horse: HorseInRace, step: number ): void {
-        $( '#horse' + ( horse.track ) ).css( 'left', '+=' + step );
     }
 
     ngOnDestroy() {

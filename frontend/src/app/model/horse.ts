@@ -42,6 +42,7 @@ export class HorseInRace {
     form: number;
     color: string;
     distanceDone: number;
+    cssLeft: number;
 
     constructor( horse: Horse, color: string ) {
         this.baseHorse = horse;
@@ -51,6 +52,7 @@ export class HorseInRace {
         this.tempStamina = this.fullStamina;
         this.color = color;
         this.distanceDone = 0;
+        this.cssLeft = 4;
     }
 }
 

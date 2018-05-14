@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
 import { GameInstance } from './gameinstance';
-import { Utils } from './utils';
+import { Utils, StaticData } from './utils';
 import { Player } from './player';
 import { Horse, TrainingHorse } from './horse';
 import { Race } from './race';
@@ -18,18 +18,6 @@ export class CommonService {
     races = new Map<number, Race>();
     gameInstance: GameInstance;
     savedGame: GameInstance;
-    nextHorseID: number;
-    horseNames: string[] = ['Annabel', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Onix', 'Sugarbolt', 'Colby',
-        'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
-        'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand',
-        'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo'];
-
-    colors: string[] = [
-        /*Reds and yellows:*/ '#ff0000', '#ff00ff', '#FA8072', '#800000', '#800080', '#ff6600', '#8B0000',
-       /* Yellows */ '#f7cda8', '#EDDA74', '#c5c54f', '#FBB117', '#C2B280', '#C58917',
-        /*Greens */ '#00ff00', '#aaaa00', '#808000', '#00dddd', '#556B2F', '#6B8E23',
-        /* Blues */  '#000080',
-        /* Grey and Brown */ '#000000', '#999999', '#966F33', '#6F4E37', '#7F5217'];
 
     static TRAIN_SPEED: number = 1;
     static TRAIN_STAMINA: number = 2;
@@ -42,12 +30,12 @@ export class CommonService {
         this.initRaces();
         this.loading = false;
 
-        let savedGameString: string = Cookies.get( 'gamev1' );
+        let savedGameString: string = Cookies.get( StaticData.saveGameName);
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, 'The McCoys', '#0077ee', 5000 );
+        let playerOne = new Player( 1, '', '#0077ee', 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
 
     }
@@ -90,8 +78,6 @@ export class CommonService {
 
         horse = new Horse( 5, 'Samuel Titanium', 50, 55, 3 );
         this.horsesInShop.push( horse );
-
-        this.nextHorseID = 5;
     }
 
     initRaces(): void {
@@ -140,13 +126,13 @@ export class CommonService {
     }
 
     saveGame(): void {
-        Cookies.set( 'gamev1', this.gameInstance, { expires: 7 } );
+        Cookies.set( StaticData.saveGameName, this.gameInstance, { expires: 7 } );
     }
 
     addHorseToPlayer( horse: Horse ): boolean {
         if ( this.gameInstance.playerOne.money >= horse.price ) {
             this.gameInstance.playerOne.money -= horse.price;
-            let newHorse = new Horse( this.nextHorseID++, horse.name, horse.speed, horse.stamina, horse.form );
+            let newHorse = new Horse( horse.id, horse.name, horse.speed, horse.stamina, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push( newHorse );
@@ -164,11 +150,11 @@ export class CommonService {
     }
 
     createRandomColor(): string {
-        return this.colors[Utils.getRandomInt( 0, this.colors.length - 1 )];
+        return StaticData.colors[Utils.getRandomInt( 0, StaticData.colors.length - 1 )];
     }
 
     createRandomHorse( num: number, difficulty: number ): Horse {
-        let name: string = this.horseNames[Utils.getRandomInt( 0, this.horseNames.length - 1 )];
+        let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
         return new Horse( 1000 + num, name, ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ), ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ), Horse.AVG_FORM );
     }
 

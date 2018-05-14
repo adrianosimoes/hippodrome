@@ -6,6 +6,9 @@ import { CommonService } from './common.service';
 import { Player } from './player';
 import { Utils } from './utils';
 
+declare var $: any;
+
+
 export class RaceInstance {
     commonService: CommonService;
     baseRace: Race;
@@ -22,6 +25,7 @@ export class RaceInstance {
     place: number;
     wonPrize: number = 0;
     canceled: boolean = false;
+    cssMaxDistance: number;
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
         this.baseRace = race;
@@ -44,6 +48,8 @@ export class RaceInstance {
         for ( let i = 0; i < this.horses.length; i++ ) {
             this.horses[i].track = i + 1;
         }
+
+        this.cssMaxDistance = this.baseRace.distance + 40;
     }
 
     addHorse( horse: HorseInRace ): void {
@@ -55,13 +61,13 @@ export class RaceInstance {
 
         this.preRace = false;
         this.raceTimer = 0;
-        
-        /* Order by speed on live tracking: */ 
+
+        /* Order by speed on live tracking: */
         Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.speed - h1.speed );
         this.raceStart = new Date();
         this.commonService.chargeEntranceFee( this.baseRace );
         setTimeout(() => { this.updateRace() }, 100 );
-        
+
     }
 
     updateRace(): void {
@@ -72,15 +78,17 @@ export class RaceInstance {
         }
 
         //Update movement:
+
+
         for ( let i = 0; i < this.horses.length; i++ ) {
-            if ( this.raceView.isFinished( this.horses[i] ) ) {
+            if ( this.horses[i].cssLeft >= this.cssMaxDistance ) {
                 continue;
             } else {
                 allFinished = false;
             }
 
             let step: number = this.getMovementStep( this.horses[i] );
-            this.raceView.moveHorse( this.horses[i], step );
+            this.horses[i].cssLeft += step;
 
             this.horses[i].distanceDone += step;
             if ( this.horses[i].distanceDone > this.baseRace.distance ) {
@@ -92,8 +100,6 @@ export class RaceInstance {
         Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.distanceDone - h1.distanceDone );
 
         this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
-
-
 
         if ( allFinished ) {
             this.finishRace();
@@ -108,12 +114,12 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let step = Utils.getRandomInt( 0, horse.speed - 1);
+        let step = Utils.getRandomInt( 0, horse.speed - 1 );
         //If speed is bigger than 80%, reduce stamina:
         if ( step >= horse.speed * 0.90 ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
-                if(horse.speed > (this.baseRace.difficulty * 5) + 1){
+                if ( horse.speed > ( this.baseRace.difficulty * 5 ) + 1 ) {
                     horse.speed--;
                 }
                 horse.tempStamina = horse.fullStamina;
@@ -136,7 +142,7 @@ export class RaceInstance {
 
     finishRace(): void {
         this.raceFinished = true;
-        
+
         this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
         if ( this.baseRace.prizes.length >= this.place ) {

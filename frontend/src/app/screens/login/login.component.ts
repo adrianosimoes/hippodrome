@@ -24,6 +24,9 @@ export class LoginComponent implements OnInit {
     }
 
     saveForm(): void {
+        if(this.player.name==''){
+            this.player.name = 'The McCoys';
+        }
         this.router.navigate( ['shop'] );
         this.commonService.setInitialized();
     }
