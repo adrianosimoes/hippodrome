@@ -14,10 +14,12 @@ import { Player } from '../../model/player';
 export class HorseComponent implements OnInit {
     @Input() horse: Horse;
     @Input() page: string;
+    public commonService: CommonService;
 
-    constructor( private router: Router, private commonService: CommonService ) { }
+    constructor( private router: Router, private commService: CommonService ) { }
 
     ngOnInit() {
+        this.commonService= this.commService;
     }
 
     buyHorse(): void {
