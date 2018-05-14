@@ -83,7 +83,7 @@ export class CommonService {
     }
 
     initRaces(): void {
-        let race = new Race( 1, 2, 'Anglesey', 500, '#338833', 100, 6, [1000, 450, 200] );
+        let race = new Race( 1, 2, 'Anglesey', 450, '#338833', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
         race = new Race( 2, 2, 'Hurst Park', 600, '#626f3d', 100, 6, [1000, 450, 200] );
