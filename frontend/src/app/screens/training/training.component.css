@@ -2,6 +2,10 @@
 	display: block;
 }
 
+.trainersContainer{
+	clear: both;
+}
+
 .pickHorse{
 	width: 190px;
 }
@@ -11,6 +15,11 @@
 }
  .buttonArea button:last-child {
  	margin-bottom: 0px;
+ }
+ 
+ .description {
+ 	padding: 10px;
+ 	width: 183px;
  }
 
 

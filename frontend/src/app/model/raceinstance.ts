@@ -77,19 +77,19 @@ export class RaceInstance {
         }
 
         //Update movement:
-        for ( let i = 0; i < this.horses.length; i++ ) {
-            if ( this.horses[i].cssLeft >= this.cssMaxDistance ) {
+        for ( let currHorse of this.horses) {
+            if ( currHorse.cssLeft >= this.cssMaxDistance ) {
                 continue;
             } else {
                 allFinished = false;
             }
 
-            let step: number = this.getMovementStep( this.horses[i] );
-            this.horses[i].cssLeft += step;
+            let step: number = this.getMovementStep(currHorse );
+            currHorse.cssLeft += step;
 
-            this.horses[i].distanceDone += step;
-            if ( this.horses[i].distanceDone > this.baseRace.distance ) {
-                this.horses[i].distanceDone = this.baseRace.distance;
+            currHorse.distanceDone += step;
+            if ( currHorse.distanceDone > this.baseRace.distance ) {
+                currHorse.distanceDone = this.baseRace.distance;
             }
 
         }

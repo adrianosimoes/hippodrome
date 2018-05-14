@@ -5,6 +5,8 @@ import { Utils, StaticData } from './utils';
 import { Player } from './player';
 import { Horse, TrainingHorse } from './horse';
 import { Race } from './race';
+import { Trainer } from './trainer';
+
 
 declare var Cookies: any;
 declare var JSON: any;
@@ -86,7 +88,7 @@ export class CommonService {
 
         race = new Race( 2, 2, 'Hurst Park', 600, '#626f3d', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
-        
+
         race = new Race( 3, 2, 'Alexandra Park', 750, '#eef4be', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
@@ -125,7 +127,20 @@ export class CommonService {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
             currHorse.calculateForm();
         }
+        this.applyTrainers();
         this.saveGame();
+    }
+
+    applyTrainers(): void {
+        let selectedHorse: Horse = this.getSelectedHorse();
+        for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
+            let trainStep = 1 / currTrainer.speed;
+            if ( currTrainer.trainType == CommonService.TRAIN_SPEED ) {
+                selectedHorse.speed += trainStep;
+            } else {
+                selectedHorse.stamina += trainStep;
+            }
+        }
     }
 
     saveGame(): void {
@@ -152,9 +167,9 @@ export class CommonService {
     }
 
     getSelectedHorse(): Horse {
-        for ( let i = 0; i < this.gameInstance.playerOne.horses.length; i++ ) {
-            if ( this.gameInstance.playerOne.horses[i].id === this.gameInstance.playerOne.selectedHorseId ) {
-                return this.gameInstance.playerOne.horses[i];
+        for ( let currHorse of this.gameInstance.playerOne.horses ) {
+            if ( currHorse.id === this.gameInstance.playerOne.selectedHorseId ) {
+                return currHorse;
             }
         }
 
@@ -186,11 +201,21 @@ export class CommonService {
         this.gameInstance.initialized = true;
     }
 
-    trainHorse( player: Player, horse: TrainingHorse, trainType: number ): boolean {
+    buyHorseSkill( player: Player, horse: TrainingHorse, trainType: number ): boolean {
         let price: number = trainType == CommonService.TRAIN_SPEED ? horse.trainSpeedPrice : horse.trainStaminaPrice;
         if ( player.money >= price ) {
             player.money -= price;
             trainType == CommonService.TRAIN_SPEED ? horse.baseHorse.speed++ : horse.baseHorse.stamina++;
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    buyTrainer( player: Player, trainer: Trainer ) {
+        if ( player.money >= trainer.price ) {
+            player.money -= trainer.price;
+            this.gameInstance.playerOne.trainers.push( trainer );
             return true;
         } else {
             return false;

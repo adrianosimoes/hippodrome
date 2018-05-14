@@ -6,31 +6,31 @@ import { Player } from '../../model/player';
 
 
 
-@Component({
+@Component( {
     selector: 'horse',
     templateUrl: './horse.component.html',
     styleUrls: ['./horse.component.css']
-})
+} )
 export class HorseComponent implements OnInit {
     @Input() horse: Horse;
     @Input() page: string;
 
-    constructor(private router: Router, private commonService: CommonService) { }
+    constructor( private router: Router, private commonService: CommonService ) { }
 
     ngOnInit() {
     }
 
     buyHorse(): void {
-        let success = this.commonService.addHorseToPlayer(this.horse);
-        if (success) {
-            this.router.navigate(['main']);
+        let success = this.commonService.addHorseToPlayer( this.horse );
+        if ( success ) {
+            this.router.navigate( ['main'] );
         } else {
-            alert('Not enough money');
+            alert( 'Not enough money' );
         }
     }
-    
+
     selectHorse(): void {
-        this.commonService.selectHorse(this.horse);
+        this.commonService.selectHorse( this.horse );
     }
-    
+
 }

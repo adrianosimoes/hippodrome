@@ -13,7 +13,7 @@
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses">
 						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} (Speed: {{currHorse.baseHorse.speed}}; Stamina: {{currHorse.baseHorse.stamina}})</div>
+						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} (Speed: {{currHorse.baseHorse.speed | number:'2.0-1' }}; Stamina: {{currHorse.baseHorse.stamina | number:'2.0-1'}})</div>
 					</span>
 				</div>
 		</div>

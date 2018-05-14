@@ -1,4 +1,5 @@
 import { Horse } from './horse';
+import { Trainer } from './trainer';
 
 export class Player {
     id: number;
@@ -12,6 +13,7 @@ export class Player {
     money: number;
     victories: number;
     totalRaces: number;
+    trainers: Trainer[];
 
     constructor( id: number, name: string, color: string, money: number) {
         this.id = id;
@@ -24,7 +26,7 @@ export class Player {
         this.money = money;
         this.victories = 0;
         this.totalRaces = 0;
-        
+        this.trainers= [];
     }
 
 }
