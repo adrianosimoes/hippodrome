@@ -1,7 +1,8 @@
-<div class="pickHorse" [style.float]="horse.owned ? 'none' : 'left' "><div class="title">{{horse.name}}</div>
+<div class="pickHorse" [style.float]="horse.owned ? 'none' : 'left' " [style.borderColor]="page=='mainMenu' && horse.id == commonService.gameInstance.playerOne.selectedHorseId ? '#0000ff' : '#ccc'"><div class="title">{{horse.name}}</div>
 		Speed: {{horse.speed}}<br/>
 		Stamina: {{horse.stamina}}<br />
 		<span *ngIf="horse.owned">	Form: {{horse.form | formstring}}<br/></span>
 		<span class="price" *ngIf="!horse.owned">Price: {{horse.price | currency: 'EUR'}}<br /></span> 
 		<div class="buttonArea"><button  *ngIf="!horse.owned" (click)="buyHorse()" >Buy</button></div>
+		<div class="buttonArea"><button  *ngIf="page=='mainMenu' && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()" >Select</button></div>
 </div>

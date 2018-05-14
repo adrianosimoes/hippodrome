@@ -32,7 +32,7 @@ export class RaceInstance {
         this.raceView = raceView;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
-        this.playerHorse = new HorseInRace( this.player.horses[0], this.player.color );
+        this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color );
         this.horses = [];
         this.horses.push( this.playerHorse );
 
@@ -58,7 +58,6 @@ export class RaceInstance {
 
     startRace(): void {
 
-
         this.preRace = false;
         this.raceTimer = 0;
 
@@ -78,8 +77,6 @@ export class RaceInstance {
         }
 
         //Update movement:
-
-
         for ( let i = 0; i < this.horses.length; i++ ) {
             if ( this.horses[i].cssLeft >= this.cssMaxDistance ) {
                 continue;
@@ -107,10 +104,6 @@ export class RaceInstance {
         }
         setTimeout(() => { this.updateRace() }, Utils.devMode() ? 1 : 15 );
     }
-
-    /*getMovementStep(horse : HorseInRace) : number {
-        return Utils.getRandomInt(0,  horse.speed /4);
-    }*/
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {

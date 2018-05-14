@@ -136,9 +136,23 @@ button {
 	color: #222;
 }
 
+button.race{
+	background-color: #00ca00;
+	color: #222 !important;	
+}
+
+button.skip{
+	background-color: #000 !important;
+	color: #ddd;
+}
+
 .buttonArea{
 	margin-top: 10px;
 	margin-bottom: 10px;
 	display: flex;
   	justify-content: center;
+}
+
+.mainContainer .pickHorse {
+	height: 140px;
 }

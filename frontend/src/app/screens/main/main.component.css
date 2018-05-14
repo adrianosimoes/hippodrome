@@ -6,45 +6,53 @@
 }
 
 .horseView{
-	width: 250px;
+	width: 340px;
 	float: left;
 	margin-left: 10px;
 	border-right: 1px solid #aaa;
 }
 
 .playerView {
-	width: 250px;
+	width: 175px;
 	float: left;
 	margin-left: 10px;
 	border-right: 1px solid #aaa;
 	clear: both;
 }
 
-.coatOfArms{
-	margin-bottom: 15px;
+horse {
+	float: left;
+	
+}
+
+.coatOfArms {
+	margin: 10px;
+	width: 130px;
+}
+
+.silkContainer{
+	transform: scale(0.5);
+	margin-top: -20px;
+	margin-left: -10px;
+	margin-bottom: 40px;
+	width: 100px;
+	height: 100px;
 }
 
 .nextArea {
 	float: left;
-	width: 190px;
+	width: 180px;
 	margin-left: 10px;
 }
 
 .mainButtonArea button{
 	margin-bottom: 20px;
-	width: 120px;
+	width: 125px;
 }
 
 button{
 	padding: 5px 20px 5px 20px;
-	background-color: #000;
 	color: #ddd;
-}
-
-button.race{
-	background-color: #00ca00;
-	color: #222;
-	
 }
 
 button.training{
@@ -58,6 +66,7 @@ button.exhibition{
 	color: #ddd;
 	
 }
+
 
 .buttonWarning{
 	margin-bottom: 20px;

@@ -30,12 +30,12 @@ export class CommonService {
         this.initRaces();
         this.loading = false;
 
-        let savedGameString: string = Cookies.get( StaticData.saveGameName);
+        let savedGameString: string = Cookies.get( StaticData.saveGameName );
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, '', '#0077ee', 5000 );
+        let playerOne = new Player( 1, '', '#0077ee', Utils.devMode() ? 20000 : 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
 
     }
@@ -58,36 +58,39 @@ export class CommonService {
 
     initHorsesInShop(): void {
         //Initialize Horses in Shop:
-        let horse = new Horse( 1, 'Tom Bolt', 12, 16, 3 );
+        let horse = new Horse( 101, 'Tom Bolt', 12, 16, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 2, 'Bruce Steel', 11, 17, 3 );
+        horse = new Horse( 102, 'Bruce Steel', 11, 17, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 3, 'Sandra Flash', 15, 13, 3 );
+        horse = new Horse( 103, 'Sandra Flash', 15, 13, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 4, 'Jack Diamond', 14, 18, 3 );
+        horse = new Horse( 104, 'Jack Diamond', 14, 18, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 4, 'Scarlett King', 18, 26, 3 );
+        horse = new Horse( 105, 'Scarlett King', 18, 26, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 5, 'Brad Dynamite', 25, 40, 3 );
+        horse = new Horse( 106, 'Brad Dynamite', 25, 40, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 5, 'Samuel Titanium', 50, 55, 3 );
+        horse = new Horse( 107, 'Samuel Titanium', 50, 55, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
     }
 
     initRaces(): void {
-        let race = new Race( 1, 2, 'Hurst Park Racecourse', 500, '#338833', 100, 6, [1000, 450, 200] );
+        let race = new Race( 1, 2, 'Anglesey', 500, '#338833', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
-        race = new Race( 2, 2, 'Shirley Racecourse', 600, '#626f3d', 100, 6, [1000, 450, 200] );
+        race = new Race( 2, 2, 'Hurst Park', 600, '#626f3d', 100, 6, [1000, 450, 200] );
+        this.races[race.id] = race;
+        
+        race = new Race( 2, 3, 'Alexandra Park', 750, '#eef4be', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
-        race = new Race( 3, 3, 'Level 2 Racecourse', 700, '#626f3d', 200, 6, [2000, 900, 400] );
+        race = new Race( 3, 3, 'Wrexham', 700, '#626f3d', 200, 6, [2000, 900, 400] );
         this.races[race.id] = race;
     };
 
@@ -107,8 +110,8 @@ export class CommonService {
         this.loading = true;
         this.gameInstance.playerOne.money += 50;
         this.nextDay();
-        this.loadingText = "You participated in a exhibition and earned 50 €. \n Waiting 7 seconds."
-        setTimeout(() => { this.loading = false; this.loadingText = ""; }, 7000 );
+        this.loadingText = "You participated in a exhibition and earned 50 €. \n Waiting 5 seconds."
+        setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
 
     nextDay(): void {
@@ -119,8 +122,8 @@ export class CommonService {
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
-        for ( let currHorse in this.gameInstance.playerOne.horses ) {
-            this.gameInstance.playerOne.horses[0].calculateForm();
+        for ( let currHorse of this.gameInstance.playerOne.horses ) {
+            currHorse.calculateForm();
         }
         this.saveGame();
     }
@@ -132,13 +135,30 @@ export class CommonService {
     addHorseToPlayer( horse: Horse ): boolean {
         if ( this.gameInstance.playerOne.money >= horse.price ) {
             this.gameInstance.playerOne.money -= horse.price;
-            let newHorse = new Horse( horse.id, horse.name, horse.speed, horse.stamina, horse.form );
+            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name, horse.speed, horse.stamina, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push( newHorse );
+            if ( this.gameInstance.playerOne.horses.length == 1 ) {
+                this.gameInstance.playerOne.selectedHorseId = newHorse.id;
+            }
             return true;
         }
         return false;
+    }
+
+    selectHorse( horse: Horse ): void {
+        this.gameInstance.playerOne.selectedHorseId = horse.id;
+    }
+
+    getSelectedHorse(): Horse {
+        for ( let i = 0; i < this.gameInstance.playerOne.horses.length; i++ ) {
+            if ( this.gameInstance.playerOne.horses[i].id === this.gameInstance.playerOne.selectedHorseId ) {
+                return this.gameInstance.playerOne.horses[i];
+            }
+        }
+
+        return null;
     }
 
     getRaces(): IterableIterator<Race> {

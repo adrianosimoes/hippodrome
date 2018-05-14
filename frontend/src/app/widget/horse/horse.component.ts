@@ -13,6 +13,7 @@ import { Player } from '../../model/player';
 })
 export class HorseComponent implements OnInit {
     @Input() horse: Horse;
+    @Input() page: string;
 
     constructor(private router: Router, private commonService: CommonService) { }
 
@@ -26,6 +27,10 @@ export class HorseComponent implements OnInit {
         } else {
             alert('Not enough money');
         }
+    }
+    
+    selectHorse(): void {
+        this.commonService.selectHorse(this.horse);
     }
     
 }

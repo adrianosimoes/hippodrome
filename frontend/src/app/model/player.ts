@@ -8,6 +8,7 @@ export class Player {
     silkType: number;
     calculateBackground: string;
     horses: Horse[];
+    selectedHorseId: number;
     money: number;
     victories: number;
     totalRaces: number;

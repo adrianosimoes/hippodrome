@@ -104,6 +104,10 @@
 	margin-left: 10px;
 }
 
+.buttonArea button{
+	margin-right: 40px;
+}
+
 .raceStadium{
 	margin: 0 auto;
 	margin-top: 20px;
