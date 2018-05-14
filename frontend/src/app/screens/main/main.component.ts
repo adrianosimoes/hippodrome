@@ -30,7 +30,7 @@ export class MainComponent implements OnInit {
     }
 
     gotoRace(): void {
-        this.router.navigate( ['race', Utils.getRandomInt( 1, 2 )] );
+        this.router.navigate( ['race', Utils.getRandomInt( 1, 3 )] );
     }
 
     gotoTraining(): void {

@@ -87,10 +87,10 @@ export class CommonService {
         race = new Race( 2, 2, 'Hurst Park', 600, '#626f3d', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
         
-        race = new Race( 2, 3, 'Alexandra Park', 750, '#eef4be', 100, 6, [1000, 450, 200] );
+        race = new Race( 3, 2, 'Alexandra Park', 750, '#eef4be', 100, 6, [1000, 450, 200] );
         this.races[race.id] = race;
 
-        race = new Race( 3, 3, 'Wrexham', 700, '#626f3d', 200, 6, [2000, 900, 400] );
+        race = new Race( 4, 3, 'Wrexham', 700, '#626f3d', 200, 6, [2000, 900, 400] );
         this.races[race.id] = race;
     };
 
