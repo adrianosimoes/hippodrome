@@ -29,8 +29,8 @@ export class MainComponent implements OnInit {
         this.currGame = this.commonService.getGameInstance();
     }
 
-    gotoRace(): void {
-        this.router.navigate( ['race', Utils.getRandomInt( 1, 3 )] );
+    pickRace(): void {
+        this.router.navigate( ['pickRace'] );
     }
 
     gotoTraining(): void {

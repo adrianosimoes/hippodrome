@@ -19,7 +19,7 @@
 }
 
 .label, .value{
-	width: 120px;
+	width: 105px;
 	float: left;
 	height: 20px;
 	border: 1px solid #000;
@@ -112,7 +112,6 @@
 	margin: 0 auto;
 	margin-top: 20px;
 	margin-bottom: 20px;
-	height:150px;
 	padding-top:20px;
 	padding-bottom:20px;
 	color: #fff;
@@ -188,3 +187,13 @@
 	padding: 10px;
 	margin-bottom: 10px;
 }
+
+.raceStadium .specialCongrats{
+	margin-left: 20px;
+	font-size: 62px;
+	animation: blinker 0.6s cubic-bezier(1, 0, 0, 0) infinite alternate;  
+	color: #f2d732;
+}
+
+@keyframes blinker { to { opacity: 0; } }
+

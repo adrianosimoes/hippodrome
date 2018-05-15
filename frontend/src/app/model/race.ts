@@ -20,5 +20,21 @@ export class Race {
     }
 }
 
+export class RaceLeague {
+    difficulty: number;
+    name: string;
+    races: Race[]
+    
+    constructor( difficulty: number, name: string){
+        this.difficulty = difficulty;
+        this.name = name;
+        this.races = [];
+    }
+
+    addRace(race: Race) : void {
+        this.races.push(race);
+    }
+}
+
 
 

@@ -4,7 +4,7 @@ import { GameInstance } from './gameinstance';
 import { Utils, StaticData } from './utils';
 import { Player } from './player';
 import { Horse, TrainingHorse } from './horse';
-import { Race } from './race';
+import { Race, RaceLeague } from './race';
 import { Trainer } from './trainer';
 
 
@@ -17,7 +17,7 @@ declare var JSON: any;
 export class CommonService {
 
     horsesInShop: Horse[] = [];
-    races = new Map<number, Race>();
+    racesLeagues: RaceLeague[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
 
@@ -83,17 +83,36 @@ export class CommonService {
     }
 
     initRaces(): void {
-        let race = new Race( 1, 2, 'Anglesey', 450, '#338833', 100, 6, [1000, 450, 200] );
-        this.races[race.id] = race;
+        this.racesLeagues = [];
 
-        race = new Race( 2, 2, 'Hurst Park', 600, '#626f3d', 100, 6, [1000, 450, 200] );
-        this.races[race.id] = race;
+        let raceLeague = new RaceLeague( 2, "Ungraded" );
+        this.racesLeagues.push( raceLeague );
 
-        race = new Race( 3, 2, 'Alexandra Park', 750, '#eef4be', 100, 6, [1000, 450, 200] );
-        this.races[race.id] = race;
+        raceLeague.addRace( new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( 2, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 650, '#eef4be', 100, 6, [1000, 450, 200] ) );
 
-        race = new Race( 4, 3, 'Wrexham', 700, '#626f3d', 200, 6, [2000, 900, 400] );
-        this.races[race.id] = race;
+        raceLeague = new RaceLeague( 3, "Group 3" );
+        this.racesLeagues.push( raceLeague );
+
+        raceLeague.addRace( new Race( 4, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
+        raceLeague.addRace( new Race( 5, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
+        raceLeague.addRace( new Race( 6, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
+
+        raceLeague = new RaceLeague( 5, "Group 2" );
+        this.racesLeagues.push( raceLeague );
+
+        raceLeague.addRace( new Race( 7, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
+        raceLeague.addRace( new Race( 8, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
+        raceLeague.addRace( new Race( 9, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
+
+        raceLeague = new RaceLeague( 9, "World Cup" );
+        this.racesLeagues.push( raceLeague );
+
+        raceLeague.addRace( new Race( 10, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
+        raceLeague.addRace( new Race( 11, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
+        raceLeague.addRace( new Race( 12, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
+
     };
 
     getHorsesInShop(): Horse[] {
@@ -176,12 +195,15 @@ export class CommonService {
         return null;
     }
 
-    getRaces(): IterableIterator<Race> {
-        return this.races.values();
-    }
-
     getRace( raceId: number ): Race {
-        return this.races[raceId];
+        for ( let raceLeague of this.racesLeagues ) {
+            for ( let race of raceLeague.races ) {
+                if ( race.id == raceId ) {
+                    return race;
+                }
+            }
+        }
+        return null;
     }
 
     createRandomColor(): string {

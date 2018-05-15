@@ -1,0 +1,32 @@
+.raceLeague{
+	margin: 15px;
+	padding: 10px;
+	float: left;
+	border: 3px solid #ffffff;
+	width: 180px;
+}
+
+.raceLeague div {
+	margin-bottom: 5px;
+}
+
+h4 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+.level3{
+	border-color: #dfb667; 
+}
+
+.level5{
+	border-color: #a0a0a0;
+}
+
+.level9{
+	border-color: #f2d732;
+}
+
+button {
+	margin-top: 10px;
+}

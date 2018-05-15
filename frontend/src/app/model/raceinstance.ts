@@ -26,6 +26,7 @@ export class RaceInstance {
     wonPrize: number = 0;
     canceled: boolean = false;
     cssMaxDistance: number;
+    worldChampion: boolean = false;
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
         this.baseRace = race;
@@ -109,7 +110,8 @@ export class RaceInstance {
     getMovementStep( horse: HorseInRace ): number {
         let step = Utils.getRandomInt( 0, horse.speed - 1 );
         //If speed is bigger than 80%, reduce stamina:
-        if ( step >= horse.speed * 0.90 ) {
+        let speedReduction = horse.speed >= 20 ? 0.8 : 0.9
+        if ( step >= horse.speed * speedReduction ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
                 if ( horse.speed > ( this.baseRace.difficulty * 5 ) + 1 ) {
@@ -134,8 +136,6 @@ export class RaceInstance {
     }
 
     finishRace(): void {
-        this.raceFinished = true;
-
         this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
         if ( this.baseRace.prizes.length >= this.place ) {
@@ -143,8 +143,12 @@ export class RaceInstance {
             this.player.money += this.wonPrize;
             if ( this.place == 1 ) {
                 this.player.victories++;
+                if(this.baseRace.difficulty == 9){
+                    this.worldChampion = true;
+                }
             }
         }
+        this.raceFinished = true;
     }
 
     cancel(): void {

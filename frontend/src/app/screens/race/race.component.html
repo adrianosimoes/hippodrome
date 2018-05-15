@@ -4,10 +4,10 @@
 	<div class="margintop" *ngIf="currRace.preRace">
 		<div class="props">
 			<div class="label">Distance:</div><div class="value">{{currRace.baseRace.distance/100}} Furlongs</div>
-			<div class="label">Entrace fee:</div><div class="value">{{currRace.baseRace.entranceFee | currency: 'EUR' }}</div>
+			<div class="label">Entrace fee:</div><div class="value">{{currRace.baseRace.entranceFee | currency: 'EUR' : 'symbol':'1.0-0' }}</div>
 			<div class="label">Prizes:</div>
 					<div class="prizes value" *ngFor="let currPrize of currRace.baseRace.prizes; index as i" [attr.data-index]="i">
-						<div class="prizeValue"> <div class="coinCircle prize{{i+1}}">{{i+1}}</div> &nbsp; {{currPrize | currency: 'EUR'}}</div>
+						<div class="prizeValue"> <div class="coinCircle prize{{i+1}}">{{i+1}}</div> &nbsp; {{currPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</div>
 					</div>
 			<div class="label horsesLabel">Horses:</div>
 				<div class="horsesContainer">
@@ -25,7 +25,7 @@
 	<div class="margintop" *ngIf="!currRace.preRace">
 		Race Time: {{currRace.raceTimer | number:'2.1-1'}}
 		<div class="raceStadium" [ngStyle]="{'width.px': currRace.baseRace.distance + 80}" [style.backgroundColor]="currRace.baseRace.color" >
-			
+			<div class="specialCongrats" *ngIf="currRace.worldChampion">WORLD CHAMPION!</div>
 			<div class="silks">
 				<span *ngFor="let currHorse of currRace.horses">
 					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft"><div class="silk"  [style.backgroundColor]="currHorse.color"></div></div>
@@ -36,6 +36,7 @@
 					&nbsp;{{currHorse.track}}
 				</div>
 			</div>
+			<div class="clear"></div>
 		</div> 
 		<div class="liveClassification">
 			Live Classification:<br />
