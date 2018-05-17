@@ -17,9 +17,15 @@
  	margin-bottom: 0px;
  }
  
- .description {
- 	padding: 10px;
+ .desc {
+ 	padding: 6px;
  	width: 183px;
  }
+ 
+ .description {
+ margin-bottom: 5px;	
+ }
+ 
+
 
 

@@ -5,7 +5,7 @@ import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
 import { Horse, HorseInRace } from '../../model/horse';
 import { Race } from '../../model/race';
-import { RaceInstance } from '../../model/raceinstance';
+import { RaceInstance, RaceState } from '../../model/raceinstance';
 import { CommonService } from '../../model/common.service';
 
 @Component( {
@@ -18,6 +18,7 @@ export class RaceComponent implements OnInit {
     currRace: RaceInstance = null;
     maxDistance: number = null;
     debug : boolean = Utils.devMode();
+    RaceState : typeof RaceState = RaceState;
 
     constructor( private router: Router, private activeRoute: ActivatedRoute, private commonService: CommonService ) { }
 

@@ -177,15 +177,31 @@
 	float: left;
 }
 
+.comments {
+	float: left;
+	width: 350px;
+	height: 100px;
+	overflow-y: scroll;
+	border: 1px solid #444;
+	margin-bottom: 10px;
+	background-color: #fff;
+}
+
+.comment {
+	padding: 3px;
+}
+
 
 .endRace {
 	float: left;
-	margin-left: 20px;
 }
 
 .endRace div{
 	padding: 10px;
-	margin-bottom: 10px;
+}
+
+.endRace div:FIRST-CHILD{
+	padding-bottom: 0px;
 }
 
 .raceStadium .specialCongrats{

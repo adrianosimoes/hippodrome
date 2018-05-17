@@ -37,7 +37,7 @@ export class CommonService {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, '', '#0077ee', Utils.devMode() ? 20000 : 5000 );
+        let playerOne = new Player( 1, '', '#0077ee', Utils.devMode() ? 105000 : 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
 
     }
@@ -129,9 +129,9 @@ export class CommonService {
 
     exhibition(): void {
         this.loading = true;
-        this.gameInstance.playerOne.money += 50;
+        this.gameInstance.playerOne.money += 100;
         this.nextDay();
-        this.loadingText = "You participated in a exhibition and earned 50 €. \n Waiting 5 seconds."
+        this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
 
@@ -146,13 +146,15 @@ export class CommonService {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
             currHorse.calculateForm();
         }
-        this.applyTrainers();
+        this.applyTrainers(this.gameInstance.playerOne);
         this.saveGame();
     }
 
-    applyTrainers(): void {
+    applyTrainers(player: Player): void {
         let selectedHorse: Horse = this.getSelectedHorse();
         for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
+            //Pay salary:
+            player.money -= currTrainer.salary;
             let trainStep = 1 / currTrainer.speed;
             if ( currTrainer.trainType == CommonService.TRAIN_SPEED ) {
                 selectedHorse.speed += trainStep;
@@ -241,6 +243,14 @@ export class CommonService {
             return true;
         } else {
             return false;
+        }
+    }
+
+    sellTrainer( player: Player, trainer: Trainer ) {
+        var index = player.trainers.indexOf( trainer, 0 );
+        if ( index > -1 ) {
+            player.trainers.splice( index, 1 )
+            player.money += trainer.price / 2;
         }
     }
 

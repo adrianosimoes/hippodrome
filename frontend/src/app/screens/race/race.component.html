@@ -1,7 +1,7 @@
 <div id="race"  class="screen" [ngStyle]="{'min-width.px': currRace.baseRace.distance + 100}">
 <h3>{{currRace.baseRace.name}}</h3>
 
-	<div class="margintop" *ngIf="currRace.preRace">
+	<div class="margintop" *ngIf="currRace.state === RaceState.PreRace">
 		<div class="props">
 			<div class="label">Distance:</div><div class="value">{{currRace.baseRace.distance/100}} Furlongs</div>
 			<div class="label">Entrace fee:</div><div class="value">{{currRace.baseRace.entranceFee | currency: 'EUR' : 'symbol':'1.0-0' }}</div>
@@ -13,16 +13,16 @@
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses">
 						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} (Speed: {{currHorse.baseHorse.speed | number:'2.0-1' }}; Stamina: {{currHorse.baseHorse.stamina | number:'2.0-1'}})</div>
+						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.baseHorse.name}} (Speed: {{currHorse.baseHorse.speed | number:'2.0-1' }}; Stamina: {{currHorse.baseHorse.stamina | number:'2.0-1'}})</div>
 					</span>
 				</div>
 		</div>
-		<div class="buttonArea"><button [class.disabled]="currRace.player.money < currRace.baseRace.entranceFee"  [disabled]="currRace.player.money < currRace.baseRace.entranceFee" class="race" (click)="startRace()">Start Race</button>
-		<span *ngIf="currRace.player.money < currRace.baseRace.entranceFee">Not enough money to pay entrance fee.</span>
+		<div class="buttonArea"><button [class.disabled]="!(currRace.player.money >= currRace.baseRace.entranceFee)"  [disabled]="!(currRace.player.money >= currRace.baseRace.entranceFee)" class="race" (click)="startRace()">Start Race</button>
+		<span *ngIf="!(currRace.player.money >= currRace.baseRace.entranceFee)">Not enough money to pay entrance fee.</span>
 		<button (click)="exitRace()" class="skip">Skip Race</button>
 		</div> 		
 	</div>
-	<div class="margintop" *ngIf="!currRace.preRace">
+	<div class="margintop" *ngIf="currRace.state !== RaceState.PreRace">
 		Race Time: {{currRace.raceTimer | number:'2.1-1'}}
 		<div class="raceStadium" [ngStyle]="{'width.px': currRace.baseRace.distance + 80}" [style.backgroundColor]="currRace.baseRace.color" >
 			<div class="specialCongrats" *ngIf="currRace.worldChampion">WORLD CHAMPION!</div>
@@ -42,10 +42,13 @@
 			Live Classification:<br />
 			<div class="participants" *ngFor="let currHorse of currRace.sortedHorses">
 				<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-				<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.fullStamina}}</span></div>
+				<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.baseHorse.name}} <span *ngIf="debug"> {{currHorse.speed}}, {{currHorse.fullStamina}}</span></div>
 			</div>
 		</div>
-		<div *ngIf="currRace.raceFinished" class="endRace">
+		<div class="comments">
+			<div class="comment" *ngFor="let currComment of currRace.comments.reverse()">{{currComment}}</div>
+		</div>
+		<div *ngIf="currRace.state === RaceState.RaceFinished" class="endRace">
 			<div>You finished in place: {{currRace.place}}</div>
 			<div *ngIf="currRace.wonPrize > 0">Congratulations! You won {{currRace.wonPrize | currency: 'EUR'}}</div>
 			<button (click)="exitRace()">Continue</button>

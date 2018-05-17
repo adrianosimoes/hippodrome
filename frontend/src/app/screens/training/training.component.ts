@@ -25,11 +25,11 @@ export class TrainingComponent implements OnInit {
         this.reload();
         this.trainersToSell = [];
 
-        let currTrainer = new Trainer( 1, "Speed Trainer", 5000, CommonService.TRAIN_SPEED, 10,
+        let currTrainer = new Trainer( 1, "Speed Trainer", 7500, 100, CommonService.TRAIN_SPEED, 10,
             "Trains the speed every day for the active horse. 1 speed up every 10 days." );
         this.trainersToSell.push( currTrainer );
 
-        currTrainer = new Trainer( 2, "Stamina Trainer", 2400, CommonService.TRAIN_STAMINA, 10,
+        currTrainer = new Trainer( 2, "Stamina Trainer", 3600, 45, CommonService.TRAIN_STAMINA, 10,
             "Trains the stamina every day for the active horse. 1 stamina up every 10 days." );
         this.trainersToSell.push( currTrainer );
     }
@@ -71,6 +71,12 @@ export class TrainingComponent implements OnInit {
         } else {
             alert( 'Not enough money' );
         }
+    }
+
+    sellTrainer( trainer: Trainer ): void {
+        this.commonService.sellTrainer( this.currPlayer, trainer );
+        this.commonService.nextDay();
+        this.reload();
     }
 
     mainScreen() {

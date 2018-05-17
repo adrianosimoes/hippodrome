@@ -8,6 +8,18 @@ import { Utils } from './utils';
 
 declare var $: any;
 
+var TICK_MILLISECONDS: number = 15;
+var COMMENT_EVERY_TICKS: number = 134;
+var FIRST_TICK_COMMENT = 67;
+
+
+export enum RaceState {
+    PreRace = 1,
+    Racing = 2,
+    WinnerFinished = 3,
+    WaitingFinish = 4,
+    RaceFinished = 5
+}
 
 export class RaceInstance {
     commonService: CommonService;
@@ -20,13 +32,16 @@ export class RaceInstance {
     numberOfHorses: number;
     raceStart: Date;
     raceTimer: number;
-    preRace: boolean = true;
-    raceFinished: boolean = false;
     place: number;
     wonPrize: number = 0;
     canceled: boolean = false;
     cssMaxDistance: number;
     worldChampion: boolean = false;
+    lastCommentHorses: HorseInRace[];
+    ticksSinceLastComment;
+    comments: string[];
+    state: RaceState;
+
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
         this.baseRace = race;
@@ -36,6 +51,10 @@ export class RaceInstance {
         this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color );
         this.horses = [];
         this.horses.push( this.playerHorse );
+        this.lastCommentHorses = [];
+        this.ticksSinceLastComment = 0;
+        this.comments = [];
+        this.state = RaceState.PreRace;
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), this.commonService.createRandomColor() );
@@ -59,15 +78,16 @@ export class RaceInstance {
 
     startRace(): void {
 
-        this.preRace = false;
+        this.state = RaceState.PreRace;
         this.raceTimer = 0;
 
         /* Order by speed on live tracking: */
         Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.speed - h1.speed );
-        this.raceStart = new Date();
-        this.commonService.chargeEntranceFee( this.baseRace );
-        setTimeout(() => { this.updateRace() }, 100 );
 
+        this.commonService.chargeEntranceFee( this.baseRace );
+        this.state = RaceState.Racing;
+        this.comments.push( "Read. Set." );
+        setTimeout(() => { this.raceStart = new Date(); this.comments[0] += " Go!"; this.updateRace(); }, 500 );
     }
 
     updateRace(): void {
@@ -78,32 +98,82 @@ export class RaceInstance {
         }
 
         //Update movement:
-        for ( let currHorse of this.horses) {
+        for ( let currHorse of this.horses ) {
             if ( currHorse.cssLeft >= this.cssMaxDistance ) {
                 continue;
             } else {
                 allFinished = false;
             }
 
-            let step: number = this.getMovementStep(currHorse );
+            let step: number = this.getMovementStep( currHorse );
             currHorse.cssLeft += step;
 
             currHorse.distanceDone += step;
             if ( currHorse.distanceDone > this.baseRace.distance ) {
+                this.state = RaceState.WinnerFinished;
                 currHorse.distanceDone = this.baseRace.distance;
             }
 
         }
 
+        this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
+
         Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.distanceDone - h1.distanceDone );
 
-        this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
+        this.updateComments();
 
         if ( allFinished ) {
             this.finishRace();
             return;
         }
-        setTimeout(() => { this.updateRace() }, Utils.devMode() ? 1 : 15 );
+        setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
+    }
+
+    updateComments(): void {
+        if ( this.state === RaceState.WinnerFinished ) {
+            if ( this.lastCommentHorses[0].track != this.sortedHorses[0].track ) {
+                this.addCommentIfNotRepeated( "Amazing! " + this.sortedHorses[0].baseHorse.name + " wins the race in the finish line." );
+            } else {
+                this.addCommentIfNotRepeated( "It's over. " + this.sortedHorses[0].baseHorse.name + " wins the race." );
+            }
+            this.state = RaceState.WaitingFinish;
+            return;
+        }
+
+        if ( this.state === RaceState.Racing ) {
+            if ( this.ticksSinceLastComment == FIRST_TICK_COMMENT ) {
+                if ( this.lastCommentHorses.length == 0 ) {
+                    this.comments.push( "In the first yards " + this.sortedHorses[0].baseHorse.name + " is in front." );
+                }
+
+                this.lastCommentHorses = [];
+                this.lastCommentHorses[0] = this.sortedHorses[0];
+            }
+
+            if ( this.ticksSinceLastComment > COMMENT_EVERY_TICKS && this.ticksSinceLastComment % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT) {
+                if ( this.lastCommentHorses[0].track == this.sortedHorses[0].track ) {
+                    this.addCommentIfNotRepeated(this.sortedHorses[0].baseHorse.name + " remains in the lead." );
+                } else {
+                    if ( this.comments.length >= 2 &&
+                        this.comments[this.comments.length - 2].indexOf( this.sortedHorses[0].baseHorse.name, 0 ) >= 0 ) {
+                        this.comments.push( "Here goes " + this.sortedHorses[0].baseHorse.name + ", he recovers the lead!" );
+                    } else {
+                        this.comments.push( this.sortedHorses[0].baseHorse.name + " takes the lead." );
+                    }
+                }
+
+                this.lastCommentHorses = [];
+                this.lastCommentHorses[0] = this.sortedHorses[0];
+            }
+
+            this.ticksSinceLastComment++;
+        }
+    }
+
+    addCommentIfNotRepeated( comment: string ) {
+        if ( this.comments[this.comments.length - 1] !== comment ) {
+            this.comments.push( comment );
+        }
     }
 
     /* With Stamina calculation */
@@ -143,12 +213,12 @@ export class RaceInstance {
             this.player.money += this.wonPrize;
             if ( this.place == 1 ) {
                 this.player.victories++;
-                if(this.baseRace.difficulty == 9){
+                if ( this.baseRace.difficulty == 9 ) {
                     this.worldChampion = true;
                 }
             }
         }
-        this.raceFinished = true;
+        this.state = RaceState.RaceFinished;
     }
 
     cancel(): void {

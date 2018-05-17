@@ -17,13 +17,20 @@
 	<div class="trainersContainer" ><h4>Your trainers</h4>
 		<div class="pickHorse" *ngFor="let currTrainer of currPlayer.trainers">
 				<div class="title">{{currTrainer.name}}</div>
-				<div class="description">{{currTrainer.description}}</div>
+				<div class="desc">
+					<div class="description">Salary: {{currTrainer.salary | currency: 'EUR'}} per day</div>
+					<div class="description">Skill up every {{currTrainer.speed}} days</div>
+				</div>
+				<button (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR'}})</button>
 			</div>
 		</div>
 	<div class="trainersContainer"><h4>Trainers to hire</h4>
 		<div class="pickHorse" *ngFor="let currTrainer of trainersToSell">
 			<div class="title">{{currTrainer.name}}</div>
-			<div class="description">{{currTrainer.description}}</div>
+			<div class="desc">
+				<div class="description">Salary: {{currTrainer.salary | currency: 'EUR'}} per day</div>
+				<div class="description">{{currTrainer.description}}</div>
+			</div>
 				<div class="buttonArea">
 				<button (click)="buyTrainer(currTrainer)">Buy trainer ({{currTrainer.price | currency: 'EUR'}})</button>
 				</div>
