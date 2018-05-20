@@ -28,7 +28,8 @@
 			<div class="specialCongrats" *ngIf="currRace.worldChampion">WORLD CHAMPION!</div>
 			<div class="silks">
 				<span *ngFor="let currHorse of currRace.horses">
-					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div> <div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft"><div class="silk"  [style.background]="currHorse.cssBackground"></div></div>
+					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div>
+					<div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft"><div class="silk"  [style.background]="currHorse.cssBackground"></div></div>
 				</span>
 			</div>
 			<div class="raceTrack">
@@ -46,7 +47,9 @@
 			</div>
 		</div>
 		<div class="comments">
-			<div class="comment" *ngFor="let currComment of currRace.comments.reverse()">{{currComment}}</div>
+			<div class="comment" *ngFor="let currComment of currRace.comments.reverse()" [style.background]="currComment.color" [style.color]="currComment.color == '#000000' ? '#ffffff' : '#000000'">
+				{{currComment.message}}
+			</div>
 		</div>
 		<div *ngIf="currRace.state === RaceState.RaceFinished" class="endRace">
 			<div>You finished in place: {{currRace.place}}</div>

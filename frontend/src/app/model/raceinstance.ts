@@ -39,7 +39,7 @@ export class RaceInstance {
     worldChampion: boolean = false;
     lastCommentHorses: HorseInRace[];
     ticksSinceLastComment;
-    comments: string[];
+    comments: Comment[];
     state: RaceState;
 
 
@@ -58,7 +58,7 @@ export class RaceInstance {
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let color: string = this.commonService.createRandomColor()
-            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), color, color);
+            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), color, color );
             this.addHorse( horse );
         }
 
@@ -87,8 +87,8 @@ export class RaceInstance {
 
         this.commonService.chargeEntranceFee( this.baseRace );
         this.state = RaceState.Racing;
-        this.comments.push( "Read. Set." );
-        setTimeout(() => { this.raceStart = new Date(); this.comments[0] += " Go!"; this.updateRace(); }, 500 );
+        this.comments.push( new Comment( "Read. Set.", "#ffffff") );
+        setTimeout(() => { this.raceStart = new Date(); this.comments[0].message += " Go!"; this.updateRace(); }, 500 );
     }
 
     updateRace(): void {
@@ -133,9 +133,13 @@ export class RaceInstance {
     updateComments(): void {
         if ( this.state === RaceState.WinnerFinished ) {
             if ( this.lastCommentHorses[0].track != this.sortedHorses[0].track ) {
-                this.addCommentIfNotRepeated( "Amazing! " + this.sortedHorses[0].baseHorse.name + " wins the race in the finish line." );
+                this.addCommentIfNotRepeated(
+                    new Comment( "Amazing! " + this.sortedHorses[0].baseHorse.name + " wins the race in the finish line.",
+                        this.sortedHorses[0].color ) );
             } else {
-                this.addCommentIfNotRepeated( "It's over. " + this.sortedHorses[0].baseHorse.name + " wins the race." );
+                this.addCommentIfNotRepeated(
+                    new Comment( "It's over. " + this.sortedHorses[0].baseHorse.name + " wins the race.",
+                        this.sortedHorses[0].color ) );
             }
             this.state = RaceState.WaitingFinish;
             return;
@@ -144,22 +148,30 @@ export class RaceInstance {
         if ( this.state === RaceState.Racing ) {
             if ( this.ticksSinceLastComment == FIRST_TICK_COMMENT ) {
                 if ( this.lastCommentHorses.length == 0 ) {
-                    this.comments.push( "In the first yards " + this.sortedHorses[0].baseHorse.name + " is in front." );
+                    this.comments.push(
+                        new Comment( "In the first yards " + this.sortedHorses[0].baseHorse.name + " is in front.",
+                            this.sortedHorses[0].color ) );
                 }
 
                 this.lastCommentHorses = [];
                 this.lastCommentHorses[0] = this.sortedHorses[0];
             }
 
-            if ( this.ticksSinceLastComment > COMMENT_EVERY_TICKS && this.ticksSinceLastComment % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT) {
+            if ( this.ticksSinceLastComment > COMMENT_EVERY_TICKS && this.ticksSinceLastComment % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT ) {
                 if ( this.lastCommentHorses[0].track == this.sortedHorses[0].track ) {
-                    this.addCommentIfNotRepeated(this.sortedHorses[0].baseHorse.name + " remains in the lead." );
+                    this.addCommentIfNotRepeated(
+                        new Comment( this.sortedHorses[0].baseHorse.name + " remains in the lead.",
+                            this.sortedHorses[0].color ) );
                 } else {
                     if ( this.comments.length >= 2 &&
-                        this.comments[this.comments.length - 2].indexOf( this.sortedHorses[0].baseHorse.name, 0 ) >= 0 ) {
-                        this.comments.push( "Here goes " + this.sortedHorses[0].baseHorse.name + ", he recovers the lead!" );
+                        this.comments[this.comments.length - 2].message.indexOf( this.sortedHorses[0].baseHorse.name, 0 ) >= 0 ) {
+                        this.comments.push(
+                            new Comment( "Here goes " + this.sortedHorses[0].baseHorse.name + ", he recovers the lead!",
+                                this.sortedHorses[0].color ) );
                     } else {
-                        this.comments.push( this.sortedHorses[0].baseHorse.name + " takes the lead." );
+                        this.comments.push(
+                            new Comment( this.sortedHorses[0].baseHorse.name + " takes the lead.",
+                                this.sortedHorses[0].color ) );
                     }
                 }
 
@@ -171,8 +183,8 @@ export class RaceInstance {
         }
     }
 
-    addCommentIfNotRepeated( comment: string ) {
-        if ( this.comments[this.comments.length - 1] !== comment ) {
+    addCommentIfNotRepeated( comment: Comment ) {
+        if ( this.comments[this.comments.length - 1].message !== comment.message ) {
             this.comments.push( comment );
         }
     }
@@ -224,5 +236,15 @@ export class RaceInstance {
 
     cancel(): void {
         this.canceled = true;
+    }
+}
+
+export class Comment {
+    message: string;
+    color: string;
+
+    constructor( message: string, color: string ) {
+        this.message = message;
+        this.color = color;
     }
 }

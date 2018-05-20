@@ -37,7 +37,7 @@ export class CommonService {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, '', '#0077ee', '#feda10', 0, Utils.devMode() ? 105000 : 5000 );
+        let playerOne = new Player( 1, '', '#1281f1', '#feda10', 0, Utils.devMode() ? 105000 : 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
     }
 

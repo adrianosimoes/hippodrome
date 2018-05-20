@@ -43,12 +43,13 @@ export class Player {
 
     static fromJson( player: any ): Player {
         let ret = new Player( player.id, player.name, player.color, player.secColor,
-            player.silkType ? player.silkType : 2, player.money );
+            player.silkType !== undefined ? player.silkType : 2, player.money );
         ret.victories = player.victories;
         ret.selectedHorseId = player.selectedHorseId;
         ret.horses = player.horses;
         ret.trainers = player.trainers;
         ret.totalRaces = player.totalRaces;
+        ret.recalculateBackground();
 
         return ret;
     }

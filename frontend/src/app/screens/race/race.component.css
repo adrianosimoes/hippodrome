@@ -175,6 +175,14 @@
 
 .liveClassification{
 	float: left;
+	background-color: #fff;
+	padding: 5px;
+	margin-right: 20px;
+	border: 1px solid #444;
+}
+
+.liveClassification .participants {
+	width: 200px;
 }
 
 .comments {
@@ -194,6 +202,7 @@
 
 .endRace {
 	float: left;
+	margin-left: 10px;
 }
 
 .endRace div{
