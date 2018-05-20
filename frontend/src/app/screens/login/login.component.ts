@@ -31,8 +31,18 @@ export class LoginComponent implements OnInit {
         this.commonService.setInitialized();
     }
 
-    loadGame() {
+    loadGame() : void {
         this.commonService.gameInstance = this.commonService.savedGame;
         this.router.navigate( ['main'] );
     }
+    
+    nextSilkType() : void {
+        this.player.nextSlikType();
+        this.recalculateColor();
+    }
+    
+    recalculateColor() : void {
+        this.player.recalculateBackground();
+    }
+    
 }

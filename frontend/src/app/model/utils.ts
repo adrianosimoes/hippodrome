@@ -1,5 +1,7 @@
 export class Utils {
 
+    static MAX_SILK_ID: number = 13;
+
     static getRandomInt( initial: number, max: number ): number {
         return Math.floor(( Math.random() * ( max - initial + 1 ) ) + initial );
     }
@@ -35,6 +37,55 @@ export class Utils {
         return window.location.href.startsWith( "http://localhost", 0 );
     }
 
+
+    static getCssBackground( color: string, secColor: string, silkType: number ): string {
+        if ( silkType == 2 ) {
+            return color; //use simple color.
+        } else if ( silkType == 0 ) {
+            return 'repeating-linear-gradient( 0deg, ' +
+                color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
+        } else if ( silkType == 1 ) {
+            return 'repeating-linear-gradient( 90deg, ' +
+                color + ' , ' + color + ' 38px, ' + secColor + ' 38px , ' + secColor + ' 80px )';
+        } else if ( silkType == 3 ) {
+            return 'repeating-linear-gradient( 45deg, ' +
+                color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
+        } else if ( silkType == 4 ) {
+            return 'repeating-linear-gradient( 135deg, ' +
+                color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
+        } else if ( silkType == 5 ) {
+            return 'repeating-radial-gradient( circle, ' +
+                color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 120px )';
+        } else if ( silkType == 6 ) {
+            return 'repeating-radial-gradient( circle, ' +
+            color + ' , ' + color + ' 45px, ' + secColor + ' 45px , ' + secColor + ' 120px )';
+        } else if ( silkType == 7 ) {
+            return 'repeating-linear-gradient( 90deg, ' +
+                color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
+        } else if ( silkType == 8 ) {
+            return 'repeating-linear-gradient( 0deg, ' +
+                color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
+        } else if ( silkType == 9 ) {
+            return 'repeating-linear-gradient( 45deg, ' +
+                color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
+        } else if ( silkType == 10 ) {
+            return 'repeating-linear-gradient( 135deg, ' +
+                color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
+        } else if ( silkType == 11 ) {
+            return 'repeating-linear-gradient( 90deg, ' +
+                color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
+        } else if ( silkType == 12 ) {
+            return 'repeating-linear-gradient( 0deg, ' +
+                color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
+        } else if ( silkType == 13 ) {
+            return 'repeating-linear-gradient( 45deg, ' +
+                color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
+        } else if ( silkType == 12 ) {
+            return 'repeating-linear-gradient( 135deg, ' +
+                color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
+        }
+    }
+
 }
 
 interface Comparator<T> {
@@ -54,13 +105,13 @@ export class StaticData {
         'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo'];
 
     static colors: string[] = [
-                            /*Reds and yellows:*/ '#ff0000', '#ff00ff', '#FA8072', '#800000', '#800080', '#ff6600', '#8B0000',
-                           /* Yellows */ '#f7cda8', '#EDDA74', '#c5c54f', '#FBB117', '#C2B280', '#C58917',
+                            /*Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800000', '#800080', '#ff6600', '#8B0000',
+                           /* Yellows */ '#ff7700', '#EDDA74', '#c5c54f', '#FBB117', '#a99969', '#C58917',
                             /*Greens */ '#00ff00', '#aaaa00', '#808000', '#00dddd', '#556B2F', '#6B8E23',
                             /* Blues */  '#000080',
                             /* Grey and Brown */ '#000000', '#999999', '#966F33', '#6F4E37', '#7F5217'];
-    
-    static saveGameName: string ="gamev2";
+
+    static saveGameName: string = "gamev2";
 }
 
 

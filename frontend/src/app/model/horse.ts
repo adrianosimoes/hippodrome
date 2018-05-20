@@ -39,15 +39,17 @@ export class HorseInRace {
     fullStamina: number;
     tempStamina: number;
     color: string;
+    cssBackground: string;
     distanceDone: number;
     cssLeft: number;
 
-    constructor( horse: Horse, color: string ) {
+    constructor( horse: Horse, color: string, cssBackground: string ) {
         this.baseHorse = horse;
         this.speed = Utils.precisionRound((horse.speed * horse.form) / Horse.AVG_FORM , 2);
         this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 8 );
         this.tempStamina = this.fullStamina;
         this.color = color;
+        this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
     }

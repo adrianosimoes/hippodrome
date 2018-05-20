@@ -48,7 +48,7 @@ export class RaceInstance {
         this.raceView = raceView;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
-        this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color );
+        this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground );
         this.horses = [];
         this.horses.push( this.playerHorse );
         this.lastCommentHorses = [];
@@ -57,7 +57,8 @@ export class RaceInstance {
         this.state = RaceState.PreRace;
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
-            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), this.commonService.createRandomColor() );
+            let color: string = this.commonService.createRandomColor()
+            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), color, color);
             this.addHorse( horse );
         }
 

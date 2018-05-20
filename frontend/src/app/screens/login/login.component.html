@@ -10,24 +10,29 @@
 	<div class="form">
 	 <div class="label">
 	    <label>Team Name:
-	      <input [(ngModel)]="player.name" placeholder="The McCoys" autofocus>
+	      <input [(ngModel)]="player.name" placeholder="The McCoys" autofocus />
 	    </label>
       </div>
     <div class="label">
 	     <label>Main Color:
-	      <input [(ngModel)]="player.color" placeholder="color">
+	      <input [(ngModel)]="player.color" (change)="recalculateColor()" type="color" placeholder="color" />
 	    </label>
-    <!-- </div>
+    </div>
      <div class="label">
-	     <label>Secondary Color:
-	      <input [(ngModel)]="player.secColor" placeholder="color"> 
+	     <label>Sec. Color
+	      <input [(ngModel)]="player.secColor" (change)="recalculateColor()" type="color"  placeholder="color" /> 
 	    </label>
-    </div> -->
+    </div>
+     <div class="label">
+	     <label>Silk Shape:
+	     <button (click)="nextSilkType()">Next</button>
+	    </label>
+    </div>
 	</div>
 	Coat of Arms:
 	<div class="coatOfArmsContainer">
 		<div class="coatOfArms">
-			<div class="silk" [style.background]="player.calculateBackground ? player.calculateBackground : player.color">
+			<div class="silk" [style.background]="player.calculateBackground">
 			</div>
 			<div class="name">{{player.name}}</div>
 		</div>

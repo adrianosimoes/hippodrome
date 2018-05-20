@@ -37,19 +37,20 @@ export class CommonService {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, '', '#0077ee', Utils.devMode() ? 105000 : 5000 );
+        let playerOne = new Player( 1, '', '#0077ee', '#feda10', 0, Utils.devMode() ? 105000 : 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
-
     }
 
     loadToSavedSlot( savedGameString: string ): void {
         this.savedGame = JSON.parse( savedGameString );
         this.savedGame.date = new Date( this.savedGame.date );
 
+        //Load player:
+        this.savedGame.playerOne = Player.fromJson(this.savedGame.playerOne);
+
         //Load Horses:
         let horsesJson: Horse[] = this.savedGame.playerOne.horses;
         this.savedGame.playerOne.horses = [];
-
         for ( let i = 0; i < horsesJson.length; i++ ) {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
                 horsesJson[i].speed, horsesJson[i].stamina, horsesJson[i].form );
@@ -146,11 +147,11 @@ export class CommonService {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
             currHorse.calculateForm();
         }
-        this.applyTrainers(this.gameInstance.playerOne);
+        this.applyTrainers( this.gameInstance.playerOne );
         this.saveGame();
     }
 
-    applyTrainers(player: Player): void {
+    applyTrainers( player: Player ): void {
         let selectedHorse: Horse = this.getSelectedHorse();
         for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
             //Pay salary:
