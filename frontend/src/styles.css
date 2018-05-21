@@ -1,9 +1,8 @@
 /* You can add global styles to this file, and also import other style files */
 /* Application-wide Styles */
 html{
-	 background: #447744;
+	 height: 100%;
 }
-
 
 h3 {
 	margin-top: 8px;
@@ -22,19 +21,20 @@ h3 {
 }
 
 body {
-  margin: 5px;
+  margin: 0px;
   color: #fff;
   font-family: Cambria, Georgia;
   min-width: 790px;
+   height: 100%;
 }
 
 .screen {
 	display: block;
 	padding-left: 10px;
-	background-color: #f1f1f1;
+	background: rgba(241, 241, 241, 0.91);
 	color: #000;
 	margin: 0 auto;
-	margin-top: 20px;
+	margin-top: 0px;
 	padding-bottom: 10px;
 	width: 750px;
 	border: 1px solid #aaa;

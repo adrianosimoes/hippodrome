@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { GameInstance } from './gameinstance';
 import { Utils, StaticData } from './utils';
 import { Player } from './player';
@@ -20,6 +21,7 @@ export class CommonService {
     racesLeagues: RaceLeague[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
+    backgroundImage: SafeStyle;
 
     static TRAIN_SPEED: number = 1;
     static TRAIN_STAMINA: number = 2;
@@ -27,10 +29,11 @@ export class CommonService {
     public loading: boolean;
     public loadingText: string;
 
-    constructor( private router: Router ) {
+    constructor( private router: Router, private _sanitizer: DomSanitizer ) {
         this.initHorsesInShop();
         this.initRaces();
         this.loading = false;
+      
 
         let savedGameString: string = Cookies.get( StaticData.saveGameName );
         if ( savedGameString ) {
@@ -39,6 +42,7 @@ export class CommonService {
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10', 0, Utils.devMode() ? 105000 : 5000 );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
+        this.generateBgImage();
     }
 
     loadToSavedSlot( savedGameString: string ): void {
@@ -137,11 +141,12 @@ export class CommonService {
     }
 
     nextDay(): void {
+        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
+        this.generateBgImage();
         if ( !this.loading ) {
             this.loading = true;
-            setTimeout(() => { this.loading = false; }, 200 );
+            setTimeout(() => {  this.loading = false;  }, 200 );
         }
-        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
@@ -257,6 +262,10 @@ export class CommonService {
 
     isInitialized(): boolean {
         return this.gameInstance.initialized;
+    }
+    
+    generateBgImage(){
+        this.backgroundImage ='url("assets/bg' + ((this.gameInstance.date.getDate() % 11) + 1)  +  '.jpg")';
     }
 
 }

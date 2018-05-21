@@ -1,8 +1,25 @@
+#appScreen {
+	min-height: 100%;
+	-webkit-background-size: cover !important;
+  	-moz-background-size: cover  !important;
+  	-o-background-size: cover  !important;
+  	background-size: cover  !important;
+}
+
+#headerArea {
+	padding: 10px;
+}
+
+.titleArea {
+	background-color: #447744;
+	padding: 5px;
+}
+
 #topMenu{
 	border: 2px solid #ffd700;
 	background-color:   #ffd700;
 	padding: 5px;
-	margin: 14px;
+	margin: 10px;
 	min-width: 730px;
 	clear: both;
 }
@@ -31,7 +48,7 @@ h1 {
 h2 {
 	margin-left: 15px;
 	margin-top: 16px;
-	margin-bottom: 12px;
+	margin-bottom: 0px;
   	color: #bbb;
   	font-size: 0.9em;
   	font-family: Arial, Helvetica, sans-serif;
@@ -58,4 +75,8 @@ h2 {
 .rightMenu span:last-child:after {
 	margin-left: 15px;
 	content: "";
+}
+
+#bottom {
+	height: 40px;
 }
