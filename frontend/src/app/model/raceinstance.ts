@@ -193,6 +193,7 @@ export class RaceInstance {
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
         let maxSpeed:number = horse.speed;
+        let baseRaceSpeed =  this.baseRace.difficulty * 5;
         if(horse == this.playerHorse){
             if(this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance /2 ){
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
@@ -208,8 +209,11 @@ export class RaceInstance {
         if ( step >= horse.speed * speedReduction ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
-                if ( horse.speed > ( this.baseRace.difficulty * 5 ) + 1 ) {
+                if ( Math.floor(horse.speed) > baseRaceSpeed) {
                     horse.speed--;
+                    if(horse == this.playerHorse){
+                        horse.staminaDisplay = ((horse.speed - baseRaceSpeed + 1) / (horse.maxSpeed - baseRaceSpeed + 1)) * 100;
+                    }
                 }
                 horse.tempStamina = horse.fullStamina;
             }

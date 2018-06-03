@@ -131,6 +131,27 @@
 	margin-right: 40px;
 }
 
+.raceTextContainer{
+	margin-bottom: 10px;
+}
+
+.staminaLabel {
+	float: left;
+}
+
+.fullStaminaBar {
+	border: 1px solid #000;
+	width: 100px;
+	height: 16px;
+	float: left;
+	margin-left: 10px;
+}
+
+.staminaBar {
+	background: #000;
+	height: 16px;
+}
+
 .raceStadium{
 	margin: 0 auto;
 	margin-top: 20px;
