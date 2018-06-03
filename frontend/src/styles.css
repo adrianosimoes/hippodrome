@@ -160,7 +160,7 @@ button.skip{
 
 .cdk-visually-hidden{
 	display: none
-};
+}
 
 .mat-radio-outer-circle{border-color:rgba(0,0,0,.54)}
 .mat-radio-disabled .mat-radio-outer-circle{border-color:rgba(0,0,0,.38)}
