@@ -1,7 +1,5 @@
 import { Player } from './player';
 
-declare var Cookies: any;
-
 export class GameInstance {
     name: string;
     date: Date;

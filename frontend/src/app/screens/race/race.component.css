@@ -1,3 +1,4 @@
+
 #race {
 	
 }
@@ -94,6 +95,28 @@
     left: -4px;
 }
 
+.strategiesContainer{
+	clear: both;
+}
+
+.strategies {
+	clear: both;
+	margin-top: 10px;
+	margin-left: 10px;
+	float: left;
+}
+
+.radio {
+	  display: inline-flex;
+  		flex-direction: column;
+}
+
+.mat-radio-button {
+	margin-bottom: 10px;
+	clear: both;
+	float: left;
+}
+
 .buttonArea {
 	padding-top: 40px;
 	margin-left: 15px;
@@ -182,7 +205,7 @@
 }
 
 .liveClassification .participants {
-	width: 200px;
+	width: 220px;
 }
 
 .comments {

@@ -3,8 +3,6 @@ import { Trainer } from './trainer';
 import { Utils } from './utils';
 
 
-
-
 export class Player {
     id: number;
     name: string;

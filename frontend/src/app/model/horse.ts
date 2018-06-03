@@ -32,6 +32,12 @@ export class Horse {
     }
 }
 
+export enum RaceStrategy {
+    Everything = 0,
+    HalfWay = 1,
+    End = 2
+}
+
 export class HorseInRace {
     baseHorse: Horse;
     track: number;
@@ -42,16 +48,18 @@ export class HorseInRace {
     cssBackground: string;
     distanceDone: number;
     cssLeft: number;
+    strategy: RaceStrategy;
 
     constructor( horse: Horse, color: string, cssBackground: string ) {
         this.baseHorse = horse;
         this.speed = Utils.precisionRound((horse.speed * horse.form) / Horse.AVG_FORM , 2);
-        this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 8 );
+        this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 11 );
         this.tempStamina = this.fullStamina;
         this.color = color;
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
+        this.strategy = RaceStrategy.Everything;
     }
 }
 

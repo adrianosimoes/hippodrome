@@ -1,9 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router } from "@angular/router";
-import { ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
+import {MatRadioModule} from '@angular/material/radio';
 import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
-import { Horse, HorseInRace } from '../../model/horse';
+import { Horse, HorseInRace, RaceStrategy } from '../../model/horse';
 import { Race } from '../../model/race';
 import { RaceInstance, RaceState } from '../../model/raceinstance';
 import { CommonService } from '../../model/common.service';
@@ -19,6 +19,7 @@ export class RaceComponent implements OnInit {
     maxDistance: number = null;
     debug : boolean = Utils.devMode();
     RaceState : typeof RaceState = RaceState;
+    RaceStrategy : typeof RaceStrategy = RaceStrategy;
 
     constructor( private router: Router, private activeRoute: ActivatedRoute, private commonService: CommonService ) { }
 

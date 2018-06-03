@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
+import { MatRadioModule } from '@angular/material';
+
 
 import { FormStringPipe, RaceDifficultyPipe } from './model/pipehelpers';
 
@@ -31,6 +33,7 @@ import { PickRaceComponent } from './screens/pick-race/pick-race.component';
   imports: [
       BrowserModule,
       FormsModule,
+      MatRadioModule,
       AppRoutingModule
   ],
   providers: [],

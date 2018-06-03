@@ -1,6 +1,5 @@
-import { Horse, HorseInRace } from './horse';
+import { Horse, HorseInRace, RaceStrategy } from './horse';
 import { RaceComponent } from '../screens/race/race.component';
-
 import { Race } from './race';
 import { CommonService } from './common.service';
 import { Player } from './player';
@@ -41,6 +40,7 @@ export class RaceInstance {
     ticksSinceLastComment;
     comments: Comment[];
     state: RaceState;
+    debugMessage: string;
 
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
@@ -55,6 +55,7 @@ export class RaceInstance {
         this.ticksSinceLastComment = 0;
         this.comments = [];
         this.state = RaceState.PreRace;
+        this.debugMessage="";
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let color: string = this.commonService.createRandomColor()
@@ -191,9 +192,19 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let step = Utils.getRandomInt( 0, horse.speed - 1 );
-        //If speed is bigger than 80%, reduce stamina:
-        let speedReduction = horse.speed >= 20 ? 0.8 : 0.9
+        let maxSpeed:number = horse.speed;
+        if(horse == this.playerHorse){
+            if(this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance /2 ){
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
+            } else if(this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < (this.baseRace.distance*2)/3 ){
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
+            }   
+        }
+        
+        let step = Utils.getRandomInt( 0, maxSpeed - 1 );
+        
+        //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
+        let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
         if ( step >= horse.speed * speedReduction ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
