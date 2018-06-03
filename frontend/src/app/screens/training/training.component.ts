@@ -15,7 +15,7 @@ export class TrainingComponent implements OnInit {
     currPlayer: Player;
     trainersToSell: Trainer[];
 
-    constructor( private router: Router, private commonService: CommonService ) { }
+    constructor( private router: Router, public commonService: CommonService ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {

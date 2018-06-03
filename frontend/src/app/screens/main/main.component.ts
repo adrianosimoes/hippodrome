@@ -15,13 +15,11 @@ import { CommonService } from '../../model/common.service';
 export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
-    public commonService: CommonService;
     warningText: string = '';
 
-    constructor( private router: Router, private commService: CommonService ) { }
+    constructor( private router: Router, public commonService: CommonService ) { }
 
     ngOnInit() {
-        this.commonService = this.commService;
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
         }

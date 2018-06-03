@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 import { TrainingComponent } from './training.component';
+import { CommonService } from '../../model/common.service';
+
 
 describe('TrainingComponent', () => {
   let component: TrainingComponent;
@@ -8,7 +12,8 @@ describe('TrainingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ TrainingComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ TrainingComponent, FormStringPipe]
     })
     .compileComponents();
   }));
@@ -16,6 +21,7 @@ describe('TrainingComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TrainingComponent);
     component = fixture.componentInstance;
+    component.commonService.setInitialized();
     fixture.detectChanges();
   });
 

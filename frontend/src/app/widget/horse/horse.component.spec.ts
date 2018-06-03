@@ -1,6 +1,10 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
+import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 import { HorseComponent } from './horse.component';
+import { Horse } from '../../model/horse';
+
 
 describe('HorseComponent', () => {
   let component: HorseComponent;
@@ -8,7 +12,8 @@ describe('HorseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HorseComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ HorseComponent, FormStringPipe]
     })
     .compileComponents();
   }));
@@ -16,6 +21,8 @@ describe('HorseComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HorseComponent);
     component = fixture.componentInstance;
+    component.horse = new Horse(1, "aaa", 10, 10, 10);
+    component.page = "aa";
     fixture.detectChanges();
   });
 

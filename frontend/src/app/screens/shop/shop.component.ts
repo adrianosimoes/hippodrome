@@ -15,7 +15,7 @@ export class ShopComponent implements OnInit {
     horses: Horse[];
     currPlayer: Player;
 
-    constructor( private router: Router, private commonService: CommonService ) { }
+    constructor( private router: Router, public commonService: CommonService ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {

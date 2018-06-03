@@ -21,7 +21,7 @@ export class RaceComponent implements OnInit {
     RaceState : typeof RaceState = RaceState;
     RaceStrategy : typeof RaceStrategy = RaceStrategy;
 
-    constructor( private router: Router, private activeRoute: ActivatedRoute, private commonService: CommonService ) { }
+    constructor( private router: Router, public activeRoute: ActivatedRoute, public commonService: CommonService ) {}
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {

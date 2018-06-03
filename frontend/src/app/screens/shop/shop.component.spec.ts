@@ -1,6 +1,11 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ShopComponent } from './shop.component';
+import { HorseComponent } from '../../widget//horse/horse.component';
+import { CommonService } from '../../model/common.service';
+import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
+
 
 describe('ShopComponent', () => {
   let component: ShopComponent;
@@ -8,7 +13,8 @@ describe('ShopComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShopComponent ]
+      imports: [RouterTestingModule],
+      declarations: [ ShopComponent, HorseComponent, FormStringPipe ]
     })
     .compileComponents();
   }));
@@ -16,6 +22,7 @@ describe('ShopComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(ShopComponent);
     component = fixture.componentInstance;
+    component.commonService.setInitialized();
     fixture.detectChanges();
   });
 
