@@ -36,6 +36,11 @@ export class Utils {
     static devMode() {
         return window.location.href.startsWith( "http://localhost", 0 );
     }
+    
+    static calculateStamina(speed: number, maxSpeed: number, baseValue: number): number {
+        return (speed - (maxSpeed/2)) /
+                (maxSpeed - (maxSpeed/2)) * baseValue;
+    }
 
 
     static getCssBackground( color: string, secColor: string, silkType: number ): string {

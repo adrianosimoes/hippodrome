@@ -29,6 +29,10 @@ body {
    height: 100%;
 }
 
+.left {
+	float: left;
+}
+
 .screen {
 	display: block;
 	padding-left: 10px;
@@ -167,6 +171,19 @@ button.skip{
 .mat-radio-disabled .mat-radio-label-content{color:rgba(0,0,0,.38)}
 .mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle{border-color:#000}
 .mat-radio-button.mat-accent .mat-radio-inner-circle{background-color:#111}
+
+.fullStaminaBar {
+	border: 1px solid #000;
+	width: 70px;
+	height: 16px;
+	float: left;
+	margin-left: 8px;
+}
+
+.staminaBar {
+	background: #000;
+	height: 16px;
+}
 
 
 

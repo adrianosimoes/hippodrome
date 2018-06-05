@@ -59,6 +59,10 @@ export class CommonService {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
                 horsesJson[i].speed, horsesJson[i].stamina, horsesJson[i].form );
             horseInstance.owned = true;
+            if(horsesJson[i].fitnessSpeed > 0){
+                horseInstance.fitnessSpeed = horsesJson[i].fitnessSpeed;
+            }
+            horseInstance.calculateStaminaDisplay();
             this.savedGame.playerOne.horses.push( horseInstance );
         }
     }
@@ -151,6 +155,7 @@ export class CommonService {
         this.gameInstance.date = new Date( this.gameInstance.date );
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
             currHorse.calculateForm();
+            currHorse.updateDaillyFitness();
         }
         this.applyTrainers( this.gameInstance.playerOne );
         this.saveGame();

@@ -33,7 +33,7 @@
 	<div class="margintop" *ngIf="currRace.state !== RaceState.PreRace">
 		<div class="raceTextContainer">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
 		<div class="raceTextContainer">
-			<span class="staminaLabel">Stamina:</span> <div class="fullStaminaBar"><div class="staminaBar" [style.width.px]="currRace.playerHorse.staminaDisplay"></div></div>
+			<span class="staminaLabel">Fitness:</span> <div class="fullStaminaBar"><div class="staminaBar" [style.width.px]="currRace.playerHorse.staminaDisplay"></div></div>
 		</div>
 		<div *ngIf="debug">{{currRace.debugMessage}}</div>
 		<div class="clear"></div>

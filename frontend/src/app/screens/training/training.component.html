@@ -1,18 +1,20 @@
 <div id="training"  class="screen">
 	<h3>Stables (Training)</h3>
 	Money: {{currPlayer.money | currency: 'EUR'}}
-  	<div  class="horsesContainer" *ngFor="let currHorse of playerTrainingHorses">
-	  	<div class="pickHorse" [style.float]="'left'" [style.borderColor]="currHorse.baseHorse.id == commonService.gameInstance.playerOne.selectedHorseId ? '#0000ff' : '#ccc'"><div class="title">{{currHorse.baseHorse.name}}</div>
-			Speed: {{currHorse.baseHorse.speed | number:'2.0-1'}}<br/>
-			Stamina: {{currHorse.baseHorse.stamina | number:'2.0-1'}}<br />
-			<span *ngIf="currHorse">	Form: {{currHorse.baseHorse.form | formstring}}<br/></span>
-			<!--  <span class="price" *ngIf="currHorse">Training Speed Cost:<br /></span> 
-			<span class="price" *ngIf="currHorse">Training Stamina Cost: <br /></span>   -->
-			<div class="buttonArea">
-				<button (click)="trainSpeed(currHorse)">Train Speed ({{currHorse.trainSpeedPrice | currency: 'EUR'}})</button>
-				<button (click)="trainStamina(currHorse)">Train Stamina ({{currHorse.trainStaminaPrice | currency: 'EUR'}})</button>
-			</div>
-		</div> 
+	<div *ngIf="utils.devMode()" class="buyStats" >
+	  	<div class="horsesContainer" *ngFor="let currHorse of playerTrainingHorses">
+		  	<div class="pickHorse" [style.float]="'left'" [style.borderColor]="currHorse.baseHorse.id == commonService.gameInstance.playerOne.selectedHorseId ? '#0000ff' : '#ccc'"><div class="title">{{currHorse.baseHorse.name}}</div>
+				Speed: {{currHorse.baseHorse.speed | number:'2.0-1'}}<br/>
+				Stamina: {{currHorse.baseHorse.stamina | number:'2.0-1'}}<br />
+				<span *ngIf="currHorse">	Form: {{currHorse.baseHorse.form | formstring}}<br/></span>
+				<!--  <span class="price" *ngIf="currHorse">Training Speed Cost:<br /></span> 
+				<span class="price" *ngIf="currHorse">Training Stamina Cost: <br /></span>   -->
+				<div class="buttonArea">
+					<button (click)="trainSpeed(currHorse)">Train Speed ({{currHorse.trainSpeedPrice | currency: 'EUR'}})</button>
+					<button (click)="trainStamina(currHorse)">Train Stamina ({{currHorse.trainStaminaPrice | currency: 'EUR'}})</button>
+				</div>
+			</div> 
+		</div>
 	</div>
 	<div class="trainersContainer" ><h4>Your trainers</h4>
 		<div class="pickHorse" *ngFor="let currTrainer of currPlayer.trainers">

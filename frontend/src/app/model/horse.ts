@@ -12,19 +12,40 @@ export class Horse {
     id: number;
     name: string;
     speed: number;
+    fitnessSpeed: number;
     stamina: number;
     price: number;
     owned: boolean;
     form: number;
+    staminaDisplay: number;
     calculateForm(): void {
         this.form = Utils.getRandomInt( 10, 12 );
     };
+    
+    calculateStaminaDisplay(): void{
+         this.staminaDisplay = Utils.calculateStamina(this.fitnessSpeed, this.speed, 70);
+    }
+    
+    updateDaillyFitness(): void {
+        if(this.fitnessSpeed < this.speed){
+            console.log("prev fitness:" + this.fitnessSpeed);
+            this.fitnessSpeed = Utils.precisionRound(this.fitnessSpeed + 
+                    (this.fitnessSpeed * 0.1 * (this.stamina/20)), 2);
+            if(this.fitnessSpeed > this.speed){
+                this.fitnessSpeed = this.speed;
+            } 
+            console.log("next fitness:" + this.fitnessSpeed);
+        }
+        this.calculateStaminaDisplay();
+    }
 
     constructor( id: number, name: string, speed: number, stamina: number, form: number ) {
         this.id = id;
         this.name = name;
         this.speed = speed;
+        this.fitnessSpeed = speed;
         this.stamina = stamina;
+        this.calculateStaminaDisplay();
         this.price = Math.round(( ( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) )
             + ( STAMINA_SKILL_PRICE * ( stamina * ( stamina / 10 ) ) ) ) / TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
         this.form = form;
@@ -41,7 +62,6 @@ export enum RaceStrategy {
 export class HorseInRace {
     baseHorse: Horse;
     track: number;
-    maxSpeed: number;
     speed: number;
     fullStamina: number;
     tempStamina: number;
@@ -54,8 +74,7 @@ export class HorseInRace {
 
     constructor( horse: Horse, color: string, cssBackground: string ) {
         this.baseHorse = horse;
-        this.speed = Utils.precisionRound((horse.speed * horse.form) / Horse.AVG_FORM , 2);
-        this.maxSpeed = this.speed;
+        this.speed = horse.fitnessSpeed;
         this.fullStamina = Math.round(( horse.stamina * 1.7 ) - 11 );
         this.tempStamina = this.fullStamina;
         this.color = color;

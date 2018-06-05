@@ -4,6 +4,7 @@ import { Horse, TrainingHorse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
 import { CommonService } from '../../model/common.service';
+import { Utils } from '../../model/utils';
 
 @Component( {
     selector: 'app-training',
@@ -14,6 +15,7 @@ export class TrainingComponent implements OnInit {
     playerTrainingHorses: TrainingHorse[];
     currPlayer: Player;
     trainersToSell: Trainer[];
+    utils: Utils = Utils;
 
     constructor( private router: Router, public commonService: CommonService ) { }
 

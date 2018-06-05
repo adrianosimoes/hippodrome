@@ -41,6 +41,8 @@ export class RaceInstance {
     comments: Comment[];
     state: RaceState;
     debugMessage: string;
+    baseRaceSpeed: number;
+
 
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
@@ -56,9 +58,12 @@ export class RaceInstance {
         this.comments = [];
         this.state = RaceState.PreRace;
         this.debugMessage="";
+        this.baseRaceSpeed = this.baseRace.difficulty * 5;
+        
+        this.playerHorse.staminaDisplay = Utils.calculateStamina(this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100);
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
-            let color: string = this.commonService.createRandomColor()
+            let color: string = this.commonService.createRandomColor();
             let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), color, color );
             this.addHorse( horse );
         }
@@ -192,11 +197,11 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let maxSpeed:number = horse.speed;
-        let baseRaceSpeed =  this.baseRace.difficulty * 5;
+        let maxSpeed:number = Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
         if(horse == this.playerHorse){
             if(this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance /2 ){
-                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
+                //console.log("max speed:" + maxSpeed);
             } else if(this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < (this.baseRace.distance*2)/3 ){
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
             }   
@@ -206,13 +211,14 @@ export class RaceInstance {
         
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
-        if ( step >= horse.speed * speedReduction ) {
+        let formSpeed = Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
+        if ( step >= formSpeed * speedReduction ) {
             horse.tempStamina--;
             if ( horse.tempStamina < 0 ) {
-                if ( Math.floor(horse.speed) > baseRaceSpeed) {
+                if ( Math.floor(horse.speed) > this.baseRaceSpeed) {
                     horse.speed--;
                     if(horse == this.playerHorse){
-                        horse.staminaDisplay = ((horse.speed - baseRaceSpeed + 1) / (horse.maxSpeed - baseRaceSpeed + 1)) * 100;
+                        horse.staminaDisplay = Utils.calculateStamina(horse.speed, horse.baseHorse.speed, 100);
                     }
                 }
                 horse.tempStamina = horse.fullStamina;
@@ -234,6 +240,8 @@ export class RaceInstance {
     }
 
     finishRace(): void {
+        this.playerHorse.baseHorse.fitnessSpeed = this.playerHorse.speed;
+        this.playerHorse.baseHorse.calculateStaminaDisplay();
         this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
         if ( this.baseRace.prizes.length >= this.place ) {
