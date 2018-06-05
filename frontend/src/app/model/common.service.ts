@@ -153,11 +153,11 @@ export class CommonService {
         }
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
+        this.applyTrainers( this.gameInstance.playerOne );
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
             currHorse.calculateForm();
             currHorse.updateDaillyFitness();
         }
-        this.applyTrainers( this.gameInstance.playerOne );
         this.saveGame();
     }
 
