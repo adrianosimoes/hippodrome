@@ -1,7 +1,7 @@
 <div id="race"  class="screen" [ngStyle]="{'min-width.px': currRace.baseRace.distance + 100}">
 <h3>{{currRace.baseRace.name}}</h3>
 
-	<div class="margintop" *ngIf="currRace.state === RaceState.PreRace">
+	<div *ngIf="currRace.state === RaceState.PreRace">
 		<div class="props">
 			<div class="label">Distance:</div><div class="value">{{currRace.baseRace.distance/100}} Furlongs</div>
 			<div class="label">Entrace fee:</div><div class="value">{{currRace.baseRace.entranceFee | currency: 'EUR' : 'symbol':'1.0-0' }}</div>
@@ -37,16 +37,16 @@
 		</div>
 		<div *ngIf="debug">{{currRace.debugMessage}}</div>
 		<div class="clear"></div>
-		<div class="raceStadium" [ngStyle]="{'width.px': currRace.baseRace.distance + 80}" [style.backgroundColor]="currRace.baseRace.color" >
+		<div [class]="currRace.state === RaceState.RaceFinished ? 'hideRaceStadium' : 'raceStadium'" [ngStyle]="{'width.px': currRace.baseRace.distance + 80}" [style.backgroundColor]="currRace.baseRace.color" >
 			<div class="specialCongrats" *ngIf="currRace.worldChampion">WORLD CHAMPION!</div>
-			<div class="silks">
+			<div class="silks" *ngIf="currRace.state !== RaceState.RaceFinished">
 				<span *ngFor="let currHorse of currRace.horses">
 					<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div>
 					<div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft"><div class="silk"  [style.background]="currHorse.cssBackground"></div></div>
 				</span>
 			</div>
 			<div class="raceTrack">
-				<div *ngFor="let currHorse of currRace.horses" class="raceLine" [ngStyle]="{'width.px': currRace.baseRace.distance}">
+				<div *ngFor="let currHorse of currRace.horses" [class]="currRace.state === RaceState.RaceFinished ? 'hideRaceLine' : 'raceLine'" [ngStyle]="{'width.px': currRace.baseRace.distance}">
 					&nbsp;{{currHorse.track}}
 				</div>
 			</div>

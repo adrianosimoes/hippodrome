@@ -133,7 +133,7 @@ export class RaceInstance {
             this.finishRace();
             return;
         }
-        setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
+        setTimeout(() => { this.updateRace() }, Utils.devMode() ? 3 : TICK_MILLISECONDS );
     }
 
     updateComments(): void {
@@ -256,7 +256,7 @@ export class RaceInstance {
         }
         this.state = RaceState.RaceFinished;
     }
-
+    
     cancel(): void {
         this.canceled = true;
     }

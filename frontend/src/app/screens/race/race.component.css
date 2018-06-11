@@ -1,11 +1,7 @@
 
 #race {
-	
 }
 
-.margintop {
-	margin-top: 20px;
-}
 
 .props {
 	float: left;
@@ -143,13 +139,19 @@
 	width: 100px;	
 }
 
+
 .raceStadium{
 	margin: 0 auto;
 	margin-top: 20px;
-	margin-bottom: 20px;
 	padding-top:20px;
 	padding-bottom:20px;
 	color: #fff;
+}
+
+.hideRaceStadium{
+	margin: 0 auto;
+	scale: 0.0;
+	transition: all 1s;
 }
 
 .raceTrack{
@@ -178,6 +180,11 @@
 	height: 34px;
 	margin-left: 0px;
 	align-items: center;
+}
+
+.hideRaceLine {
+	height: 0px;
+	transition: 1s cubic-bezier(0, 0.33, 0.66, 1);
 }
 
 
@@ -214,6 +221,7 @@
 	padding: 5px;
 	margin-right: 20px;
 	border: 1px solid #444;
+	margin-top: 20px;
 }
 
 .liveClassification .participants {
@@ -228,6 +236,7 @@
 	border: 1px solid #444;
 	margin-bottom: 10px;
 	background-color: #fff;
+	margin-top: 20px;
 }
 
 .comment {

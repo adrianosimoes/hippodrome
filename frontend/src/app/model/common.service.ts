@@ -33,7 +33,7 @@ export class CommonService {
         this.initHorsesInShop();
         this.initRaces();
         this.loading = false;
-      
+
 
         let savedGameString: string = Cookies.get( StaticData.saveGameName );
         if ( savedGameString ) {
@@ -50,7 +50,7 @@ export class CommonService {
         this.savedGame.date = new Date( this.savedGame.date );
 
         //Load player:
-        this.savedGame.playerOne = Player.fromJson(this.savedGame.playerOne);
+        this.savedGame.playerOne = Player.fromJson( this.savedGame.playerOne );
 
         //Load Horses:
         let horsesJson: Horse[] = this.savedGame.playerOne.horses;
@@ -59,7 +59,7 @@ export class CommonService {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
                 horsesJson[i].speed, horsesJson[i].stamina, horsesJson[i].form );
             horseInstance.owned = true;
-            if(horsesJson[i].fitnessSpeed > 0){
+            if ( horsesJson[i].fitnessSpeed > 0 ) {
                 horseInstance.fitnessSpeed = horsesJson[i].fitnessSpeed;
             }
             horseInstance.calculateStaminaDisplay();
@@ -149,7 +149,7 @@ export class CommonService {
         this.generateBgImage();
         if ( !this.loading ) {
             this.loading = true;
-            setTimeout(() => {  this.loading = false;  }, 200 );
+            setTimeout(() => { this.loading = false; }, 200 );
         }
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
@@ -268,9 +268,13 @@ export class CommonService {
     isInitialized(): boolean {
         return this.gameInstance.initialized;
     }
-    
-    generateBgImage(){
-        this.backgroundImage ='url("assets/bg' + ((this.gameInstance.date.getDate() % 11) + 1)  +  '.jpg")';
+
+    generateBgImage() {
+        if ( !Utils.devMode() ) {
+            this.backgroundImage = 'url("assets/bg' + ( ( this.gameInstance.date.getDate() % 11 ) + 1 ) + '.jpg")';
+        } else {
+            this.backgroundImage = 'url("assets/bg7.jpg")';
+        }
     }
 
 }
