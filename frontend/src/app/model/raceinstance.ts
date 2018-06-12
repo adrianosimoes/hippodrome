@@ -213,15 +213,15 @@ export class RaceInstance {
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
         let formSpeed = Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
         if ( step >= formSpeed * speedReduction ) {
-            horse.tempStamina--;
-            if ( horse.tempStamina < 0 ) {
+            horse.currentStamina--;
+            if ( horse.currentStamina < 0 ) {
                 if ( Math.floor(horse.speed) > this.baseRaceSpeed) {
                     horse.speed--;
                     if(horse == this.playerHorse){
                         horse.staminaDisplay = Utils.calculateStamina(horse.speed, horse.baseHorse.speed, 100);
                     }
                 }
-                horse.tempStamina = horse.fullStamina;
+                horse.currentStamina = horse.fullStamina;
             }
         }
         if ( step > 0 ) {
@@ -240,7 +240,7 @@ export class RaceInstance {
     }
 
     finishRace(): void {
-        this.playerHorse.baseHorse.fitnessSpeed = this.playerHorse.speed;
+        this.playerHorse.baseHorse.staminaSpeed = this.playerHorse.speed;
         this.playerHorse.baseHorse.calculateStaminaDisplay();
         this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );

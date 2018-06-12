@@ -12,29 +12,28 @@ export class Horse {
     id: number;
     name: string;
     speed: number;
-    fitnessSpeed: number;
     endurance: number;
     price: number;
     owned: boolean;
     form: number;
+    staminaSpeed: number;
     staminaDisplay: number;
     calculateForm(): void {
         this.form = Utils.getRandomInt( 10, 12 );
     };
     
     calculateStaminaDisplay(): void{
-         this.staminaDisplay = Utils.calculateStamina(this.fitnessSpeed, this.speed, 65);
+         this.staminaDisplay = Utils.calculateStamina(this.staminaSpeed, this.speed, 65);
     }
     
     updateDaillyFitness(): void {
-        if(this.fitnessSpeed < this.speed){
-            console.log("prev fitness:" + this.fitnessSpeed);
-            this.fitnessSpeed = Utils.precisionRound(this.fitnessSpeed + 
-                    (this.fitnessSpeed * 0.1 * (this.endurance/20)), 2);
-            if(this.fitnessSpeed > this.speed){
-                this.fitnessSpeed = this.speed;
+        if(this.staminaSpeed < this.speed){
+            console.log("prev fitness:" + this.staminaSpeed);
+            this.staminaSpeed = Utils.precisionRound(this.staminaSpeed + 
+                    (this.staminaSpeed * 0.1 * (this.endurance/20)), 2);
+            if(this.staminaSpeed > this.speed){
+                this.staminaSpeed = this.speed;
             } 
-            console.log("next fitness:" + this.fitnessSpeed);
         }
         this.calculateStaminaDisplay();
     }
@@ -43,7 +42,7 @@ export class Horse {
         this.id = id;
         this.name = name;
         this.speed = speed;
-        this.fitnessSpeed = speed;
+        this.staminaSpeed = speed;
         this.endurance = endurance;
         this.calculateStaminaDisplay();
         this.price = Math.round(( ( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) )
@@ -64,7 +63,7 @@ export class HorseInRace {
     track: number;
     speed: number;
     fullStamina: number;
-    tempStamina: number;
+    currentStamina: number;
     color: string;
     cssBackground: string;
     distanceDone: number;
@@ -74,9 +73,9 @@ export class HorseInRace {
 
     constructor( horse: Horse, color: string, cssBackground: string ) {
         this.baseHorse = horse;
-        this.speed = horse.fitnessSpeed;
+        this.speed = horse.staminaSpeed;
         this.fullStamina = Math.round(( horse.endurance * 1.7 ) - 11 );
-        this.tempStamina = this.fullStamina;
+        this.currentStamina = this.fullStamina;
         this.color = color;
         this.cssBackground = cssBackground;
         this.distanceDone = 0;

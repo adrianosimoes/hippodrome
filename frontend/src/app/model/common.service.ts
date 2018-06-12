@@ -59,8 +59,8 @@ export class CommonService {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
                 horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].form );
             horseInstance.owned = true;
-            if ( horsesJson[i].fitnessSpeed > 0 ) {
-                horseInstance.fitnessSpeed = horsesJson[i].fitnessSpeed;
+            if ( horsesJson[i].staminaSpeed > 0 ) {
+                horseInstance.staminaSpeed = horsesJson[i].staminaSpeed;
             }
             horseInstance.calculateStaminaDisplay();
             this.savedGame.playerOne.horses.push( horseInstance );
