@@ -57,7 +57,7 @@ export class CommonService {
         this.savedGame.playerOne.horses = [];
         for ( let i = 0; i < horsesJson.length; i++ ) {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
-                horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].form );
+                horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].acceleration, horsesJson[i].form );
             horseInstance.owned = true;
             if ( horsesJson[i].staminaSpeed > 0 ) {
                 horseInstance.staminaSpeed = horsesJson[i].staminaSpeed;
@@ -69,25 +69,25 @@ export class CommonService {
 
     initHorsesInShop(): void {
         //Initialize Horses in Shop:
-        let horse = new Horse( 101, 'Tom Bolt', 12, 16, Horse.AVG_FORM );
+        let horse = new Horse( 101, 'Tom Bolt', 12, 16, 14, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 102, 'Bruce Steel', 11, 17, Horse.AVG_FORM );
+        horse = new Horse( 102, 'Bruce Steel', 11, 17, 14, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 103, 'Sandra Flash', 15, 13, Horse.AVG_FORM );
+        horse = new Horse( 103, 'Sandra Flash', 15, 13, 10, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 104, 'Jack Diamond', 14, 18, Horse.AVG_FORM );
+        horse = new Horse( 104, 'Jack Diamond', 14, 18, 13, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 105, 'Scarlett King', 18, 26, Horse.AVG_FORM );
+        horse = new Horse( 105, 'Scarlett King', 18, 26, 30, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 106, 'Brad Dynamite', 25, 40, Horse.AVG_FORM );
+        horse = new Horse( 106, 'Brad Dynamite', 25, 40, 35, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
 
-        horse = new Horse( 107, 'Samuel Titanium', 50, 55, Horse.AVG_FORM );
+        horse = new Horse( 107, 'Samuel Titanium', 50, 55, 50, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
     }
 
@@ -182,7 +182,8 @@ export class CommonService {
     addHorseToPlayer( horse: Horse ): boolean {
         if ( this.gameInstance.playerOne.money >= horse.price ) {
             this.gameInstance.playerOne.money -= horse.price;
-            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name, horse.speed, horse.endurance, horse.form );
+            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name,
+                    horse.speed, horse.endurance, horse.acceleration, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push( newHorse );
@@ -225,7 +226,11 @@ export class CommonService {
 
     createRandomHorse( num: number, difficulty: number ): Horse {
         let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
-        return new Horse( 1000 + num, name, ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ), ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ), Horse.AVG_FORM );
+        return new Horse( 1000 + num, name, 
+                ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
+                ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ),
+                ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
+                Horse.AVG_FORM );
     }
 
     chargeEntranceFee( race: Race ) {

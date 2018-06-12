@@ -13,6 +13,7 @@ export class Horse {
     name: string;
     speed: number;
     endurance: number;
+    acceleration: number;
     price: number;
     owned: boolean;
     form: number;
@@ -28,7 +29,6 @@ export class Horse {
     
     updateDaillyFitness(): void {
         if(this.staminaSpeed < this.speed){
-            console.log("prev fitness:" + this.staminaSpeed);
             this.staminaSpeed = Utils.precisionRound(this.staminaSpeed + 
                     (this.staminaSpeed * 0.1 * (this.endurance/20)), 2);
             if(this.staminaSpeed > this.speed){
@@ -38,12 +38,13 @@ export class Horse {
         this.calculateStaminaDisplay();
     }
 
-    constructor( id: number, name: string, speed: number, endurance: number, form: number ) {
+    constructor( id: number, name: string, speed: number, endurance: number, acceleration: number, form: number ) {
         this.id = id;
         this.name = name;
         this.speed = speed;
         this.staminaSpeed = speed;
         this.endurance = endurance;
+        this.acceleration = acceleration;
         this.calculateStaminaDisplay();
         this.price = Math.round(( ( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) )
             + ( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) ) ) / TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
@@ -64,6 +65,7 @@ export class HorseInRace {
     speed: number;
     fullStamina: number;
     currentStamina: number;
+    currentAcceleration: number;
     color: string;
     cssBackground: string;
     distanceDone: number;
@@ -76,12 +78,18 @@ export class HorseInRace {
         this.speed = horse.staminaSpeed;
         this.fullStamina = Math.round(( horse.endurance * 1.7 ) - 11 );
         this.currentStamina = this.fullStamina;
+       
+        this.currentAcceleration = Utils.precisionRound(Math.log10(horse.acceleration)/3, 2);
         this.color = color;
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
         this.strategy = RaceStrategy.Everything;
         this.staminaDisplay = 100;
+    }
+    
+    updateAcc(){
+        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration)/2.5, 2);
     }
 }
 

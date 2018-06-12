@@ -1,5 +1,6 @@
 <div class="pickHorse" [style.float]="horse.owned ? 'none' : 'left' " [style.borderColor]="page=='myhorses' && horse.id == commonService.gameInstance.playerOne.selectedHorseId ? '#0000ff' : '#ccc'"><div class="title">{{horse.name}}</div>
 		Speed: {{horse.speed | number:'2.0-1'}}<br/>
+		Acceleration: {{horse.acceleration | number:'2.0-1'}}<br/>
 		Endurance: {{horse.endurance| number:'2.0-1' }}<br />
 		<span *ngIf="horse.owned">	Form: {{horse.form | formstring}}<br/></span>
 		<span *ngIf="horse.owned"><span class="left">Stamina:</span><div class="fullStaminaBar"><div class="staminaBar" [style.width.px]="horse.staminaDisplay"></div></div><br /></span> 

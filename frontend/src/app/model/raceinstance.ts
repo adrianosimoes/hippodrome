@@ -37,7 +37,7 @@ export class RaceInstance {
     cssMaxDistance: number;
     worldChampion: boolean = false;
     lastCommentHorses: HorseInRace[];
-    ticksSinceLastComment;
+    totalTicks;
     comments: Comment[];
     state: RaceState;
     debugMessage: string;
@@ -54,7 +54,7 @@ export class RaceInstance {
         this.horses = [];
         this.horses.push( this.playerHorse );
         this.lastCommentHorses = [];
-        this.ticksSinceLastComment = 0;
+        this.totalTicks = 0;
         this.comments = [];
         this.state = RaceState.PreRace;
         this.debugMessage="";
@@ -128,12 +128,13 @@ export class RaceInstance {
         Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.distanceDone - h1.distanceDone );
 
         this.updateComments();
+        this.totalTicks++;
 
         if ( allFinished ) {
             this.finishRace();
             return;
         }
-        setTimeout(() => { this.updateRace() }, Utils.devMode() ? 3 : TICK_MILLISECONDS );
+        setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
     }
 
     updateComments(): void {
@@ -152,7 +153,7 @@ export class RaceInstance {
         }
 
         if ( this.state === RaceState.Racing ) {
-            if ( this.ticksSinceLastComment == FIRST_TICK_COMMENT ) {
+            if ( this.totalTicks == FIRST_TICK_COMMENT ) {
                 if ( this.lastCommentHorses.length == 0 ) {
                     this.comments.push(
                         new Comment( "In the first yards " + this.sortedHorses[0].baseHorse.name + " is in front.",
@@ -163,7 +164,7 @@ export class RaceInstance {
                 this.lastCommentHorses[0] = this.sortedHorses[0];
             }
 
-            if ( this.ticksSinceLastComment > COMMENT_EVERY_TICKS && this.ticksSinceLastComment % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT ) {
+            if ( this.totalTicks > COMMENT_EVERY_TICKS && this.totalTicks % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT ) {
                 if ( this.lastCommentHorses[0].track == this.sortedHorses[0].track ) {
                     this.addCommentIfNotRepeated(
                         new Comment( this.sortedHorses[0].baseHorse.name + " remains in the lead.",
@@ -184,8 +185,6 @@ export class RaceInstance {
                 this.lastCommentHorses = [];
                 this.lastCommentHorses[0] = this.sortedHorses[0];
             }
-
-            this.ticksSinceLastComment++;
         }
     }
 
@@ -207,11 +206,19 @@ export class RaceInstance {
             }   
         }
         
+        if(this.totalTicks==50){
+            horse.updateAcc();
+        }
+        
+        if(this.totalTicks<=150){
+            maxSpeed *= horse.currentAcceleration;
+        }
+        
         let step = Utils.getRandomInt( 0, maxSpeed - 1 );
         
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
-        let formSpeed = Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
+        let formSpeed =  Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
         if ( step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
