@@ -24,7 +24,7 @@ export class CommonService {
     backgroundImage: SafeStyle;
 
     static TRAIN_SPEED: number = 1;
-    static TRAIN_STAMINA: number = 2;
+    static TRAIN_ENDURANCE: number = 2;
 
     public loading: boolean;
     public loadingText: string;
@@ -57,7 +57,7 @@ export class CommonService {
         this.savedGame.playerOne.horses = [];
         for ( let i = 0; i < horsesJson.length; i++ ) {
             let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
-                horsesJson[i].speed, horsesJson[i].stamina, horsesJson[i].form );
+                horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].form );
             horseInstance.owned = true;
             if ( horsesJson[i].fitnessSpeed > 0 ) {
                 horseInstance.fitnessSpeed = horsesJson[i].fitnessSpeed;
@@ -170,7 +170,7 @@ export class CommonService {
             if ( currTrainer.trainType == CommonService.TRAIN_SPEED ) {
                 selectedHorse.speed += trainStep;
             } else {
-                selectedHorse.stamina += trainStep;
+                selectedHorse.endurance += trainStep;
             }
         }
     }
@@ -182,7 +182,7 @@ export class CommonService {
     addHorseToPlayer( horse: Horse ): boolean {
         if ( this.gameInstance.playerOne.money >= horse.price ) {
             this.gameInstance.playerOne.money -= horse.price;
-            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name, horse.speed, horse.stamina, horse.form );
+            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name, horse.speed, horse.endurance, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push( newHorse );
@@ -237,10 +237,10 @@ export class CommonService {
     }
 
     buyHorseSkill( player: Player, horse: TrainingHorse, trainType: number ): boolean {
-        let price: number = trainType == CommonService.TRAIN_SPEED ? horse.trainSpeedPrice : horse.trainStaminaPrice;
+        let price: number = trainType == CommonService.TRAIN_SPEED ? horse.trainSpeedPrice : horse.trainEndurancePrice;
         if ( player.money >= price ) {
             player.money -= price;
-            trainType == CommonService.TRAIN_SPEED ? horse.baseHorse.speed++ : horse.baseHorse.stamina++;
+            trainType == CommonService.TRAIN_SPEED ? horse.baseHorse.speed++ : horse.baseHorse.endurance++;
             return true;
         } else {
             return false;

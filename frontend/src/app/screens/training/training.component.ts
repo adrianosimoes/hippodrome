@@ -31,8 +31,8 @@ export class TrainingComponent implements OnInit {
             "Trains the speed every day for the active horse. 1 speed up every 10 days." );
         this.trainersToSell.push( currTrainer );
 
-        currTrainer = new Trainer( 2, "Stamina Trainer", 3600, 45, CommonService.TRAIN_STAMINA, 10,
-            "Trains the stamina every day for the active horse. 1 stamina up every 10 days." );
+        currTrainer = new Trainer( 2, "Endurance Trainer", 3600, 45, CommonService.TRAIN_ENDURANCE, 10,
+            "Trains the endurance every day for the active horse. 1 endurance up every 10 days." );
         this.trainersToSell.push( currTrainer );
     }
 
@@ -54,8 +54,8 @@ export class TrainingComponent implements OnInit {
         }
     }
 
-    trainStamina( horse: TrainingHorse ): void {
-        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, CommonService.TRAIN_STAMINA );
+    trainEndurance( horse: TrainingHorse ): void {
+        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, CommonService.TRAIN_ENDURANCE);
         if ( success ) {
             this.commonService.nextDay();
             this.reload();
