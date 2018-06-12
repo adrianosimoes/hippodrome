@@ -15,7 +15,7 @@ export class TrainingComponent implements OnInit {
     playerTrainingHorses: TrainingHorse[];
     currPlayer: Player;
     trainersToSell: Trainer[];
-    utils: Utils = Utils;
+    debug: boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
 

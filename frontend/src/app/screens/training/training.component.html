@@ -1,7 +1,7 @@
 <div id="training"  class="screen">
 	<h3>Stables (Training)</h3>
 	Money: {{currPlayer.money | currency: 'EUR'}}
-	<div *ngIf="utils.devMode()" class="buyStats" >
+	<div *ngIf="debug" class="buyStats" >
 	  	<div class="horsesContainer" *ngFor="let currHorse of playerTrainingHorses">
 		  	<div class="pickHorse" [style.float]="'left'" [style.borderColor]="currHorse.baseHorse.id == commonService.gameInstance.playerOne.selectedHorseId ? '#0000ff' : '#ccc'"><div class="title">{{currHorse.baseHorse.name}}</div>
 				Speed: {{currHorse.baseHorse.speed | number:'2.0-1'}}<br/>
