@@ -34,7 +34,7 @@ export class Utils {
     }
 
     static devMode() {
-        return window.location.href.startsWith( "http://localhost", 0 );
+        return window.location.href.startsWith( "http://127.0.0.1", 0 );
     }
     
     static calculateStamina(speed: number, maxSpeed: number, baseValue: number): number {

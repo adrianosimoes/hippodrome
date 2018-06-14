@@ -25,6 +25,8 @@ export class CommonService {
 
     static TRAIN_SPEED: number = 1;
     static TRAIN_ENDURANCE: number = 2;
+    
+    static INITIAL_MONEY: number = 5000;
 
     public loading: boolean;
     public loadingText: string;
@@ -40,7 +42,8 @@ export class CommonService {
             this.loadToSavedSlot( savedGameString );
         }
 
-        let playerOne = new Player( 1, '', '#1281f1', '#feda10', 0, Utils.devMode() ? 105000 : 5000 );
+        let playerOne = new Player( 1, '', '#1281f1', '#feda10',
+                0, Utils.devMode() ? 105000 : CommonService.INITIAL_MONEY );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
         this.generateBgImage();
     }

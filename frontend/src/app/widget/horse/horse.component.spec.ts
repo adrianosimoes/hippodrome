@@ -21,7 +21,7 @@ describe('HorseComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(HorseComponent);
     component = fixture.componentInstance;
-    component.horse = new Horse(1, "aaa", 10, 10, 10);
+    component.horse = new Horse(1, "aaa", 10, 10, 11, 10);
     component.page = "aa";
     fixture.detectChanges();
   });
