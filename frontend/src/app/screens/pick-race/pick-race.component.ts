@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { CommonService } from '../../model/common.service';
 import { Utils } from '../../model/utils';
 import { Race, RaceLeague } from '../../model/race';
+import { Player } from "src/app/model/player";
 
 
 
@@ -12,6 +13,7 @@ import { Race, RaceLeague } from '../../model/race';
     styleUrls: ['./pick-race.component.css']
 } )
 export class PickRaceComponent implements OnInit {
+    currPlayer: Player;
 
     constructor( private router: Router, public commonService: CommonService ) { }
 
@@ -19,6 +21,7 @@ export class PickRaceComponent implements OnInit {
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
         }
+        this.currPlayer = this.commonService.getPlayer();
     }
 
 

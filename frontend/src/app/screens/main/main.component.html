@@ -19,11 +19,11 @@
 		<div class="nextArea">
 			<h4>{{currGame.date | date: "longDate" }}</h4>
 			<div class="mainButtonArea">
-				<button [class.disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="pickRace()">RACE</button>
-				<button [class.disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="training" (click)="gotoTraining()">STABLES</button>
-				<button [class.disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>
+				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="pickRace()">RACE</button>
+				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="training" (click)="gotoTraining()">STABLES</button>
+				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>
 				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race, train or exhibit.</div>
-				<button class="skip"  [class.disabled]="commonService.loading" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
+				<button class="skip" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
 			</div>
 		</div>
 	</div>

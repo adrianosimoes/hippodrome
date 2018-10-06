@@ -23,12 +23,14 @@ export class Race {
 export class RaceLeague {
     difficulty: number;
     name: string;
-    races: Race[]
+    races: Race[];
+    numberOfWins: number;
     
-    constructor( difficulty: number, name: string){
+    constructor( difficulty: number, name: string, numberOfWins: number){
         this.difficulty = difficulty;
         this.name = name;
         this.races = [];
+        this.numberOfWins = numberOfWins;
     }
 
     addRace(race: Race) : void {

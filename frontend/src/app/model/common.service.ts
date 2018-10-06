@@ -94,28 +94,28 @@ export class CommonService {
     initRaces(): void {
         this.racesLeagues = [];
 
-        let raceLeague = new RaceLeague( 2, "Ungraded" );
+        let raceLeague = new RaceLeague( 2, "Ungraded", 0);
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( 2, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 650, '#eef4be', 100, 6, [1000, 450, 200] ) );
 
-        raceLeague = new RaceLeague( 3, "Group 3" );
+        raceLeague = new RaceLeague( 3, "Group 3", 5);
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( 4, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
         raceLeague.addRace( new Race( 5, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
         raceLeague.addRace( new Race( 6, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
 
-        raceLeague = new RaceLeague( 5, "Group 2" );
+        raceLeague = new RaceLeague( 5, "Group 2", 10);
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( 7, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
         raceLeague.addRace( new Race( 8, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
         raceLeague.addRace( new Race( 9, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
 
-        raceLeague = new RaceLeague( 9, "World Cup" );
+        raceLeague = new RaceLeague( 9, "World Cup", 15);
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( 10, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );

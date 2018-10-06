@@ -50,10 +50,9 @@ button{
 	padding: 5px 20px 5px 20px;
 }
 
-button.disabled{
+button:disabled{
 	background-color: #ccc !important;
 	color: #999 !important;
-	margin-bottom: 5px;
 }
 
 input[text], button {
@@ -134,16 +133,6 @@ button {
 	text-align:center;
 	background-color: #fff;
 	color: #222;
-}
-
-button.race{
-	background-color: #00ca00;
-	color: #222 !important;	
-}
-
-button.skip{
-	background-color: #000 !important;
-	color: #ddd;
 }
 
 .buttonArea{
