@@ -6,6 +6,12 @@ const ENDURANCE_SKILL_PRICE: number = 4;
 const TOTAL_SKILL_PRICE: number = 8;
 const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
+export enum HorseSkills {
+    SPEED = 1,
+    ENDURANCE = 2,
+    ACCELERATION = 3,
+}
+
 export class Horse {
     static AVG_FORM: number = 11;
     

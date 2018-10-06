@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { Horse, TrainingHorse } from '../../model/horse';
+import { Horse, TrainingHorse, HorseSkills } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
 import { CommonService } from '../../model/common.service';
@@ -27,11 +27,11 @@ export class TrainingComponent implements OnInit {
         this.reload();
         this.trainersToSell = [];
 
-        let currTrainer = new Trainer( 1, "Speed Trainer", 7500, 100, CommonService.TRAIN_SPEED, 10,
+        let currTrainer = new Trainer( 1, "Speed Trainer", 7500, 100, HorseSkills.SPEED, 10,
             "Trains the speed every day for the active horse. 1 speed up every 10 days." );
         this.trainersToSell.push( currTrainer );
 
-        currTrainer = new Trainer( 2, "Endurance Trainer", 3600, 45, CommonService.TRAIN_ENDURANCE, 10,
+        currTrainer = new Trainer( 2, "Endurance Trainer", 3600, 45, HorseSkills.ENDURANCE, 10,
             "Trains the endurance every day for the active horse. 1 endurance up every 10 days." );
         this.trainersToSell.push( currTrainer );
     }
@@ -45,7 +45,7 @@ export class TrainingComponent implements OnInit {
     }
 
     trainSpeed( horse: TrainingHorse ): void {
-        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, CommonService.TRAIN_SPEED );
+        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.SPEED );
         if ( success ) {
             this.commonService.nextDay();
             this.reload();
@@ -55,7 +55,7 @@ export class TrainingComponent implements OnInit {
     }
 
     trainEndurance( horse: TrainingHorse ): void {
-        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, CommonService.TRAIN_ENDURANCE);
+        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.ENDURANCE);
         if ( success ) {
             this.commonService.nextDay();
             this.reload();

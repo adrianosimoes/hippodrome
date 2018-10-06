@@ -4,7 +4,7 @@ import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { GameInstance } from './gameinstance';
 import { Utils, StaticData } from './utils';
 import { Player } from './player';
-import { Horse, TrainingHorse } from './horse';
+import { Horse, TrainingHorse, HorseSkills } from './horse';
 import { Race, RaceLeague } from './race';
 import { Trainer } from './trainer';
 
@@ -22,9 +22,6 @@ export class CommonService {
     gameInstance: GameInstance;
     savedGame: GameInstance;
     backgroundImage: SafeStyle;
-
-    static TRAIN_SPEED: number = 1;
-    static TRAIN_ENDURANCE: number = 2;
     
     static INITIAL_MONEY: number = 5000;
 
@@ -170,7 +167,7 @@ export class CommonService {
             //Pay salary:
             player.money -= currTrainer.salary;
             let trainStep = 1 / currTrainer.speed;
-            if ( currTrainer.trainType == CommonService.TRAIN_SPEED ) {
+            if ( currTrainer.trainType == HorseSkills.SPEED ) {
                 selectedHorse.speed += trainStep;
             } else {
                 selectedHorse.endurance += trainStep;
@@ -245,10 +242,10 @@ export class CommonService {
     }
 
     buyHorseSkill( player: Player, horse: TrainingHorse, trainType: number ): boolean {
-        let price: number = trainType == CommonService.TRAIN_SPEED ? horse.trainSpeedPrice : horse.trainEndurancePrice;
+        let price: number = trainType == HorseSkills.SPEED ? horse.trainSpeedPrice : horse.trainEndurancePrice;
         if ( player.money >= price ) {
             player.money -= price;
-            trainType == CommonService.TRAIN_SPEED ? horse.baseHorse.speed++ : horse.baseHorse.endurance++;
+            trainType == HorseSkills.SPEED ? horse.baseHorse.speed++ : horse.baseHorse.endurance++;
             return true;
         } else {
             return false;
