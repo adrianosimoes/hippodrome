@@ -6,7 +6,7 @@
 	  	<div>First Place: &nbsp;{{currLeague.races[0].prizes[0] | currency: 'EUR': 'symbol':'1.0-0'}}</div>
 	  	<div>Difficulty: {{currLeague.difficulty | racedifficulty}}</div>
 	  	<div>Victories Needed: {{currLeague.numberOfWins}}</div>
-	  	<button (click)="gotoRace(currLeague)" [disabled]="commonService.loading || this.currPlayer.victories < currLeague.numberOfWins">Select</button>
+	  	<button (click)="gotoRace(currLeague)" [disabled]="!debug && (commonService.loading || this.currPlayer.victories < currLeague.numberOfWins)">Select</button>
   	</div>
   	<div class="clear"></div> 
 </div>

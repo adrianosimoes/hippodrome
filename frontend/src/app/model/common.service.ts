@@ -99,7 +99,7 @@ export class CommonService {
 
         raceLeague.addRace( new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( 2, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 650, '#eef4be', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 650, '#dce2a5', 100, 6, [1000, 450, 200] ) );
 
         raceLeague = new RaceLeague( 3, "Group 3", 5);
         this.racesLeagues.push( raceLeague );

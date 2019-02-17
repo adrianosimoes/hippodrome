@@ -148,6 +148,14 @@
 	color: #fff;
 }
 
+.roundRaceStadium{
+	margin: 0 auto;
+	margin-top: 20px;
+	padding-top:20px;
+	padding-bottom:20px;
+	color: #fff;
+}
+
 .hideRaceStadium{
 	margin: 0 auto;
 	scale: 0.0;
@@ -158,28 +166,70 @@
 	margin-left: 40px;
 	margin-top: 7px;
 	margin-right: 40px;
+	border: 1px solid #fff;	
+	border-left: none;
+	border-right: 3px dashed #fff;
+}
+
+.roundRaceTrack{
+	margin-top: 7px;
+	border: 1px solid #fff;	
+	border-bottom: none;
+	border-left: none;
+ 	border-top-right-radius: 150px;
+}
+
+.roundRaceTrack:after {
+	content: ""; 
+	display: block;
+    height:15px; 
+    border-top: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-top-right-radius: 15px;
+    width: calc(100% - 150px);
+}
+
+.roundRaceTrackSecond{
+	margin-left: 240px;
+	border: 1px solid #fff;	
+	border-top: none;
+	border-left: none;
+ 	border-bottom-right-radius: 150px;
+ 	transition: 1s cubic-bezier(0, 0.33, 0.66, 1);
+}
+
+.roundRaceTrackSecond:before {
+    content: ""; 
+    display: block;
+    width: 250px; 
+    height:15px;
+    border-bottom: 1px solid #fff;
+    border-right: 1px solid #fff;
+    border-bottom-right-radius: 15px;
 }
 
 .prizeValue{
 	margin-left: 15px;
 }
 
-.raceLine:first-child{
-	border-top: 1px solid #fff;
+
+.roundRaceTrackSecond .raceLine{
+	 border-left: 3px dashed #fff;
 }
 
-.raceLine:last-child{
-	border-bottom: 1px solid #fff;
-}
+
 
 .raceLine{
 	float: left;
 	display: flex;
-	border-left: 1px solid #fff;
-	border-right: 3px dashed #fff;
-	height: 34px;
+	height: 16px;
 	margin-left: 0px;
 	align-items: center;
+	border-left: 1px solid;
+}
+
+.raceLine:nth-last-child(2){
+	height: 17px;
 }
 
 .hideRaceLine {
@@ -195,23 +245,24 @@
 
 .silks {
 	float: left;
-	
+	margin-top: 1px;
 }
+
 
 .silkContainer {
 	clear: left;
-	transform: scale(0.1);
+	transform: scale(0.07);
 	position: relative;
 	width: 20px;
-	height:34px;
-	top: 0px;
+	height: 16px;
+	top: 1px;
 	left: 4px;
 }
 
 
 .silks .playerHorseMarker{
-	margin-top: 20px;
-	margin-bottom: -30px;
+	margin-top: 10px;
+	margin-bottom: -20px;
 	left: 8px;
 }
 
