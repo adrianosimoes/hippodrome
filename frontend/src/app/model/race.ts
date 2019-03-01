@@ -1,4 +1,6 @@
 export class Race {
+    static CURVE_RACE_MIN_DISTANCE: number = 700;
+
     id: number;
     difficulty: number;
     name: string;

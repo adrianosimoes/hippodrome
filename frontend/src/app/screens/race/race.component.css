@@ -128,7 +128,7 @@
 }
 
 .raceTextContainer{
-	margin-bottom: 10px;
+	margin-bottom: 5px;
 }
 
 .staminaLabel {
@@ -142,17 +142,17 @@
 
 .raceStadium{
 	margin: 0 auto;
-	margin-top: 20px;
-	padding-top:20px;
-	padding-bottom:20px;
+	margin-top: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	color: #fff;
 }
 
 .roundRaceStadium{
 	margin: 0 auto;
-	margin-top: 20px;
-	padding-top:20px;
-	padding-bottom:20px;
+	margin-top: 10px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	color: #fff;
 }
 
@@ -182,10 +182,10 @@
 .roundRaceTrack:after {
 	content: ""; 
 	display: block;
-    height:15px; 
+    height: 35px; 
     border-top: 1px solid #fff;
     border-right: 1px solid #fff;
-    border-top-right-radius: 15px;
+    border-top-right-radius: 35px;
     width: calc(100% - 150px);
 }
 
@@ -202,10 +202,10 @@
     content: ""; 
     display: block;
     width: 250px; 
-    height:15px;
+    height: 35px;
     border-bottom: 1px solid #fff;
     border-right: 1px solid #fff;
-    border-bottom-right-radius: 15px;
+    border-bottom-right-radius: 35px;
 }
 
 .prizeValue{
@@ -245,7 +245,7 @@
 
 .silks {
 	float: left;
-	margin-top: 1px;
+	margin-top: 2px;
 }
 
 

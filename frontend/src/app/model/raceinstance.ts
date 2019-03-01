@@ -11,6 +11,8 @@ var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
 
+var ROUND_TRACK_BOTTOM_DISTANCE : number = 400;
+
 
 export enum RaceState {
     PreRace = 1,
@@ -42,8 +44,9 @@ export class RaceInstance {
     state: RaceState;
     debugMessage: string;
     baseRaceSpeed: number;
-
-
+    roundTrack: boolean;
+    roundTrackCurvePixels: number = 150;
+    topDistance: number;
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
         this.baseRace = race;
@@ -60,6 +63,9 @@ export class RaceInstance {
         this.debugMessage="";
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
         
+        this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
+        this.topDistance = race.distance - (ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels/2) - this.roundTrackCurvePixels/2;
+        
         this.playerHorse.staminaDisplay = Utils.calculateStamina(this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100);
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
@@ -73,7 +79,7 @@ export class RaceInstance {
         this.sortedHorses = this.horses.slice();
 
         for ( let i = 0; i < this.horses.length; i++ ) {
-            this.horses[i].track = i + 1;
+            this.horses[i].setTrack(i + 1);
         }
 
         this.cssMaxDistance = this.baseRace.distance + 40;
@@ -106,21 +112,21 @@ export class RaceInstance {
 
         //Update movement:
         for ( let currHorse of this.horses ) {
-            if ( currHorse.cssLeft >= this.cssMaxDistance ) {
+            if ((!this.roundTrack && currHorse.cssLeft >= this.cssMaxDistance) ||
+                    (this.roundTrack && currHorse.distanceDone >= this.baseRace.distance)) {
                 continue;
             } else {
                 allFinished = false;
             }
 
             let step: number = this.getMovementStep( currHorse );
-            currHorse.cssLeft += step;
+            this.moveHorse(currHorse, step);
 
-            currHorse.distanceDone += step;
+           
             if ( currHorse.distanceDone > this.baseRace.distance ) {
                 this.state = RaceState.WinnerFinished;
                 currHorse.distanceDone = this.baseRace.distance;
-            }
-
+            } 
         }
 
         this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
@@ -135,6 +141,28 @@ export class RaceInstance {
             return;
         }
         setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
+    }
+    
+    moveHorse(currHorse: HorseInRace, step: number): void {
+        currHorse.distanceDone += step;
+        
+        if(!this.roundTrack || currHorse.distanceDone <= this.topDistance - this.roundTrackCurvePixels){
+            currHorse.cssLeft += step;
+        } else if(currHorse.distanceDone <= this.topDistance + this.roundTrackCurvePixels){
+            let curveDone: number = (currHorse.distanceDone - (this.topDistance - this.roundTrackCurvePixels))/2
+            currHorse.cssTop = curveDone + (52 * (curveDone / this.roundTrackCurvePixels)) ;
+            if(currHorse.distanceDone <= this.topDistance){
+                currHorse.cssLeft += step;
+            } else {
+                currHorse.cssLeft -= step;
+            }
+        } else {
+            currHorse.cssLeft -= step;
+            let finishLine = ((this.baseRace.distance/2 - ROUND_TRACK_BOTTOM_DISTANCE) * 2);
+            if(currHorse.cssLeft <= finishLine){
+                currHorse.cssLeft = finishLine;
+            }
+        }
     }
 
     updateComments(): void {

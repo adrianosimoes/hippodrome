@@ -76,6 +76,7 @@ export class HorseInRace {
     cssBackground: string;
     distanceDone: number;
     cssLeft: number;
+    cssTop: number;
     staminaDisplay: number;
     strategy: RaceStrategy;
 
@@ -90,8 +91,13 @@ export class HorseInRace {
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
+        this.cssTop = 0;
         this.strategy = RaceStrategy.Everything;
         this.staminaDisplay = 100;
+    }
+    
+    setTrack(track: number){
+        this.track = track;
     }
     
     updateAcc(){

@@ -20,10 +20,7 @@ export class RaceComponent implements OnInit {
     debug : boolean = Utils.devMode();
     RaceState : typeof RaceState = RaceState;
     RaceStrategy : typeof RaceStrategy = RaceStrategy;
-    curveRaceMinDistance: number = 700;
-    roundTrack: boolean = false;
-    roundTrackCurvePixels: number = 150;
-
+    curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
     constructor( private router: Router, public activeRoute: ActivatedRoute, public commonService: CommonService ) {}
 
     ngOnInit() {
@@ -36,7 +33,7 @@ export class RaceComponent implements OnInit {
         this.raceId = this.activeRoute.snapshot.params['id'];
         let race = this.commonService.getRace( this.raceId );
         this.currRace = new RaceInstance( race, this, this.commonService );
-        this.roundTrack = this.currRace.baseRace.distance > this.curveRaceMinDistance;
+
     }
     
     startRace(): void {
