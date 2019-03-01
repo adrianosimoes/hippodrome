@@ -1,5 +1,7 @@
 export class Race {
     static CURVE_RACE_MIN_DISTANCE: number = 700;
+    static RACETRACK_HEIGHT: number = 16;
+    static ROUND_TRACK_BOTTOM_DISTANCE: number = 440;
 
     id: number;
     difficulty: number;

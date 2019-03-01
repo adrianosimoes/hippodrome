@@ -21,6 +21,8 @@ export class RaceComponent implements OnInit {
     RaceState : typeof RaceState = RaceState;
     RaceStrategy : typeof RaceStrategy = RaceStrategy;
     curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
+    roundTrackBottomDistance: number = Race.ROUND_TRACK_BOTTOM_DISTANCE;
+
     constructor( private router: Router, public activeRoute: ActivatedRoute, public commonService: CommonService ) {}
 
     ngOnInit() {
