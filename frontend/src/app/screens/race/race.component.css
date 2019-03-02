@@ -195,7 +195,7 @@
 }
 
 .roundRaceTrackSecond{
-	margin-left: 150px;
+	margin-left: 75px;
 	border: 1px solid #fff;	
 	border-top: none;
 	border-left: none;
@@ -206,7 +206,7 @@
 .roundRaceTrackSecond:before {
     content: ""; 
     display: block;
-    width: 370px; 
+    width: 445px; 
     height: 25px;
     border-bottom: 1px solid #fff;
     border-right: 1px solid #fff;
