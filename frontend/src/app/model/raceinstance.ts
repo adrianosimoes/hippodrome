@@ -142,28 +142,26 @@ export class RaceInstance {
     }
 
     moveHorse( currHorse: HorseInRace, step: number ): void {
-        currHorse.distanceDone += step;
-        if ( !this.roundTrack || currHorse.distanceDone <= this.topDistance - (this.roundTrackCurvePixels/2)) {
+        if ( !this.roundTrack || currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) ) {
             currHorse.cssLeft += step;
-            if (this.roundTrack && currHorse.cssTop < this.cssBottom ) {
-                if(currHorse.track <= 3){
+            currHorse.distanceDone += step;
+            if ( this.roundTrack && currHorse.cssTop < this.cssBottom ) {
+                if ( currHorse.track <= 3 ) {
                     currHorse.cssTop += step / 2.5;
-                } else  currHorse.cssTop += step / 3.5;
+                } else currHorse.cssTop += step / 3.5;
             }
-        } else if ( currHorse.distanceDone <= this.topDistance + (this.roundTrackCurvePixels/2) ) {
-            let curveDone: number = ( currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels /2) ) / 1.5;
-            currHorse.cssTop = this.cssBottom + curveDone;
-            if ( currHorse.distanceDone <= this.topDistance) {
-                currHorse.cssLeft += step;
+        } else if ( currHorse.distanceDone <= this.topDistance - (this.roundTrackCurvePixels/2) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
+            let curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels /2 );
+            currHorse.cssTop = this.cssBottom + Race.ROUND_TRACK_HORSE_CURVE - (Race.ROUND_TRACK_HORSE_CURVE * Math.cos((curveDone * Math.PI)/(Race.ROUND_TRACK_HORSE_CURVE * 2)));
+            if ( currHorse.distanceDone <= this.topDistance - (this.roundTrackCurvePixels /2) + Race.ROUND_TRACK_HORSE_CURVE) {
+                currHorse.cssLeft += step / 1.4;
             } else {
-                currHorse.cssLeft -= step;
+                currHorse.cssLeft -= step / 1.4;
             }
+            currHorse.distanceDone += step / 1.3;
         } else {
             currHorse.cssLeft -= step;
-           /* let finishLine = ( ( this.baseRace.distance / 2 - Race.ROUND_TRACK_BOTTOM_DISTANCE ) * 2 );
-            if ( currHorse.cssLeft <= finishLine ) {
-                currHorse.cssLeft = finishLine;
-            }*/ 
+            currHorse.distanceDone += step;
         }
     }
 

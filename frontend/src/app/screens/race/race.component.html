@@ -51,8 +51,8 @@
 				</div>
 				<div class="clear"></div>
 			</div>
-			<div *ngIf="currRace.state !== RaceState.RaceFinished && currRace.roundTrack" [class]="'roundRaceTrackSecond'"  [ngStyle]="{'width.px': roundTrackBottomDistance + 42 + (currRace.roundTrackCurvePixels/4)}">
-				<div *ngFor="let currHorse of currRace.horses" [class]="currRace.state === RaceState.RaceFinished ? 'hideRaceLine' : 'raceLine'" [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance : roundTrackBottomDistance + 42 + (currRace.roundTrackCurvePixels/4)}">
+			<div *ngIf="currRace.state !== RaceState.RaceFinished && currRace.roundTrack" [class]="'roundRaceTrackSecond'"  [ngStyle]="{'width.px': roundTrackBottomDistance + 5 + (currRace.roundTrackCurvePixels/2)}">
+				<div *ngFor="let currHorse of currRace.horses" [class]="currRace.state === RaceState.RaceFinished ? 'hideRaceLine' : 'raceLine'" [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance : roundTrackBottomDistance + 5 + (currRace.roundTrackCurvePixels/2)}">
 				</div>
 				<div class="clear"></div>
 			</div>
