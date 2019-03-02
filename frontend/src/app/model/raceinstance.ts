@@ -147,8 +147,8 @@ export class RaceInstance {
             currHorse.cssLeft += step;
             if (this.roundTrack && currHorse.cssTop < this.cssBottom ) {
                 if(currHorse.track <= 3){
-                    currHorse.cssTop += step / 2.8;
-                } else  currHorse.cssTop += step / 4;
+                    currHorse.cssTop += step / 2.5;
+                } else  currHorse.cssTop += step / 3.5;
             }
         } else if ( currHorse.distanceDone <= this.topDistance + (this.roundTrackCurvePixels/2) ) {
             let curveDone: number = ( currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels /2) ) / 1.5;
