@@ -79,6 +79,7 @@ export class HorseInRace {
     cssLeft: number;
     cssBaseTop: number;
     cssTop: number;
+    sinceLastLaneChange;
     staminaDisplay: number;
     strategy: RaceStrategy;
 
@@ -96,6 +97,7 @@ export class HorseInRace {
       
         this.strategy = RaceStrategy.Everything;
         this.staminaDisplay = 100;
+        this.sinceLastLaneChange = 0;
     }
     
     setTrack(track: number){
