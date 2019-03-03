@@ -43,7 +43,7 @@ export class RaceComponent implements OnInit {
     }
 
     exitRace() {
-        this.commonService.nextDay();
+        this.commonService.nextDay(null);
         this.router.navigate( ['main'] );
     }
 

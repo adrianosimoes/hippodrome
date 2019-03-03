@@ -60,7 +60,7 @@ export class RaceInstance {
         this.state = RaceState.PreRace;
         this.debugMessage = "";
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
-        this.cssBottom = ( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT;
+        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + 2;
 
         this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
         this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
@@ -125,6 +125,7 @@ export class RaceInstance {
                 this.state = RaceState.WinnerFinished;
                 currHorse.distanceDone = this.baseRace.distance;
             }
+
         }
 
         this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
@@ -156,7 +157,7 @@ export class RaceInstance {
         } else if ( currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
             let curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels / 2 );
             currHorse.cssTop = currHorse.cssBaseTop + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
-            currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) );
+            currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( ( Race.ROUND_TRACK_HORSE_CURVE - 4 ) * 2 ) );
             currHorse.distanceDone += step / 1.2;
         } else {
             this.changeRandomLane( currHorse, false );
@@ -166,31 +167,59 @@ export class RaceInstance {
     }
 
     changeRandomLane( currHorse: HorseInRace, begin: boolean ): void {
-        if ( this.roundTrack && currHorse.sinceLastLaneChange > 120 ) {
+        if ( this.roundTrack && currHorse.sinceLastLaneChange > 100 ) {
             if ( begin ) {
-                var rnd: number = Utils.getRandomInt( 0, 30 );
+                var rnd: number = Utils.getRandomInt( 0, 20 );
                 if ( rnd == 0 && currHorse.cssTop < this.cssBottom ) {
                     currHorse.cssTop += 1;
                     currHorse.sinceLastLaneChange = 0;
-                } else if ( rnd == 1 && currHorse.cssTop > this.cssBottom - 5 ) {
+                } else if ( rnd == 1 && currHorse.cssTop > this.cssBottom - 6 ) {
                     currHorse.cssTop -= 1;
                     currHorse.sinceLastLaneChange = 0;
                 }
             } else {
-                if ( currHorse.cssTop > 182 ) {
-                    var rnd: number = Utils.getRandomInt( 0, 30 );
-                    if ( rnd == 0 ) {
-                        currHorse.cssTop += 3;
-                        currHorse.sinceLastLaneChange = 0;
-                    } else if ( rnd == 1 && currHorse.cssTop > 182 + 3 ) {
-                        currHorse.cssTop -= 3;
-                        currHorse.sinceLastLaneChange = 0;
+                if ( currHorse.cssTop > this.cssBottom + 68 ) {
+                    var rnd: number = Utils.getRandomInt( 0, 70 );
+                    let avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse );
+                    if ( avoidedClostestHorse ) {
+                        //Change lane faster if horse on the way:
+                        currHorse.sinceLastLaneChange = 40;
+                    } else {
+                        if ( rnd == 0 ) {
+                            currHorse.cssTop += 2;
+                            currHorse.sinceLastLaneChange = 0;
+                        } else if ( rnd == 1 && currHorse.cssTop > 182 + 3 ) {
+                            currHorse.cssTop -= 2;
+                            currHorse.sinceLastLaneChange = 0;
+                        }
                     }
                 }
             }
         } else {
             currHorse.sinceLastLaneChange++;
         }
+    }
+
+    avoidClosestHorse( currHorse: HorseInRace ): boolean {
+        let frontHorse: HorseInRace = null;
+        for ( let i of this.sortedHorses ) {
+            if ( currHorse == i ) {
+                break;
+            }
+            frontHorse = i;
+        }
+
+        if ( frontHorse != null && frontHorse.distanceDone < currHorse.distanceDone + 30 ) {
+            if ( Math.abs( frontHorse.cssTop - currHorse.cssTop ) < 12 ) {
+                if ( frontHorse.cssTop <= currHorse.cssTop ) {
+                    currHorse.cssTop += 2;
+                } else {
+                    currHorse.cssTop -= 2;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     updateComments(): void {
