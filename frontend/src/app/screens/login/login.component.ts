@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     }
 
     loadGame() : void {
-        this.commonService.gameInstance = this.commonService.savedGame;
+        this.commonService.loadSavedGame();
         this.router.navigate( ['main'] );
     }
     

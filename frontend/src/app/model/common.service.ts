@@ -22,7 +22,9 @@ export class CommonService {
     gameInstance: GameInstance;
     savedGame: GameInstance;
     backgroundImage: SafeStyle;
-    
+    loadingBackground: SafeStyle;
+
+
     static INITIAL_MONEY: number = 5000;
 
     public loading: boolean;
@@ -33,14 +35,13 @@ export class CommonService {
         this.initRaces();
         this.loading = false;
 
-
         let savedGameString: string = Cookies.get( StaticData.saveGameName );
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-                0, Utils.devMode() ? 105000 : CommonService.INITIAL_MONEY );
+            0, Utils.devMode() ? 105000 : CommonService.INITIAL_MONEY );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
         this.generateBgImage();
     }
@@ -65,6 +66,11 @@ export class CommonService {
             horseInstance.calculateStaminaDisplay();
             this.savedGame.playerOne.horses.push( horseInstance );
         }
+    }
+
+    loadSavedGame(): void {
+        this.gameInstance = this.savedGame;
+        this.loadBgImage( this.savedGame.date );
     }
 
     initHorsesInShop(): void {
@@ -94,9 +100,9 @@ export class CommonService {
     initRaces(): void {
         this.racesLeagues = [];
 
-        let raceLeague = new RaceLeague( 2, "Ungraded", 0);
+        let raceLeague = new RaceLeague( 2, "Ungraded", 0 );
         this.racesLeagues.push( raceLeague );
-        
+
         let id = 1;
 
         raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
@@ -105,21 +111,21 @@ export class CommonService {
         raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
 
 
-        raceLeague = new RaceLeague( 3, "Group 3", 5);
+        raceLeague = new RaceLeague( 3, "Group 3", 5 );
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
         raceLeague.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
         raceLeague.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
 
-        raceLeague = new RaceLeague( 5, "Group 2", 10);
+        raceLeague = new RaceLeague( 5, "Group 2", 10 );
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
         raceLeague.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
         raceLeague.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
 
-        raceLeague = new RaceLeague( 9, "World Cup", 15);
+        raceLeague = new RaceLeague( 9, "World Cup", 15 );
         this.racesLeagues.push( raceLeague );
 
         raceLeague.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
@@ -143,16 +149,16 @@ export class CommonService {
     exhibition(): void {
         this.loading = true;
         this.gameInstance.playerOne.money += 100;
-        this.nextDay(null);
+        this.nextDay( null );
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
-    
-    skipDay() :void {
-        this.nextDay(400);
+
+    skipDay(): void {
+        this.nextDay( 400 );
     }
 
-    nextDay(delay: number): void {
+    nextDay( delay: number ): void {
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         this.generateBgImage();
         if ( !this.loading ) {
@@ -191,7 +197,7 @@ export class CommonService {
         if ( this.gameInstance.playerOne.money >= horse.price ) {
             this.gameInstance.playerOne.money -= horse.price;
             let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name,
-                    horse.speed, horse.endurance, horse.acceleration, horse.form );
+                horse.speed, horse.endurance, horse.acceleration, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push( newHorse );
@@ -234,11 +240,11 @@ export class CommonService {
 
     createRandomHorse( num: number, difficulty: number ): Horse {
         let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
-        return new Horse( 1000 + num, name, 
-                ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
-                ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ),
-                ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
-                Horse.AVG_FORM );
+        return new Horse( 1000 + num, name,
+            ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
+            ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ),
+            ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
+            Horse.AVG_FORM );
     }
 
     chargeEntranceFee( race: Race ) {
@@ -288,8 +294,16 @@ export class CommonService {
         } else {
             this.backgroundImage = 'url("assets/bg7.jpg")';
         }
+        this.loadBgImage( this.gameInstance.date );
     }
 
+    loadBgImage( date: Date ) {
+        if ( !Utils.devMode() ) {
+            this.loadingBackground = 'url("assets/bg' + ( ( ( date.getDate() + 1 ) % 11 ) + 1 ) + '.jpg")';
+        } else {
+            this.loadingBackground = 'url("assets/bg7.jpg")';
+        }
+    }
 }
 
 

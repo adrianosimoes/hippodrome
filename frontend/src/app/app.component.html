@@ -19,6 +19,7 @@
 <router-outlet></router-outlet>
 <div id="bottom"></div>
 </div>
+<div id="loadingBackground" [style.display]="none" [style.background-image]="this.commonService.loadingBackground"></div>
 <div id="overlay" *ngIf="commonService.loading">{{commonService.loadingText}}</div>
 
 
