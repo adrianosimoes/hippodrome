@@ -96,31 +96,35 @@ export class CommonService {
 
         let raceLeague = new RaceLeague( 2, "Ungraded", 0);
         this.racesLeagues.push( raceLeague );
+        
+        let id = 1;
 
-        raceLeague.addRace( new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( 2, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+
 
         raceLeague = new RaceLeague( 3, "Group 3", 5);
         this.racesLeagues.push( raceLeague );
 
-        raceLeague.addRace( new Race( 4, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( 5, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( 6, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
+        raceLeague.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
+        raceLeague.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
+        raceLeague.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
 
         raceLeague = new RaceLeague( 5, "Group 2", 10);
         this.racesLeagues.push( raceLeague );
 
-        raceLeague.addRace( new Race( 7, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( 8, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( 9, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
+        raceLeague.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
+        raceLeague.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
+        raceLeague.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
 
         raceLeague = new RaceLeague( 9, "World Cup", 15);
         this.racesLeagues.push( raceLeague );
 
-        raceLeague.addRace( new Race( 10, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( 11, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( 12, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
+        raceLeague.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
+        raceLeague.addRace( new Race( id++, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
+        raceLeague.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
 
     };
 
