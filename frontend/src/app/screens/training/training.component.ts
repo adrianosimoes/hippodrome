@@ -27,11 +27,11 @@ export class TrainingComponent implements OnInit {
         this.reload();
         this.trainersToSell = [];
 
-        let currTrainer = new Trainer( 1, "Speed Trainer", 7500, 100, HorseSkills.SPEED, 10,
+        let currTrainer = new Trainer( 1, "Speed Trainer", 6200, 80, HorseSkills.SPEED, 10,
             "Trains the speed every day for the active horse. 1 speed up every 10 days." );
         this.trainersToSell.push( currTrainer );
 
-        currTrainer = new Trainer( 2, "Endurance Trainer", 3600, 45, HorseSkills.ENDURANCE, 10,
+        currTrainer = new Trainer( 2, "Endurance Trainer", 3000, 30, HorseSkills.ENDURANCE, 10,
             "Trains the endurance every day for the active horse. 1 endurance up every 10 days." );
         this.trainersToSell.push( currTrainer );
     }
@@ -47,7 +47,7 @@ export class TrainingComponent implements OnInit {
     trainSpeed( horse: TrainingHorse ): void {
         let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.SPEED );
         if ( success ) {
-            this.commonService.nextDay();
+            this.commonService.nextDay(null);
             this.reload();
         } else {
             alert( 'Not enough money' );
@@ -57,7 +57,7 @@ export class TrainingComponent implements OnInit {
     trainEndurance( horse: TrainingHorse ): void {
         let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.ENDURANCE);
         if ( success ) {
-            this.commonService.nextDay();
+            this.commonService.nextDay(null);
             this.reload();
         } else {
             alert( 'Not enough money' );
@@ -68,7 +68,7 @@ export class TrainingComponent implements OnInit {
     buyTrainer( trainer: Trainer ): void {
         let success = this.commonService.buyTrainer( this.currPlayer, trainer );
         if ( success ) {
-            this.commonService.nextDay();
+            this.commonService.nextDay(null);
             this.reload();
         } else {
             alert( 'Not enough money' );
@@ -77,7 +77,7 @@ export class TrainingComponent implements OnInit {
 
     sellTrainer( trainer: Trainer ): void {
         this.commonService.sellTrainer( this.currPlayer, trainer );
-        this.commonService.nextDay();
+        this.commonService.nextDay(null);
         this.reload();
     }
 

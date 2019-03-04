@@ -99,7 +99,7 @@ export class CommonService {
 
         raceLeague.addRace( new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( 2, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 650, '#eef4be', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( 3, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
 
         raceLeague = new RaceLeague( 3, "Group 3", 5);
         this.racesLeagues.push( raceLeague );
@@ -139,17 +139,21 @@ export class CommonService {
     exhibition(): void {
         this.loading = true;
         this.gameInstance.playerOne.money += 100;
-        this.nextDay();
+        this.nextDay(null);
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
+    
+    skipDay() :void {
+        this.nextDay(400);
+    }
 
-    nextDay(): void {
+    nextDay(delay: number): void {
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
         this.generateBgImage();
         if ( !this.loading ) {
             this.loading = true;
-            setTimeout(() => { this.loading = false; }, 200 );
+            setTimeout(() => { this.loading = false; }, delay != null ? delay : 200 );
         }
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );

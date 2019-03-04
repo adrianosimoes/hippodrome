@@ -20,6 +20,8 @@ export class RaceComponent implements OnInit {
     debug : boolean = Utils.devMode();
     RaceState : typeof RaceState = RaceState;
     RaceStrategy : typeof RaceStrategy = RaceStrategy;
+    curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
+    roundTrackBottomDistance: number = Race.ROUND_TRACK_BOTTOM_DISTANCE;
 
     constructor( private router: Router, public activeRoute: ActivatedRoute, public commonService: CommonService ) {}
 
@@ -33,14 +35,15 @@ export class RaceComponent implements OnInit {
         this.raceId = this.activeRoute.snapshot.params['id'];
         let race = this.commonService.getRace( this.raceId );
         this.currRace = new RaceInstance( race, this, this.commonService );
-    }
 
+    }
+    
     startRace(): void {
         this.currRace.startRace();
     }
 
     exitRace() {
-        this.commonService.nextDay();
+        this.commonService.nextDay(null);
         this.router.navigate( ['main'] );
     }
 

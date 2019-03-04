@@ -11,7 +11,6 @@ var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
 
-
 export enum RaceState {
     PreRace = 1,
     Racing = 2,
@@ -42,8 +41,10 @@ export class RaceInstance {
     state: RaceState;
     debugMessage: string;
     baseRaceSpeed: number;
-
-
+    roundTrack: boolean;
+    roundTrackCurvePixels: number = 150;
+    topDistance: number;
+    cssBottom: number;
 
     constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
         this.baseRace = race;
@@ -57,10 +58,14 @@ export class RaceInstance {
         this.totalTicks = 0;
         this.comments = [];
         this.state = RaceState.PreRace;
-        this.debugMessage="";
+        this.debugMessage = "";
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
-        
-        this.playerHorse.staminaDisplay = Utils.calculateStamina(this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100);
+        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + 2;
+
+        this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
+        this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
+
+        this.playerHorse.staminaDisplay = Utils.calculateStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let color: string = this.commonService.createRandomColor();
@@ -73,7 +78,7 @@ export class RaceInstance {
         this.sortedHorses = this.horses.slice();
 
         for ( let i = 0; i < this.horses.length; i++ ) {
-            this.horses[i].track = i + 1;
+            this.horses[i].setTrack( i + 1 );
         }
 
         this.cssMaxDistance = this.baseRace.distance + 40;
@@ -93,7 +98,7 @@ export class RaceInstance {
 
         this.commonService.chargeEntranceFee( this.baseRace );
         this.state = RaceState.Racing;
-        this.comments.push( new Comment( "Read. Set.", "#ffffff") );
+        this.comments.push( new Comment( "Read. Set.", "#ffffff" ) );
         setTimeout(() => { this.raceStart = new Date(); this.comments[0].message += " Go!"; this.updateRace(); }, 500 );
     }
 
@@ -106,16 +111,16 @@ export class RaceInstance {
 
         //Update movement:
         for ( let currHorse of this.horses ) {
-            if ( currHorse.cssLeft >= this.cssMaxDistance ) {
+            if ( ( !this.roundTrack && currHorse.cssLeft >= this.cssMaxDistance ) ||
+                ( this.roundTrack && currHorse.distanceDone >= this.baseRace.distance ) ) {
                 continue;
             } else {
                 allFinished = false;
             }
 
             let step: number = this.getMovementStep( currHorse );
-            currHorse.cssLeft += step;
+            this.moveHorse( currHorse, step );
 
-            currHorse.distanceDone += step;
             if ( currHorse.distanceDone > this.baseRace.distance ) {
                 this.state = RaceState.WinnerFinished;
                 currHorse.distanceDone = this.baseRace.distance;
@@ -135,6 +140,86 @@ export class RaceInstance {
             return;
         }
         setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
+    }
+
+    moveHorse( currHorse: HorseInRace, step: number ): void {
+        if ( !this.roundTrack || currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) ) {
+            currHorse.cssLeft += step;
+            currHorse.distanceDone += step;
+            if ( this.roundTrack && currHorse.cssTop < this.cssBottom - 5 ) {
+                if ( currHorse.track <= 3 ) {
+                    currHorse.cssTop += step / 2.5;
+                } else currHorse.cssTop += step / 3.5;
+            } else {
+                this.changeRandomLane( currHorse, true );
+            }
+            currHorse.cssBaseTop = currHorse.cssTop;
+        } else if ( currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
+            let curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels / 2 );
+            currHorse.cssTop = currHorse.cssBaseTop + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
+            currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( ( Race.ROUND_TRACK_HORSE_CURVE - 4 ) * 2 ) );
+            currHorse.distanceDone += step / 1.2;
+        } else {
+            this.changeRandomLane( currHorse, false );
+            currHorse.cssLeft -= step;
+            currHorse.distanceDone += step;
+        }
+    }
+
+    changeRandomLane( currHorse: HorseInRace, begin: boolean ): void {
+        if ( this.roundTrack && currHorse.sinceLastLaneChange > 100 ) {
+            if ( begin ) {
+                var rnd: number = Utils.getRandomInt( 0, 20 );
+                if ( rnd == 0 && currHorse.cssTop < this.cssBottom ) {
+                    currHorse.cssTop += 1;
+                    currHorse.sinceLastLaneChange = 0;
+                } else if ( rnd == 1 && currHorse.cssTop > this.cssBottom - 6 ) {
+                    currHorse.cssTop -= 1;
+                    currHorse.sinceLastLaneChange = 0;
+                }
+            } else {
+                if ( currHorse.cssTop > this.cssBottom + 68 ) {
+                    var rnd: number = Utils.getRandomInt( 0, 70 );
+                    let avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse );
+                    if ( avoidedClostestHorse ) {
+                        //Change lane faster if horse on the way:
+                        currHorse.sinceLastLaneChange = 40;
+                    } else {
+                        if ( rnd == 0 ) {
+                            currHorse.cssTop += 2;
+                            currHorse.sinceLastLaneChange = 0;
+                        } else if ( rnd == 1 && currHorse.cssTop > 182 + 3 ) {
+                            currHorse.cssTop -= 2;
+                            currHorse.sinceLastLaneChange = 0;
+                        }
+                    }
+                }
+            }
+        } else {
+            currHorse.sinceLastLaneChange++;
+        }
+    }
+
+    avoidClosestHorse( currHorse: HorseInRace ): boolean {
+        let frontHorse: HorseInRace = null;
+        for ( let i of this.sortedHorses ) {
+            if ( currHorse == i ) {
+                break;
+            }
+            frontHorse = i;
+        }
+
+        if ( frontHorse != null && frontHorse.distanceDone < currHorse.distanceDone + 30 ) {
+            if ( Math.abs( frontHorse.cssTop - currHorse.cssTop ) < 12 ) {
+                if ( frontHorse.cssTop <= currHorse.cssTop ) {
+                    currHorse.cssTop += 2;
+                } else {
+                    currHorse.cssTop -= 2;
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     updateComments(): void {
@@ -196,36 +281,36 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let maxSpeed:number = Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
-        if(horse == this.playerHorse){
-            if(this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance /2 ){
+        let maxSpeed: number = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
+        if ( horse == this.playerHorse ) {
+            if ( this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2 ) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
                 //console.log("max speed:" + maxSpeed);
-            } else if(this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < (this.baseRace.distance*2)/3 ){
-                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9* maxSpeed;
-            }   
+            } else if ( this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < ( this.baseRace.distance * 2 ) / 3 ) {
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
+            }
         }
-        
-        if(this.totalTicks==50){
+
+        if ( this.totalTicks == 50 ) {
             horse.updateAcc();
         }
-        
-        if(this.totalTicks<=150){
+
+        if ( this.totalTicks <= 150 ) {
             maxSpeed *= horse.currentAcceleration;
         }
-        
+
         let step = Utils.getRandomInt( 0, maxSpeed - 1 );
-        
+
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
-        let formSpeed =  Utils.precisionRound((horse.speed * horse.baseHorse.form) / Horse.AVG_FORM , 2);
+        let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
         if ( step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
-                if ( Math.floor(horse.speed) > this.baseRaceSpeed) {
+                if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
                     horse.speed--;
-                    if(horse == this.playerHorse){
-                        horse.staminaDisplay = Utils.calculateStamina(horse.speed, horse.baseHorse.speed, 100);
+                    if ( horse == this.playerHorse ) {
+                        horse.staminaDisplay = Utils.calculateStamina( horse.speed, horse.baseHorse.speed, 100 );
                     }
                 }
                 horse.currentStamina = horse.fullStamina;
@@ -263,7 +348,7 @@ export class RaceInstance {
         }
         this.state = RaceState.RaceFinished;
     }
-    
+
     cancel(): void {
         this.canceled = true;
     }

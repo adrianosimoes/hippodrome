@@ -40,7 +40,7 @@ export class MainComponent implements OnInit {
     }
 
     skipDay(): void {
-        this.commonService.nextDay();
+        this.commonService.skipDay();
     }
 
 }

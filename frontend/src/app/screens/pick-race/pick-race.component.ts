@@ -14,6 +14,7 @@ import { Player } from "src/app/model/player";
 } )
 export class PickRaceComponent implements OnInit {
     currPlayer: Player;
+    debug : boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
 

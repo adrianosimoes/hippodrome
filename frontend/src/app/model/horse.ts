@@ -1,4 +1,5 @@
 import { Utils } from './utils';
+import { Race } from "src/app/model/race";
 
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7;
@@ -76,6 +77,9 @@ export class HorseInRace {
     cssBackground: string;
     distanceDone: number;
     cssLeft: number;
+    cssBaseTop: number;
+    cssTop: number;
+    sinceLastLaneChange;
     staminaDisplay: number;
     strategy: RaceStrategy;
 
@@ -90,8 +94,16 @@ export class HorseInRace {
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
+      
         this.strategy = RaceStrategy.Everything;
         this.staminaDisplay = 100;
+        this.sinceLastLaneChange = 0;
+    }
+    
+    setTrack(track: number){
+        this.track = track;
+        this.cssBaseTop = (this.track - 1) * Race.RACETRACK_HEIGHT;
+        this.cssTop =  this.cssBaseTop;
     }
     
     updateAcc(){
