@@ -4,6 +4,7 @@ import { Race } from "src/app/model/race";
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7;
 const ENDURANCE_SKILL_PRICE: number = 4;
+const ACCELERATION_SKILL_PRICE: number = 4;
 const TOTAL_SKILL_PRICE: number = 8;
 const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
@@ -115,16 +116,22 @@ export class TrainingHorse {
     baseHorse: Horse;
     trainSpeedPrice: number;
     trainEndurancePrice: number;
+    trainAccelerationPrice: number;
 
     constructor( horse: Horse ) {
         this.baseHorse = horse;
         this.trainSpeedPrice = getSpeedPrice( horse.speed ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
         this.trainEndurancePrice = getEndurancePrice( horse.endurance ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
+        this.trainAccelerationPrice = getAccelerationPrice( horse.acceleration ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
     }
 }
 
 function getSpeedPrice( speed: number ) {
     return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getAccelerationPrice( acceleration: number ) {
+    return Math.round( ACCELERATION_SKILL_PRICE * ( acceleration * ( acceleration / 10 ) ) / TOTAL_SKILL_PRICE ); 
 }
 
 function getEndurancePrice( endurance: number ) {

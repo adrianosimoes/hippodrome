@@ -10,6 +10,8 @@ declare var $: any;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
+var ACCELERATION_UNTIL_TICKS: number = 330;
+
 
 export enum RaceState {
     PreRace = 1,
@@ -295,7 +297,7 @@ export class RaceInstance {
             horse.updateAcc();
         }
 
-        if ( this.totalTicks <= 150 ) {
+        if ( this.totalTicks <= ACCELERATION_UNTIL_TICKS ) {
             maxSpeed *= horse.currentAcceleration;
         }
 
@@ -304,7 +306,7 @@ export class RaceInstance {
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
         let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
-        if ( step >= formSpeed * speedReduction ) {
+        if (this.totalTicks > ACCELERATION_UNTIL_TICKS - 330 && step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {

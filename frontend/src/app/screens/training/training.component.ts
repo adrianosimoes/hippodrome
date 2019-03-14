@@ -14,7 +14,6 @@ import { Utils } from '../../model/utils';
 export class TrainingComponent implements OnInit {
     playerTrainingHorses: TrainingHorse[];
     currPlayer: Player;
-    trainersToSell: Trainer[];
     debug: boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
@@ -25,15 +24,6 @@ export class TrainingComponent implements OnInit {
         }
         this.currPlayer = this.commonService.getPlayer();
         this.reload();
-        this.trainersToSell = [];
-
-        let currTrainer = new Trainer( 1, "Speed Trainer", 6200, 80, HorseSkills.SPEED, 10,
-            "Trains the speed every day for the active horse. 1 speed up every 10 days." );
-        this.trainersToSell.push( currTrainer );
-
-        currTrainer = new Trainer( 2, "Endurance Trainer", 3000, 30, HorseSkills.ENDURANCE, 10,
-            "Trains the endurance every day for the active horse. 1 endurance up every 10 days." );
-        this.trainersToSell.push( currTrainer );
     }
 
     reload() {

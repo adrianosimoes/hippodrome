@@ -27,7 +27,7 @@
 			</div>
 		</div>
 	<div class="trainersContainer"><h4>Trainers to hire</h4>
-		<div class="pickHorse" *ngFor="let currTrainer of trainersToSell">
+		<div class="pickHorse" *ngFor="let currTrainer of commonService.trainersToSell">
 			<div class="title">{{currTrainer.name}}</div>
 			<div class="desc">
 				<div class="description">Salary: {{currTrainer.salary | currency: 'EUR'}} per day</div>

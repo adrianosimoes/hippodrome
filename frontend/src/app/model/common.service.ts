@@ -17,22 +17,23 @@ declare var JSON: any;
 } )
 export class CommonService {
 
-    horsesInShop: Horse[] = [];
+    static INITIAL_MONEY: number = 5000;
+
+    horsesInShop: Horse[];
     racesLeagues: RaceLeague[];
+    trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
     backgroundImage: SafeStyle;
     loadingBackground: SafeStyle;
 
-
-    static INITIAL_MONEY: number = 5000;
-
     public loading: boolean;
     public loadingText: string;
 
-    constructor( private router: Router, private _sanitizer: DomSanitizer ) {
+    constructor( private router: Router) {
         this.initHorsesInShop();
         this.initRaces();
+        this.initTrainers();
         this.loading = false;
 
         let savedGameString: string = Cookies.get( StaticData.saveGameName );
@@ -74,6 +75,8 @@ export class CommonService {
     }
 
     initHorsesInShop(): void {
+        this.horsesInShop = [];
+
         //Initialize Horses in Shop:
         let horse = new Horse( 101, 'Tom Bolt', 12, 16, 14, Horse.AVG_FORM );
         this.horsesInShop.push( horse );
@@ -105,10 +108,10 @@ export class CommonService {
 
         let id = 1;
 
-        raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+       raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
+       raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
+       raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+       raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
 
 
         raceLeague = new RaceLeague( 3, "Group 3", 5 );
@@ -133,6 +136,19 @@ export class CommonService {
         raceLeague.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
 
     };
+
+    initTrainers(): void {
+        this.trainersToSell = [];
+
+        this.trainersToSell.push( new Trainer( 1, "Acceleration Trainer", 2500, 25, HorseSkills.ACCELERATION, 10,
+            "Trains the acceleration every day for the active horse. 1 speed up every 12 days." ) );
+
+        this.trainersToSell.push( new Trainer( 1, "Speed Trainer", 6200, 65, HorseSkills.SPEED, 10,
+            "Trains the speed every day for the active horse. 1 speed up every 10 days." ) );
+
+        this.trainersToSell.push( new Trainer( 2, "Endurance Trainer", 3000, 30, HorseSkills.ENDURANCE, 10,
+            "Trains the endurance every day for the active horse. 1 endurance up every 10 days." ) );
+    }
 
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
@@ -183,8 +199,10 @@ export class CommonService {
             let trainStep = 1 / currTrainer.speed;
             if ( currTrainer.trainType == HorseSkills.SPEED ) {
                 selectedHorse.speed += trainStep;
-            } else {
+            } else if(currTrainer.trainType == HorseSkills.ENDURANCE ){
                 selectedHorse.endurance += trainStep;
+            } else if(currTrainer.trainType == HorseSkills.ACCELERATION ){
+                selectedHorse.acceleration += trainStep;
             }
         }
     }
