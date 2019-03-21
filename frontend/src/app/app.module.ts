@@ -5,6 +5,7 @@ import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
 import { MatRadioModule } from '@angular/material';
 
+import { Angulartics2Module } from 'angulartics2';
 
 import { FormStringPipe, RaceDifficultyPipe } from './model/pipehelpers';
 
@@ -34,7 +35,8 @@ import { PickRaceComponent } from './screens/pick-race/pick-race.component';
       BrowserModule,
       FormsModule,
       MatRadioModule,
-      AppRoutingModule
+      AppRoutingModule,
+      Angulartics2Module.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent]

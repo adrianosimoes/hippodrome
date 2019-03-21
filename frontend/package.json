@@ -22,8 +22,9 @@
     "@angular/platform-browser": "^6.0.0",
     "@angular/platform-browser-dynamic": "^6.0.0",
     "@angular/router": "^6.0.0",
+    "angulartics2": "^7.4.1",
     "core-js": "^2.5.4",
-    "npm": "^6.1.0",
+    "npm": "^6.9.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
