@@ -7,8 +7,6 @@ import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 
-
-
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
@@ -22,7 +20,7 @@ const routes: Routes = [
 
 @NgModule({
   exports: [ RouterModule ],
-  imports: [ RouterModule.forRoot(routes, {useHash: true}) ]
+  imports: [ RouterModule.forRoot(routes, {useHash: false})]
 })
 
 export class AppRoutingModule { }

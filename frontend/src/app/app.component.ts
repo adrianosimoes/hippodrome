@@ -15,8 +15,8 @@ export class AppComponent {
     title = 'Hippodrome';
     public commonService;
 
-    constructor( commService: CommonService, angulartics2Clicky: Angulartics2Clicky ) {
-        this.commonService = commService; angulartics2Clicky.startTracking();
+    constructor( commService: CommonService ) {
+        this.commonService = commService;
     }
 
     ngOnInit() {
