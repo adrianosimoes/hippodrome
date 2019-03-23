@@ -5,8 +5,6 @@ import { CommonService } from './common.service';
 import { Player } from './player';
 import { Utils } from './utils';
 
-declare var $: any;
-
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;

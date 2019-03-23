@@ -8,13 +8,13 @@ import { TrainingComponent } from './screens/training/training.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'stables', component: TrainingComponent },
   { path: 'pickRace', component: PickRaceComponent },
-  { path: 'race/:id', component: RaceComponent }
+  { path: 'race/:id', component: RaceComponent },
+  { path: '**', redirectTo: 'login' }
 ];
 
 

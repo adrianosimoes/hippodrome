@@ -19,13 +19,13 @@ export class HorseComponent implements OnInit {
     constructor( private router: Router, private commService: CommonService ) { }
 
     ngOnInit() {
-        this.commonService= this.commService;
+        this.commonService = this.commService;
     }
 
     buyHorse(): void {
         let success = this.commonService.addHorseToPlayer( this.horse );
         if ( success ) {
-            this.router.navigate( ['main'] );
+            this.router.navigate( ['main'], { queryParams: { buyHorse: this.horse.id } } );
         } else {
             alert( 'Not enough money' );
         }
