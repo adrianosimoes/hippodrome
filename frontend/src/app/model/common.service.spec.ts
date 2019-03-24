@@ -32,16 +32,16 @@ describe('CommonService', () => {
       expect(service.racesLeagues.length).toBe(4);
       expect(service.racesLeagues[0].name).toBe("Ungraded");
       expect(service.racesLeagues[0].difficulty).toBe(2);
-      expect(service.racesLeagues[0].races.length).toBe(3);
+      expect(service.racesLeagues[0].races.length).toBe(4);
       expect(service.getRace(1).name).toBe("Colwall Park");
       expect(service.getRace(1).difficulty).toBe(2);
       expect(service.getRace(1).distance).toBe(400);
       expect(service.getRace(1).color).toBe("#338833");
       
-      expect(service.getRace(5).name).toBe("Hurst Park");
+      expect(service.getRace(5).name).toBe("Aberystwyth");
       expect(service.getRace(5).difficulty).toBe(3);
-      expect(service.getRace(5).distance).toBe(700);
-      expect(service.getRace(5).color).toBe("#9ec629");
+      expect(service.getRace(5).distance).toBe(450);
+      expect(service.getRace(5).color).toBe("#1fba1f");
       
   }));
   

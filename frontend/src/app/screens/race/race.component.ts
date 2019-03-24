@@ -34,7 +34,7 @@ export class RaceComponent implements OnInit {
         }
         this.raceId = this.activeRoute.snapshot.params['id'];
         let race = this.commonService.getRace( this.raceId );
-        this.currRace = new RaceInstance( race, this, this.commonService );
+        this.currRace = new RaceInstance( race, this.commonService );
 
     }
     

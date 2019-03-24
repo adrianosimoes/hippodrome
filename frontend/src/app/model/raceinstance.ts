@@ -5,11 +5,11 @@ import { CommonService } from './common.service';
 import { Player } from './player';
 import { Utils } from './utils';
 
+var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
 var ACCELERATION_UNTIL_TICKS: number = 330;
-
 
 export enum RaceState {
     PreRace = 1,
@@ -22,7 +22,6 @@ export enum RaceState {
 export class RaceInstance {
     commonService: CommonService;
     baseRace: Race;
-    raceView: RaceComponent
     player: Player;
     playerHorse: HorseInRace;
     horses: HorseInRace[];
@@ -45,10 +44,11 @@ export class RaceInstance {
     roundTrackCurvePixels: number = 150;
     topDistance: number;
     cssBottom: number;
+    startTimeout: number = START_TIMEOUT;
+    tickTime: number = TICK_MILLISECONDS;
 
-    constructor( race: Race, raceView: RaceComponent, commonService: CommonService ) {
+    constructor( race: Race, commonService: CommonService ) {
         this.baseRace = race;
-        this.raceView = raceView;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
         this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground );
@@ -99,12 +99,12 @@ export class RaceInstance {
         this.commonService.chargeEntranceFee( this.baseRace );
         this.state = RaceState.Racing;
         this.comments.push( new Comment( "Read. Set.", "#ffffff" ) );
-        setTimeout(() => { this.raceStart = new Date(); this.comments[0].message += " Go!"; this.updateRace(); }, 500 );
+        setTimeout(() => { this.raceStart = new Date(); this.comments[0].message += " Go!"; this.updateRace(); }, this.startTimeout);
     }
 
     updateRace(): void {
         let allFinished: boolean = true;
-
+        //console.log("update");
         if ( this.canceled ) {
             return;
         }
@@ -139,7 +139,7 @@ export class RaceInstance {
             this.finishRace();
             return;
         }
-        setTimeout(() => { this.updateRace() }, Utils.devMode() ? TICK_MILLISECONDS : TICK_MILLISECONDS );
+        setTimeout(() => { this.updateRace() }, Utils.devMode() ? this.tickTime : this.tickTime );
     }
 
     moveHorse( currHorse: HorseInRace, step: number ): void {
