@@ -3,15 +3,41 @@
 }
 
 .savedGame {
-	margin-top: 20px;
+	margin-left: 30px;
+	margin-top: 10px;
 	margin-bottom: 20px;
+	float: left;
 }
 
-#login {
-	width: 400px;
+
+h4{
+	margin-bottom: 10px;
 }
-.coatOfArmsContainer {
-	width: 250px;
+
+.border{
+	border: 1px solid #888;
+	padding: 25px;
+	padding-top: 0px;
+}
+
+.coatOfArms {
+	margin: 10px;
+	width: 130px;
+}
+
+.silkContainer{
+	transform: scale(0.5);
+	margin-top: -20px;
+	margin-left: -10px;
+	margin-bottom: 40px;
+	width: 100px;
+	height: 100px;
+}
+
+.newGame {
+	margin-top: 10px;
+	margin-left: 40px;
+	float: left;
 }
 
 .form{

@@ -7,20 +7,26 @@
 }
 
 #headerArea {
-	padding: 10px;
+	padding: 0px;
+	padding-bottom: 10px;
 }
 
 .titleArea {
 	background-color: #447744;
-	padding: 5px;
+	padding: 10px;
+	margin: 0 auto;
+	min-width: 742px;
+	max-width: 1000px;
 }
 
 #topMenu {
 	border: 2px solid #ffd700;
 	background-color:   #ffd700;
 	padding: 5px;
-	margin: 10px 10px 0px 10px;
-	min-width: 730px;
+	margin:  0 auto;
+	min-width: 748px;
+	max-width: 1000px;
+	margin-top: 10px; 
 	clear: both;
 }
 
@@ -77,5 +83,5 @@ h2 {
 }
 
 #bottom {
-	height: 40px;
+	height: 35px;
 }
