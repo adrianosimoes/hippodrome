@@ -105,7 +105,7 @@ input[text], button {
 }
 
 .warnings {
-	margin-top: 20px;
+	margin-top: 10px;
 	background-color: #fff;
 	color: red;
 }
