@@ -19,7 +19,7 @@
 			<div class="strategiesContainer">
 				<div class="label horsesLabel">Strategy:</div>
 				<mat-radio-group class="strategies" [(ngModel)]="currRace.playerHorse.strategy">
-			    <mat-radio-button class="radio" [value]="RaceStrategy.Everything" >Full Speed!</mat-radio-button>
+			    <mat-radio-button class="radio" [value]="RaceStrategy.Everything" >Full Speed<span class="exclamation">!</span></mat-radio-button>
 			    <mat-radio-button class="radio" [value]="RaceStrategy.HalfWay">Sprint Halfway.</mat-radio-button>
 			    <mat-radio-button class="radio" [value]="RaceStrategy.End">Sprint only in the end.</mat-radio-button>
     			</mat-radio-group>

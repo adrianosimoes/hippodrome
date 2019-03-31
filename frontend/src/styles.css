@@ -58,8 +58,14 @@ body {
 	margin-top: 0px;
 	padding-bottom: 10px;
 	width: 750px;
-	border: 1px solid #aaa;
+	border: 5px solid #777;
+	border-radius: 2px;
 	min-height: 90%;
+	
+	box-shadow:
+		3px 0px #222,
+		0px 3px #222,
+		3px 3px #222;
 }
 
 button {

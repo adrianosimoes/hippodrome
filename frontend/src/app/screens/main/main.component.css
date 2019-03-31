@@ -9,14 +9,14 @@
 	width: 360px;
 	float: left;
 	margin-left: 10px;
-	border-right: 1px solid #aaa;
+	border-right: 2px solid #777;
 }
 
 .playerView {
 	width: 175px;
 	float: left;
 	margin-left: 10px;
-	border-right: 1px solid #aaa;
+	border-right: 2px solid #777;
 	clear: both;
 }
 

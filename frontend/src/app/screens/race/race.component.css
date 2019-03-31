@@ -318,3 +318,8 @@
 
 @keyframes blinker { to { opacity: 0; } }
 
+
+.exclamation{
+	font-family: Verdana;
+	font-size: 18px;
+}
