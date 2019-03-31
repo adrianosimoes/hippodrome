@@ -7,7 +7,6 @@ html {
 h3 {
 	margin-top: 8px;
 	margin-bottom: 8px;
-	font-family: Times;
 	font-weight: bold;
 }
 
@@ -28,10 +27,16 @@ h4 {
 	align-items: center;
 }
 
+@font-face {
+font-family: "PixelFont";
+src: url("assets/PIXELADE.ttf");
+}
+
 body {
 	margin: 0px;
 	color: #fff;
-	font-family: Times;
+	font-family: PixelFont;
+	font-size: 24px;
 	min-width: 790px;
 	height: 100%;
 }
@@ -65,7 +70,7 @@ button:disabled {
 input[text], button {
 	color: #111;
 	font-size: 1em;
-	font-family: Cambria, Georgia;
+	font-family: PixelFont;
 }
 
 .formButtonArea {
@@ -124,7 +129,7 @@ input[text], button {
 	margin-right: 15px;
 	margin-bottom: 15px;
 	padding: 5px;
-	width: 140px;
+	width: 150px;
 	float: left;
 }
 
@@ -151,7 +156,7 @@ button {
 }
 
 .mainContainer .pickHorse {
-	height: 140px;
+	height: 145px;
 }
 
 .cdk-visually-hidden {

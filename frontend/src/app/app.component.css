@@ -28,14 +28,16 @@
 	max-width: 1000px;
 	margin-top: 10px;
 	clear: both;
+	color: #000;
 }
 
 #topMenu .menuItem {
 	margin-left: 20px;
 }
 
-#topMenu .menuItem:before {
-	margin-right: 20px;
+#topMenu .menuItemDiv:before {
+	margin-left: 20px;
+	margin-right: 0px;
 	content: "|"
 }
 
@@ -53,7 +55,7 @@ h1 {
 
 h2 {
 	margin-left: 15px;
-	margin-top: 16px;
+	margin-top: 20px;
 	margin-bottom: 0px;
 	color: #bbb;
 	font-size: 0.9em;
@@ -63,13 +65,16 @@ h2 {
 
 .rightMenu {
 	float: right;
-	color: #000;
 	margin-right: 5px;
 }
 
 .rightMenu span {
 	margin-right: 5px;
 	float: left;
+}
+
+.rightMenu .money{
+	margin-top: -3px;
 }
 
 .rightMenu span:after {

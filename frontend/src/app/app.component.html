@@ -6,11 +6,11 @@
 			<div class="clear"></div>
 		</div> 
 		<div id="topMenu">
-			<a class="menuItem" routerLink="/main">Home</a>
+			<a class="menuItem" routerLink="/main">Home</a><span class="menuItemDiv"></span>
 			<a class="menuItem" routerLink="/shop">Shop</a>
 			<div class="rightMenu">
 				<span>{{this.commonService.gameInstance.playerOne.name}}</span>
-				<span>Money: {{this.commonService.gameInstance.playerOne.money | currency: 'EUR': 'symbol':'1.0-0'}}</span>
+				<span class="money">Money: {{this.commonService.gameInstance.playerOne.money | currency: 'EUR': 'symbol':'1.0-0'}}</span>
 				<span>Victories: {{this.commonService.gameInstance.playerOne.victories}}</span>
 				<span>{{this.commonService.gameInstance.date | date: "longDate" }}</span>
 			</div>
