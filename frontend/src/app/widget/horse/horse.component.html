@@ -5,6 +5,6 @@
 		<span *ngIf="horse.owned">	Form: {{horse.form | formstring}}<br/></span>
 		<span *ngIf="horse.owned"><span class="left">Stamina:</span><div class="fullStaminaBar"><div class="staminaBar" [style.width.px]="horse.staminaDisplay"></div></div><br /></span> 
 		<span class="price" *ngIf="!horse.owned">Price: {{horse.price | currency: 'EUR'}}<br /></span> 
-		<div class="buttonArea"><button  *ngIf="!horse.owned" (click)="buyHorse()" >Buy</button></div>
-		<div class="buttonArea"><button  *ngIf="page=='myhorses' && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()" >Select</button></div>
+		<div class="buttonArea" *ngIf="!horse.owned"><button (click)="buyHorse()" >Buy</button></div>
+		<div class="buttonArea" *ngIf="page=='myhorses' && commonService.gameInstance.playerOne.horses.length > 1"><button class="select"  *ngIf="page=='myhorses' && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()">Select</button></div>
 </div>
