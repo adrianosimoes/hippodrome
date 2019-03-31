@@ -4,6 +4,12 @@ html {
 	height: 100%;
 }
 
+@font-face {
+font-family: "PixelFont";
+src: url("assets/PIXELADE.TTF");
+}
+
+
 h3 {
 	margin-top: 8px;
 	margin-bottom: 8px;
