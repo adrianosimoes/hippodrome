@@ -73,6 +73,9 @@ h2 {
 	float: left;
 }
 
+.rightMenu .money{
+    margin-top: -3px;
+}
 
 .rightMenu span:after {
 	margin-left: 5px;

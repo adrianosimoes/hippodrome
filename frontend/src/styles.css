@@ -12,13 +12,16 @@ src: url("assets/PIXELADE.TTF");
 
 h3 {
 	margin-top: 8px;
-	margin-bottom: 8px;
-	font-weight: bold;
+	margin-bottom: 4px;
+	font-weight: normal;
+    font-size: 32px;
 }
 
 h4 {
 	margin-top: 0px;
 	margin-bottom: 0px;
+	font-weight: normal;
+    font-size: 26px;
 }
 
 #overlay {
@@ -36,7 +39,8 @@ h4 {
 body {
 	margin: 0px;
 	color: #fff;
-	font-family: Times;
+	font-family: PixelFont;
+	font-size: 24px;
 	min-width: 790px;
 	height: 100%;
 }
@@ -70,7 +74,7 @@ button:disabled {
 input[text], button {
 	color: #111;
 	font-size: 1em;
-	font-family: Cambria, Georgia;
+	font-family: PixelFont;
 }
 
 .formButtonArea {
