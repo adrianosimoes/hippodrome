@@ -308,18 +308,18 @@ export class CommonService {
 
     generateBgImage() {
         if ( !Utils.devMode() ) {
-            this.backgroundImage = 'url("assets/bg' + ( ( this.gameInstance.date.getDate() % 11 ) + 1 ) + '.jpg")';
+            this.backgroundImage = 'url("assets/bg8bit_' + ( ( this.gameInstance.date.getDate() % 11 ) + 1 ) + '.jpg")';
         } else {
-            this.backgroundImage = 'url("assets/bg7.jpg")';
+            this.backgroundImage = 'url("assets/bg8bit_7.jpg")';
         }
         this.loadBgImage( this.gameInstance.date );
     }
 
     loadBgImage( date: Date ) {
         if ( !Utils.devMode() ) {
-            this.loadingBackground = 'url("assets/bg' + ( ( ( date.getDate() + 1 ) % 11 ) + 1 ) + '.jpg")';
+            this.loadingBackground = 'url("assets/bg8bit_' + ( ( ( date.getDate() + 1 ) % 11 ) + 1 ) + '.jpg")';
         } else {
-            this.loadingBackground = 'url("assets/bg7.jpg")';
+            this.loadingBackground = 'url("assets/bg8bit_7.jpg")';
         }
     }
 }

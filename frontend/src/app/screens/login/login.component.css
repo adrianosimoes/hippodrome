@@ -15,14 +15,12 @@ h4{
 }
 
 .border{
-	border: 3px solid #888;
+	border: 4px solid #777;
 	border-radius: 2px;
 	padding: 25px;
 	padding-top: 0px;
 	box-shadow:
-		2px 0px #222,
-		0px 2px #222,
-		2px 2px #222;
+		3px 3px #222;
 }
 
 .coatOfArms {

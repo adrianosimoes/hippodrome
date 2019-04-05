@@ -2,8 +2,10 @@
 	margin: 15px;
 	padding: 10px;
 	float: left;
-	border: 3px solid #ffffff;
+	border: 5px solid #ffffff;
 	width: 180px;
+	box-shadow:
+		3px 3px #666;
 }
 
 .raceLeague div {
@@ -20,7 +22,9 @@ h4 {
 }
 
 .level5{
-	border-color: #a0a0a0;
+	border-color: #999;
+	box-shadow:
+		3px 3px #444;
 }
 
 .level9{

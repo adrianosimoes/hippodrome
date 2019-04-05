@@ -63,9 +63,7 @@ body {
 	min-height: 90%;
 	
 	box-shadow:
-		3px 0px #222,
-		0px 3px #222,
-		3px 3px #222;
+		4px 4px #222;
 }
 
 button {
@@ -133,25 +131,6 @@ input[text], button {
 	margin-top: 20px;
 }
 
-/* Horse View: */
-.pickHorse {
-	border: 2px solid #ccc;
-	margin-right: 15px;
-	margin-bottom: 15px;
-	padding: 5px;
-	width: 150px;
-	float: left;
-}
-
-.pickHorse .title {
-	font-weight: bold;
-	padding-bottom: 5px;
-}
-
-.price {
-	font-weight: bold;
-}
-
 button {
 	text-align: center;
 	background-color: #fff;
@@ -190,7 +169,7 @@ button {
 }
 
 .fullStaminaBar {
-	border: 1px solid #000;
+	border: 2px solid #000;
 	width: 65px;
 	height: 16px;
 	float: left;

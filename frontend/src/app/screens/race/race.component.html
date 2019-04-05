@@ -3,12 +3,14 @@
 
 	<div *ngIf="currRace.state === RaceState.PreRace">
 		<div class="props">
+			<div class="tableProps">
 			<div class="label">Distance:</div><div class="value">{{currRace.baseRace.distance/100}} Furlongs</div>
 			<div class="label">Entrace fee:</div><div class="value">{{currRace.baseRace.entranceFee | currency: 'EUR' : 'symbol':'1.0-0' }}</div>
 			<div class="label">Prizes:</div>
 					<div class="prizes value" *ngFor="let currPrize of currRace.baseRace.prizes; index as i" [attr.data-index]="i">
 						<div class="prizeValue"> <div class="coinCircle prize{{i+1}}">{{i+1}}</div> &nbsp; {{currPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</div>
 					</div>
+			</div>		
 			<div class="label horsesLabel">Horses:</div>
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses">
@@ -58,21 +60,21 @@
 			</div>
 			<div class="clear"></div>
 		</div> 
-		<div class="liveClassification">
+		<div class="liveClassification border">
 			Live Classification:<br />
 			<div class="participants" *ngFor="let currHorse of currRace.sortedHorses">
 				<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
 				<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.baseHorse.name}} <span *ngIf="debug"> {{currHorse.speed | number:'2.0-1'}}, {{currHorse.fullStamina}},  {{currHorse.currentAcceleration  | number:'0.0-2'}}</span></div>
 			</div>
 		</div>
-		<div class="comments">
+		<div class="comments border">
 			<div class="comment" *ngFor="let currComment of currRace.comments.slice().reverse()" [style.background]="currComment.color" [style.color]="currComment.color == '#000000' ? '#ffffff' : '#000000'">
 				{{currComment.message}}
 			</div>
 		</div>
 		<div *ngIf="currRace.state === RaceState.RaceFinished" class="endRace">
 			<div>You finished in place: {{currRace.place}}</div>
-			<div *ngIf="currRace.wonPrize > 0">Congratulations! You won {{currRace.wonPrize | currency: 'EUR'}}</div>
+			<div *ngIf="currRace.wonPrize > 0">Congratulations! You won {{currRace.wonPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</div>
 			<button (click)="exitRace()">Continue</button>
 		</div>
 		<div class="clear"></div>

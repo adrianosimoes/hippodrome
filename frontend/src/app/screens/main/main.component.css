@@ -5,18 +5,23 @@
 .title{
 }
 
-.horseView{
-	width: 360px;
+.horseView {
+	width: 369px;
 	float: left;
 	margin-left: 10px;
-	border-right: 2px solid #777;
 }
+
+.verticalDivision {
+	border-right: 3px solid #999;
+	box-shadow:
+		3px 2px #444;
+}
+
 
 .playerView {
 	width: 175px;
 	float: left;
 	margin-left: 10px;
-	border-right: 2px solid #777;
 	clear: both;
 }
 
@@ -41,7 +46,7 @@ horse {
 
 .nextArea {
 	float: left;
-	width: 180px;
+	width: 170px;
 	margin-left: 10px;
 }
 
