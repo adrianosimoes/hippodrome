@@ -148,26 +148,6 @@ button {
 	display: none
 }
 
-.mat-radio-outer-circle {
-	border-color: rgba(0, 0, 0, .54)
-}
-
-.mat-radio-disabled .mat-radio-outer-circle {
-	border-color: rgba(0, 0, 0, .38)
-}
-
-.mat-radio-disabled .mat-radio-label-content {
-	color: rgba(0, 0, 0, .38)
-}
-
-.mat-radio-button.mat-accent.mat-radio-checked .mat-radio-outer-circle {
-	border-color: #000
-}
-
-.mat-radio-button.mat-accent .mat-radio-inner-circle {
-	background-color: #111
-}
-
 .fullStaminaBar {
 	border: 2px solid #000;
 	width: 65px;
