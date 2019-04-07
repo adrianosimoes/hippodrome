@@ -64,6 +64,16 @@ export class TrainingComponent implements OnInit {
             alert( 'Not enough money' );
         }
     }
+    
+    upgradeTrainer( trainer: Trainer ): void {
+        let success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
+        if ( success ) {
+            this.commonService.nextDay(null);
+            this.reload();
+        } else {
+            alert( 'Not enough money' );
+        }
+    }
 
     sellTrainer( trainer: Trainer ): void {
         this.commonService.sellTrainer( this.currPlayer, trainer );

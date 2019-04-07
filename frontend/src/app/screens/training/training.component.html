@@ -1,5 +1,5 @@
 <div id="training"  class="screen">
-	<h3>Stables (Training)</h3>
+	<h3>Training</h3>
 	Money: {{currPlayer.money | currency: 'EUR' : 'symbol':'1.0-0'}}
 	<div *ngIf="debug" class="buyStats" >
 	  	<div class="horsesContainer" *ngFor="let currHorse of playerTrainingHorses">
@@ -16,22 +16,24 @@
 			</div> 
 		</div>
 	</div>
-	<div class="trainersContainer" ><h4>Your trainers</h4>
-		<div class="pickHorse" *ngFor="let currTrainer of currPlayer.trainers">
+	<div class="trainersContainer" ><h3>Your trainers</h3>
+		<div *ngIf="currPlayer.trainers.length == 0">No Trainers.</div>
+		<div class="pickTrainer" *ngFor="let currTrainer of currPlayer.trainers">
 				<div class="title">{{currTrainer.name}}</div>
 				<div class="desc">
 					<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per day</div>
-					<div class="description">Skill up every {{currTrainer.speed}} days</div>
+					<div>Quality: <span class="star"></span><span class="star" [class.black]="currTrainer.quality<5" ></span><span class="star" [class.black]="currTrainer.quality<7"></span></div>
 				</div>
-				<button (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
+				<button *ngIf="currTrainer.quality<7" (click)="upgradeTrainer(currTrainer)">Upgrade Trainer ({{currTrainer.upgradePrice | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
+				<a [routerLink]="['/stables']" (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR' : 'symbol':'1.0-0'}})</a>
 			</div>
 		</div>
-	<div class="trainersContainer"><h4>Trainers to hire</h4>
-		<div class="pickHorse" *ngFor="let currTrainer of commonService.trainersToSell">
+	<div class="trainersContainer"><h3>Trainers to hire</h3>
+		<div class="pickTrainer" *ngFor="let currTrainer of commonService.trainersToSell">
 			<div class="title">{{currTrainer.name}}</div>
 			<div class="desc">
 				<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per day</div>
-				<div class="description">{{currTrainer.description}}</div>
+				<div>Quality: <span class="star"></span><span class="star" [class.black]="currTrainer.quality<5" ></span><span class="star" [class.black]="currTrainer.quality<7"></span></div>
 			</div>
 				<div class="buttonArea">
 				<button (click)="buyTrainer(currTrainer)">Buy trainer ({{currTrainer.price | currency: 'EUR' : 'symbol':'1.0-0'}})</button>

@@ -32,7 +32,7 @@ export class MainComponent implements OnInit {
     }
 
     gotoTraining(): void {
-        this.router.navigate( ['stables'] );
+        this.router.navigate( ['training'] );
     }
 
     gotoExhibition(): void {

@@ -11,7 +11,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'main', component: MainComponent },
   { path: 'shop', component: ShopComponent },
-  { path: 'stables', component: TrainingComponent },
+  { path: 'training', component: TrainingComponent },
   { path: 'pickRace', component: PickRaceComponent },
   { path: 'race/:id', component: RaceComponent },
   { path: '**', redirectTo: 'login' }

@@ -3,6 +3,7 @@
 }
 
 .trainersContainer{
+	margin-top: 20px;
 	clear: both;
 }
 
@@ -26,6 +27,56 @@
  margin-bottom: 5px;	
  }
  
+ .pickTrainer {
+ 	border: 4px solid #999;
+	margin-right: 15px;
+	margin-bottom: 15px;
+	padding: 5px;
+	width: 200px;
+	float: left;
+	box-shadow:
+		3px 3px #444;
+ }
+ 
+.star {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0.9em;
+  margin-right: 0.9em;
+  margin-bottom: 0.8em;
+  border-right: 0.3em solid transparent;
+  border-bottom: 0.7em solid #f4c400;
+  border-left: 0.3em solid transparent;
+  /* Controlls the size of the stars. */
+  font-size: 10px;
+}
 
+.star:before, .star:after {
+  content: '';
+  display: block;
+  width: 0;
+  height: 0;
+  position: absolute;
+  top: 0.6em;
+  left: -1em;
+  border-right: 1em solid transparent;
+  border-bottom: 0.7em solid #f4c400;
+  border-left: 1em solid transparent;
+  transform: rotate(-35deg);
+}
+
+.star:after {
+  transform: rotate(35deg);
+}
+
+.star.black{
+	 border-bottom: 0.7em solid #000;
+}
+
+.star.black:before, .star.black:after {
+  border-bottom: 0.7em solid #000;
+}
 
 
