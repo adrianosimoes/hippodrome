@@ -16,7 +16,7 @@
 }
 
 .label, .value{
-	width: 105px;
+	width: 115px;
 	float: left;
 	height: 20px;
 	border: 2px solid #777;
@@ -192,21 +192,26 @@ input[type=radio]:focus {
 .hideRaceStadium{
 	margin: 0 auto;
 	scale: 0.0;
-	transition: all 1s;
+	transition: all 1.5s;
+}
+
+.hideRaceTrack {
+	transition: all 1.5s;
+	scale:  0.0;
 }
 
 .raceTrack{
 	margin-left: 40px;
 	margin-top: 7px;
 	margin-right: 40px;
-	border: 1px solid #fff;	
+	border: 3px solid #fff;	
 	border-left: none;
 	border-right: 3px dashed #fff;
 }
 
 .roundRaceTrack{
 	margin-top: 7px;
-	border: 1px solid #fff;	
+	border: 3px solid #fff;	
 	border-bottom: none;
 	border-left: none;
  	border-top-right-radius: 150px;
@@ -216,19 +221,19 @@ input[type=radio]:focus {
 	content: ""; 
 	display: block;
     height: 25px; 
-    border-top: 1px solid #fff;
-    border-right: 1px solid #fff;
+    border-top: 3px solid #fff;
+    border-right: 3px solid #fff;
     border-top-right-radius: 35px;
     width: calc(100% - 150px);
 }
 
 .roundRaceTrackSecond{
 	margin-left: 75px;
-	border: 1px solid #fff;	
+	border: 3px solid #fff;	
 	border-top: none;
 	border-left: none;
  	border-bottom-right-radius: 150px;
- 	transition: 1s cubic-bezier(0, 0.33, 0.66, 1);
+ 	transition: 1.5s cubic-bezier(0, 0.33, 0.66, 1);
 }
 
 .roundRaceTrackSecond:before {
@@ -236,8 +241,8 @@ input[type=radio]:focus {
     display: block;
     width: 445px; 
     height: 25px;
-    border-bottom: 1px solid #fff;
-    border-right: 1px solid #fff;
+    border-bottom: 3px solid #fff;
+    border-right: 3px solid #fff;
     border-bottom-right-radius: 35px;
 }
 
@@ -257,7 +262,7 @@ input[type=radio]:focus {
 	height: 16px;
 	margin-left: 0px;
 	align-items: center;
-	border-left: 1px solid;
+	border-left: 3px solid;
 }
 
 .raceLine:first-child{
@@ -271,7 +276,7 @@ input[type=radio]:focus {
 .hideRaceLine {
 	height: 0px;
 	opacity: 0;
-	transition: 1s cubic-bezier(0, 0.33, 0.66, 1);
+	transition: 1.5s cubic-bezier(0, 0.33, 0.66, 1);
 }
 
 

@@ -46,7 +46,7 @@
 					<div class="silkContainer" id="horse{{currHorse.track}}" [style.left.px]="currHorse.cssLeft" [style.top.px]="currHorse.cssTop"><div class="silk"  [style.background]="currHorse.cssBackground"></div></div>
 				</span>
 			</div>
-			<div [class]="!currRace.roundTrack ? 'raceTrack' : 'roundRaceTrack'" [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance : currRace.baseRace.distance - (roundTrackBottomDistance - currRace.roundTrackCurvePixels/2), 'margin-left.px': !currRace.roundTrack ? 40 : 155 - ((currRace.baseRace.distance/2 - roundTrackBottomDistance) * 2) }">
+			<div [class]="currRace.state === RaceState.RaceFinished && !currRace.worldChampion ? 'raceTrack hideRaceTrack' : !currRace.roundTrack ? 'raceTrack' : 'roundRaceTrack'" [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance : currRace.baseRace.distance - (roundTrackBottomDistance - currRace.roundTrackCurvePixels/2), 'margin-left.px': !currRace.roundTrack ? 40 : 155 - ((currRace.baseRace.distance/2 - roundTrackBottomDistance) * 2) }">
 				<div *ngFor="let currHorse of currRace.horses" [class]="currRace.state === RaceState.RaceFinished && !currRace.worldChampion ? 'hideRaceLine' : 'raceLine'" [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance : currRace.baseRace.distance  - roundTrackBottomDistance}">
 				 	<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse"  [style.backgroundColor]="currHorse.color"></div>
 					&nbsp;{{currHorse.track}}

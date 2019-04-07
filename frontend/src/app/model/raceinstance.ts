@@ -10,6 +10,8 @@ var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
 var ACCELERATION_UNTIL_TICKS: number = 330;
+export var BORDER_HEIGHT: number = 2;
+
 
 export enum RaceState {
     PreRace = 1,
@@ -60,7 +62,7 @@ export class RaceInstance {
         this.state = RaceState.PreRace;
         this.debugMessage = "";
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
-        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + 2;
+        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + BORDER_HEIGHT * 2;
 
         this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
         this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
@@ -156,7 +158,7 @@ export class RaceInstance {
             currHorse.cssBaseTop = currHorse.cssTop;
         } else if ( currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
             let curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels / 2 );
-            currHorse.cssTop = currHorse.cssBaseTop + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
+            currHorse.cssTop = currHorse.cssBaseTop + BORDER_HEIGHT + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
             currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( ( Race.ROUND_TRACK_HORSE_CURVE - 4 ) * 2 ) );
             currHorse.distanceDone += step / 1.2;
         } else {
@@ -178,9 +180,10 @@ export class RaceInstance {
                     currHorse.sinceLastLaneChange = 0;
                 }
             } else {
-                if ( currHorse.cssTop > this.cssBottom + 68 ) {
+                let minCssTop : number = this.cssBottom + 68 + BORDER_HEIGHT;
+                if ( currHorse.cssTop > minCssTop) {
                     var rnd: number = Utils.getRandomInt( 0, 70 );
-                    let avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse );
+                    let avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse, minCssTop);
                     if ( avoidedClostestHorse ) {
                         //Change lane faster if horse on the way:
                         currHorse.sinceLastLaneChange = 40;
@@ -188,7 +191,7 @@ export class RaceInstance {
                         if ( rnd == 0 ) {
                             currHorse.cssTop += 2;
                             currHorse.sinceLastLaneChange = 0;
-                        } else if ( rnd == 1 && currHorse.cssTop > 182 + 3 ) {
+                        } else if ( rnd == 1 && currHorse.cssTop > minCssTop + 2 ) {
                             currHorse.cssTop -= 2;
                             currHorse.sinceLastLaneChange = 0;
                         }
@@ -200,7 +203,7 @@ export class RaceInstance {
         }
     }
 
-    avoidClosestHorse( currHorse: HorseInRace ): boolean {
+    avoidClosestHorse( currHorse: HorseInRace, minCssTop : number ): boolean {
         let frontHorse: HorseInRace = null;
         for ( let i of this.sortedHorses ) {
             if ( currHorse == i ) {
@@ -213,7 +216,7 @@ export class RaceInstance {
             if ( Math.abs( frontHorse.cssTop - currHorse.cssTop ) < 12 ) {
                 if ( frontHorse.cssTop <= currHorse.cssTop ) {
                     currHorse.cssTop += 2;
-                } else {
+                } else if(currHorse.cssTop > minCssTop + 2) {
                     currHorse.cssTop -= 2;
                 }
                 return true;
