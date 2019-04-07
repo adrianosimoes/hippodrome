@@ -217,7 +217,7 @@ export class CommonService {
     }
     
     calculateTrainSpeed(skill: number, trainer: Trainer ): number {
-        let trainStep = 0.5 / trainer.speed;
+        let trainStep = 2 / trainer.speed;
         // Dont train when horse has reacherd trainer quality.
         if(skill > trainer.quality * 10)
             return 0;
