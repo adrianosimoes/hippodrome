@@ -1,6 +1,5 @@
-import { Utils } from './utils';
+import { Utils, BORDER_HEIGHT } from './utils';
 import { Race } from "src/app/model/race";
-import { BORDER_HEIGHT } from "src/app/model/raceinstance";
 
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7;

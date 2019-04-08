@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { CommonService } from '../../model/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
-
+import { Utils } from "src/app/model/utils";
 
 
 @Component( {
@@ -25,7 +25,8 @@ export class HorseComponent implements OnInit {
     buyHorse(): void {
         let success = this.commonService.addHorseToPlayer( this.horse );
         if ( success ) {
-            this.router.navigate( ['main'], { queryParams: { buyHorse: this.horse.id } } );
+            Utils.clickyPagView("buyHorse:" + this.horse.id, "BuyHorse");
+            this.router.navigate( ['main']);
         } else {
             alert( 'Not enough money' );
         }

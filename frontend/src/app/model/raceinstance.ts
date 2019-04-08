@@ -3,14 +3,13 @@ import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
 import { CommonService } from './common.service';
 import { Player } from './player';
-import { Utils } from './utils';
+import { Utils, BORDER_HEIGHT } from './utils';
 
 var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
 var ACCELERATION_UNTIL_TICKS: number = 330;
-export var BORDER_HEIGHT: number = 2;
 
 
 export enum RaceState {
@@ -349,6 +348,7 @@ export class RaceInstance {
                 }
             }
         }
+        Utils.clickyPagView("finishRace:" + this.baseRace.id + "_place:" + this.place,  "Finished Race");
         this.state = RaceState.RaceFinished;
     }
 

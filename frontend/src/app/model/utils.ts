@@ -1,10 +1,21 @@
+export var BORDER_HEIGHT: number = 2;
+declare var clicky: any;
+
 export class Utils {
+
 
     static MAX_SILK_ID: number = 13;
 
     static getRandomInt( initial: number, max: number ): number {
         return Math.floor(( Math.random() * ( max - initial + 1 ) ) + initial );
     }
+
+    static clickyPagView( url: string, name: string ) {
+        try {
+            clicky.log( '/' + url, name, 'pageview' );
+        } catch ( e ) { };
+    }
+
 
     static randomizeArray( a ): void {
         let b, c, d;
@@ -36,10 +47,10 @@ export class Utils {
     static devMode() {
         return window.location.href.startsWith( "http://127.0.0.1", 0 );
     }
-    
-    static calculateStamina(speed: number, maxSpeed: number, baseValue: number): number {
-        return (speed - (maxSpeed/2)) /
-                (maxSpeed - (maxSpeed/2)) * baseValue;
+
+    static calculateStamina( speed: number, maxSpeed: number, baseValue: number ): number {
+        return ( speed - ( maxSpeed / 2 ) ) /
+            ( maxSpeed - ( maxSpeed / 2 ) ) * baseValue;
     }
 
 
@@ -63,7 +74,7 @@ export class Utils {
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 120px )';
         } else if ( silkType == 6 ) {
             return 'repeating-radial-gradient( circle, ' +
-            color + ' , ' + color + ' 45px, ' + secColor + ' 45px , ' + secColor + ' 120px )';
+                color + ' , ' + color + ' 45px, ' + secColor + ' 45px , ' + secColor + ' 120px )';
         } else if ( silkType == 7 ) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';

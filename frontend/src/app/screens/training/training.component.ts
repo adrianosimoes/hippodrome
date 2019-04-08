@@ -58,6 +58,7 @@ export class TrainingComponent implements OnInit {
     buyTrainer( trainer: Trainer ): void {
         let success = this.commonService.buyTrainer( this.currPlayer, trainer );
         if ( success ) {
+            Utils.clickyPagView("buyTrainer:" + trainer.name, "Buy Trainer");
             this.commonService.nextDay(null);
             this.reload();
         } else {
@@ -68,6 +69,7 @@ export class TrainingComponent implements OnInit {
     upgradeTrainer( trainer: Trainer ): void {
         let success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
         if ( success ) {
+            Utils.clickyPagView("upgradeTrainer:" + trainer.name + "q:" + trainer.quality, "Upgrade Trainer");
             this.commonService.nextDay(null);
             this.reload();
         } else {
