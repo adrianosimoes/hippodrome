@@ -287,13 +287,12 @@ export class RaceInstance {
         if ( horse == this.playerHorse ) {
             if ( this.playerHorse.strategy == RaceStrategy.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2 ) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
-                //console.log("max speed:" + maxSpeed);
             } else if ( this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < ( this.baseRace.distance * 2 ) / 3 ) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
             }
         }
 
-        if ( this.totalTicks == 50 ) {
+        if ( this.totalTicks == 70 ) {
             horse.updateAcc();
         }
 
