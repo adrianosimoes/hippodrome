@@ -108,7 +108,7 @@ export class HorseInRace {
     }
     
     updateAcc(){
-        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration-7)/1.8, 2);
+        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration-5)/1.8, 2);
     }
 }
 

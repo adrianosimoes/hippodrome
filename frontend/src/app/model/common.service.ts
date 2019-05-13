@@ -174,6 +174,7 @@ export class CommonService {
 
     exhibition(): void {
         this.loading = true;
+        Utils.clickyPagView("money:" +  this.gameInstance.playerOne.money, "Exhibition");
         this.gameInstance.playerOne.money += 100;
         this.nextDay( null );
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
@@ -219,7 +220,7 @@ export class CommonService {
     calculateTrainSpeed(skill: number, trainer: Trainer ): number {
         let trainStep = 2 / trainer.speed;
         // Dont train when horse has reacherd trainer quality.
-        if(skill > trainer.quality * 10)
+        if(skill + trainStep  >= trainer.quality * 10)
             return 0;
         return trainStep;
     }

@@ -9,7 +9,7 @@ var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
-var ACCELERATION_UNTIL_TICKS: number = 330;
+var ACCELERATION_UNTIL_TICKS: number = 300;
 
 
 export enum RaceState {
@@ -347,7 +347,8 @@ export class RaceInstance {
                 }
             }
         }
-        Utils.clickyPagView("finishRace:" + this.baseRace.id + "_place:" + this.place,  "Finished Race");
+        Utils.clickyPagView("finishRace:" + this.baseRace.id + "_place:" + this.place 
+                + "_form" + this.playerHorse.baseHorse.form +  "_strategy:" + this.playerHorse.strategy,  "Finished Race");
         this.state = RaceState.RaceFinished;
     }
 
