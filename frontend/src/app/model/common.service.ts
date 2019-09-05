@@ -259,6 +259,10 @@ export class CommonService {
 
         return null;
     }
+    
+    setHorseName(horse: Horse, newName: string ): void {
+        horse.name = newName;
+    }
 
     getRace( raceId: number ): Race {
         for ( let raceLeague of this.racesLeagues ) {

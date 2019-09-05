@@ -26,6 +26,10 @@
 	padding-bottom: 5px;
 }
 
+.title .edit{
+	font-weight: normal;
+}
+
 .price {
 	font-weight: bold;
 }
@@ -34,4 +38,8 @@
 	border: 4px solid #0F13FF;
 	box-shadow:
 		3px 3px #001B57;
+}
+
+.stables.pickHorse{
+	width: 170px;
 }

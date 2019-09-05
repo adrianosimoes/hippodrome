@@ -5,6 +5,7 @@ import { LoginComponent }      from './screens/login/login.component';
 import { ShopComponent }      from './screens/shop/shop.component';
 import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
+import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   { path: 'main', component: MainComponent },
   { path: 'shop', component: ShopComponent },
   { path: 'training', component: TrainingComponent },
+  { path: 'stables', component: StablesComponent },
   { path: 'pickRace', component: PickRaceComponent },
   { path: 'race/:id', component: RaceComponent },
   { path: '**', redirectTo: 'login' }

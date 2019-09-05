@@ -31,6 +31,15 @@ export class HorseComponent implements OnInit {
             alert( 'Not enough money' );
         }
     }
+    
+    editName(): void {
+        let newName: string = window.prompt( "Please select new Horse Name", this.horse.name );
+        if ( newName != null ) {
+            if ( newName.length > 16 )
+                window.alert( "Please select a name with maximum 16 characters." )
+            else this.commonService.setHorseName( this.horse, newName );
+        }
+    }
 
     selectHorse(): void {
         this.commonService.selectHorse( this.horse );

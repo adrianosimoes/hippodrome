@@ -13,6 +13,7 @@ import { ShopComponent } from './screens/shop/shop.component';
 import { HorseComponent } from './widget//horse/horse.component';
 import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
+import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 
 
@@ -27,6 +28,7 @@ import { PickRaceComponent } from './screens/pick-race/pick-race.component';
     HorseComponent,
     RaceComponent,
     TrainingComponent,
+    StablesComponent,
     PickRaceComponent
   ],
   imports: [

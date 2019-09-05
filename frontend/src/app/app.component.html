@@ -7,7 +7,8 @@
 		</div> 
 		<div id="topMenu">
 			<a class="menuItem" routerLink="/main">Home</a><span class="menuItemDiv"></span>
-			<a class="menuItem" routerLink="/shop">Shop</a>
+			<a class="menuItem" routerLink="/shop">Shop</a><span class="menuItemDiv"></span>
+			<a class="menuItem" routerLink="/stables">Stables</a>
 			<div class="rightMenu">
 				<span>{{this.commonService.gameInstance.playerOne.name}}</span>
 				<span class="money">Money: {{this.commonService.gameInstance.playerOne.money | currency: 'EUR': 'symbol':'1.0-0'}}</span>

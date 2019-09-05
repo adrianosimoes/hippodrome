@@ -33,11 +33,11 @@
 }
 
 #topMenu .menuItem {
-	margin-left: 20px;
+	margin-left: 15px;
 }
 
 #topMenu .menuItemDiv:before {
-	margin-left: 20px;
+	margin-left: 15px;
 	margin-right: 0px;
 	content: "|"
 }
