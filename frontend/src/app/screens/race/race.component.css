@@ -135,6 +135,7 @@ input[type=radio] {
 
 .strategies label{
 	margin-left: 4px;
+	width: 350px;
 }
 
 .strategies div{
