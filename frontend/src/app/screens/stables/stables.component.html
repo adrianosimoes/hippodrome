@@ -4,5 +4,8 @@
 		<span *ngIf="currPlayer.horses.length==0">You have no horses.</span> 
 		<horse *ngFor="let currHorse of currPlayer.horses"  [horse]="currHorse" [page]="'stables'"></horse>
 	</div>
-	<div class="clear"></div>	
+	<div class="clear"></div>
+	<div class="formButtonArea">
+		<button (click)="mainScreen()">Continue</button>
+	</div>	
 </div>

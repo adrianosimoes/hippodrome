@@ -23,4 +23,8 @@ export class StablesComponent implements OnInit {
         }
         this.currPlayer = this.commonService.getPlayer();
     }
+    
+    mainScreen() {
+        this.router.navigate( ['main'] );
+    }
 }

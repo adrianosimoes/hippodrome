@@ -89,6 +89,19 @@ input[text], button {
 	margin-top: 20px;
 }
 
+.verticalDivision {
+	border-right: 3px solid #999;
+	box-shadow:
+		3px 2px #444;
+}
+
+.horizontalDivision {
+	border-bottom: 3px solid #999;
+	box-shadow:
+		3px 2px #444;
+	margin-bottom: 15px;
+}
+
 .coatOfArms {
 	width: 200px;
 	margin: 0 auto;

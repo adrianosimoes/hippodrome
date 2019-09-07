@@ -34,6 +34,14 @@ export class MainComponent implements OnInit {
     gotoTraining(): void {
         this.router.navigate( ['training'] );
     }
+    
+    gotoStables(): void {
+        this.router.navigate( ['stables'] );
+    }
+    
+    gotoShop(): void {
+        this.router.navigate( ['shop'] );
+    }
 
     gotoExhibition(): void {
         this.commonService.exhibition();

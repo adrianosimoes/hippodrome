@@ -11,12 +11,6 @@
 	margin-left: 10px;
 }
 
-.verticalDivision {
-	border-right: 3px solid #999;
-	box-shadow:
-		3px 2px #444;
-}
-
 
 .playerView {
 	width: 175px;
@@ -46,12 +40,17 @@ horse {
 
 .nextArea {
 	float: left;
-	width: 170px;
+	width: 165px;
 	margin-left: 10px;
 }
 
+.mainButtonArea{
+	margin-top: 10px;
+	margin-right: 10px;
+}
+
 .mainButtonArea button{
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	width: 125px;
 }
 
@@ -65,10 +64,9 @@ button.race{
 	color: #222;	
 }
 
-button.training{
-	background-color: #30c0f7;
-	color: #222;
-	
+button.gotoArea{
+	background-color: #bbb;
+	color: #000;
 }
 
 button.exhibition{
