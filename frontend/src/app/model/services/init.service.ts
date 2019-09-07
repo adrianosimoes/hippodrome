@@ -19,7 +19,7 @@ export class InitService {
         horse = new Horse( 103, 'Sandra Flash', 15, 13, 10, Horse.AVG_FORM );
         horsesInShop.push( horse );
 
-        horse = new Horse( 104, 'Jack Diamond', 14, 18, 13, Horse.AVG_FORM );
+        horse = new Horse( 104, 'Jack Diamond', 14, 16, 13, Horse.AVG_FORM );
         horsesInShop.push( horse );
 
         horse = new Horse( 105, 'Scarlett King', 20, 28, 25, Horse.AVG_FORM );

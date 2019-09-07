@@ -173,6 +173,11 @@ input[type=radio]:focus {
 	margin-bottom: 5px;
 }
 
+.raceTextContainer.header{
+	width: 250px;
+	float: left;
+}
+
 .staminaLabel {
 	float: left;
 }
@@ -343,18 +348,10 @@ input[type=radio]:focus {
 	padding: 3px;
 }
 
-
 .endRace {
-	float: left;
+	margin-top: 5px;
 	margin-left: 10px;
-}
-
-.endRace div{
-	padding: 10px;
-}
-
-.endRace div:FIRST-CHILD{
-	padding-bottom: 0px;
+	float: left;
 }
 
 .raceStadium .specialCongrats{
@@ -370,4 +367,25 @@ input[type=radio]:focus {
 .exclamation{
 	font-family: Verdana;
 	font-size: 18px;
+}
+
+.prestigeCalc {
+	margin: 15px;
+	padding: 5px;
+	border: 2px solid #777;
+}
+
+.prestigePoints.left{
+	float: left;
+	clear: left;
+}
+
+.prestigePoints.right{
+	width: 50px;
+	float: right;
+	text-align: right;
+}
+
+.prestigePoints.total.right{
+	border-top: 2px solid #000;
 }

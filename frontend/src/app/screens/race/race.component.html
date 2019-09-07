@@ -33,8 +33,8 @@
 		</div> 		
 	</div>
 	<div class="margintop" *ngIf="currRace.state !== RaceState.PreRace">
-		<div class="raceTextContainer">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
-		<div class="raceTextContainer">
+		<div class="raceTextContainer header">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
+		<div class="raceTextContainer header">
 			<span class="staminaLabel">Stamina:</span> <div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="currRace.playerHorse.staminaDisplay"  [ngClass]="{'noBorder': currRace.playerHorse.staminaDisplay==0}"></div></div>
 		</div>
 		<div *ngIf="debug">{{currRace.debugMessage}}</div>
@@ -73,8 +73,16 @@
 			</div>
 		</div>
 		<div *ngIf="currRace.state === RaceState.RaceFinished" class="endRace">
-			<div>You finished in place: {{currRace.place}}</div>
-			<div *ngIf="currRace.wonPrize > 0">Congratulations! You won {{currRace.wonPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</div>
+			<div><span *ngIf="currRace.wonPrize > 0">Congratulations! </span> You finished in  {{currRace.place}}'  place.</div>
+			<div><span *ngIf="currRace.wonPrize > 0">You won <b>{{currRace.wonPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</b> and </span>
+				<span *ngIf="!(currRace.wonPrize > 0)">You won </span>
+				<b>{{currRace.basePrestigePoints + currRace.placePrestigePoints}}</b> Prestige Points.</div>
+			<div class="prestigeCalc">
+				<div class="prestigePoints left">Finish race</div> 	<div class="prestigePoints right">{{currRace.basePrestigePoints}}</div>
+				<div class="prestigePoints left" *ngIf="currRace.placePrestigePoints > 0">{{currRace.place}}'  place</div><div class="prestigePoints right" *ngIf="currRace.placePrestigePoints > 0">{{currRace.placePrestigePoints}}</div>
+				<div class="prestigePoints left">Total Prestige Points:</div><div class="prestigePoints right total"><b>{{currRace.basePrestigePoints + currRace.placePrestigePoints}}</b></div>
+				<div class="clear"></div>
+			</div>
 			<button (click)="exitRace()">Continue</button>
 		</div>
 		<div class="clear"></div>
