@@ -71,9 +71,6 @@ export class InitService {
         trainersToSell.push( new Trainer( 1, "Acceleration Trainer", 2500, 12, HorseSkills.ACCELERATION, 10, 3,
             "Trains the acceleration every day for the active horse. 1 speed up every 12 days." ) );
 
-        trainersToSell.push( new Trainer( 2, "Speed Trainer", 6200, 32, HorseSkills.SPEED, 10, 3,
-            "Trains the speed every day for the active horse. 1 speed up every 10 days." ) );
-
         trainersToSell.push( new Trainer( 3, "Endurance Trainer", 3000, 15, HorseSkills.ENDURANCE, 10, 3,
             "Trains the endurance every day for the active horse. 1 endurance up every 10 days." ) );
     }

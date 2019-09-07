@@ -32,7 +32,7 @@ export class Horse {
     };
     
     calculateStaminaDisplay(): void{
-         this.staminaDisplay = Utils.calculateStamina(this.staminaSpeed, this.speed, 65);
+         this.staminaDisplay = Utils.calculateDisplayStamina(this.staminaSpeed, this.speed, 65);
     }
     
     updateDaillyFitness(): void {

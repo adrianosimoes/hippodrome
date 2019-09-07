@@ -48,8 +48,8 @@ export class Utils {
         return window.location.href.startsWith( "http://127.0.0.1", 0 );
     }
 
-    static calculateStamina( speed: number, maxSpeed: number, baseValue: number ): number {
-        return ( speed - ( maxSpeed / 2 ) ) /
+    static calculateDisplayStamina( speed: number, maxSpeed: number, baseValue: number ): number {
+        return baseValue - ( speed - ( maxSpeed / 2 ) ) /
             ( maxSpeed - ( maxSpeed / 2 ) ) * baseValue;
     }
 

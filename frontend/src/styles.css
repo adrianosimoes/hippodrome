@@ -154,9 +154,16 @@ button {
 	height: 16px;
 	float: left;
 	margin-left: 8px;
+	background: linear-gradient(0.25turn, #ff0000, 30%, #ffff00, 91%, #32CD32);
 }
 
-.staminaBar {
-	background: #000;
+.usedStamina {
+	float: right;
+	background: rgba(241, 241, 241, 0.91);
+	border-left: 1px solid #777;
 	height: 16px;
+}
+
+.noBorder{
+	border: 0;
 }

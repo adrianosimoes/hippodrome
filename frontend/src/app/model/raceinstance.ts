@@ -66,7 +66,7 @@ export class RaceInstance {
         this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
         this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
 
-        this.playerHorse.staminaDisplay = Utils.calculateStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
+        this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let color: string = this.commonService.createRandomColor();
@@ -311,7 +311,7 @@ export class RaceInstance {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
                     horse.speed--;
                     if ( horse == this.playerHorse ) {
-                        horse.staminaDisplay = Utils.calculateStamina( horse.speed, horse.baseHorse.speed, 100 );
+                        horse.staminaDisplay = Utils.calculateDisplayStamina( horse.speed, horse.baseHorse.speed, 100 );
                     }
                 }
                 horse.currentStamina = horse.fullStamina;
