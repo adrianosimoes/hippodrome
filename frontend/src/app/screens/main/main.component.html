@@ -1,7 +1,8 @@
 <div id="main-screen"  class="screen">
 	<h3>Main Screen</h3>
 	<div class="mainContainer">
-		<div class="playerView"><h4>Family</h4>
+		<div class="playerView">
+		<h4>Family</h4>
 			<div class="coatOfArms">
 				<div class="silkContainer">
 					<div class="silk"  [style.background]="currPlayer.calculateBackground"></div>
@@ -12,6 +13,12 @@
 			Money: {{currPlayer.money | currency: 'EUR' : 'symbol':'1.0-0'}}<br/>
 			Victories: {{currPlayer.victories}}<br/>
 			Races: {{currPlayer.totalRaces}}<br/>
+			<div class="horizontalDivision"></div>
+			<div class="mainButtonArea">
+					<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoTraining()">TRAINERS</button>
+					<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="gotoArea" (click)="gotoStables()">STABLES</button>
+					<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoShop()">SHOP</button>
+			</div>
 		</div>
 		<div class="verticalDivision"></div>
 		<div class="horseView"><h4>Horses</h4>
@@ -23,12 +30,8 @@
 			<div class="mainButtonArea">
 				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="pickRace()">RACE</button>
 				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>
-				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race, train or exhibit.</div>
+				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race or exhibit.</div>
 				<button class="skip" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
-				<div class="horizontalDivision"></div>
-				<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoTraining()">TRAINERS</button>
-				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="gotoArea" (click)="gotoStables()">STABLES</button>
-				<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoShop()">SHOP</button>
 			</div>
 		</div>
 	</div>

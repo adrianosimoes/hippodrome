@@ -25,17 +25,21 @@ horse {
 }
 
 .coatOfArms {
-	margin: 10px;
-	width: 130px;
+	margin: 5px;
+	width: 120px;
 }
 
 .silkContainer{
-	transform: scale(0.5);
-	margin-top: -20px;
+	transform: scale(0.4);
+	margin-top: -25px;
 	margin-left: -10px;
-	margin-bottom: 40px;
+	margin-bottom: 14px;
 	width: 100px;
 	height: 100px;
+}
+
+.horizontalDivision{
+	margin-left: -5px;
 }
 
 .nextArea {
@@ -46,7 +50,7 @@ horse {
 
 .mainButtonArea{
 	margin-top: 10px;
-	margin-right: 10px;
+	margin-right: 15px;
 }
 
 .mainButtonArea button{
