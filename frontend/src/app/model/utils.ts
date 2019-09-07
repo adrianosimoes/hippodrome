@@ -115,10 +115,10 @@ let defaultCmp: Comparator<any> = ( a, b ) => {
 }
 
 export class StaticData {
-    static horseNames: string[] = ['Annabel', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Onix', 'Sugarbolt', 'Colby',
+    static horseNames: string[] = ['Annabel', 'Adagio', 'Aida','Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby',
         'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
         'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand',
-        'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo'];
+        'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo', 'Velvet', 'Verona', 'Vegas', 'Virgo'];
 
     static colors: string[] = [
                             /*Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800000', '#800080', '#ff6600', '#9e0000',

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { InitService } from './init.service';
 import { GameInstance } from '../gameinstance';
 import { Utils, StaticData } from '../utils';
 import { Player } from '../player';
@@ -16,8 +17,6 @@ declare var JSON: any;
     providedIn: 'root'
 } )
 export class CommonService {
-
-    static INITIAL_MONEY: number = 6000;
 
     horsesInShop: Horse[];
     racesLeagues: RaceLeague[];
@@ -42,7 +41,7 @@ export class CommonService {
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-            0, Utils.devMode() ? 105000 : CommonService.INITIAL_MONEY );
+            0, Utils.devMode() ? 105000 : InitService.INITIAL_MONEY );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
         this.generateBgImage();
     }
@@ -86,78 +85,18 @@ export class CommonService {
 
     initHorsesInShop(): void {
         this.horsesInShop = [];
-
-        //Initialize Horses in Shop:
-        let horse = new Horse( 101, 'Tom Bolt', 13, 14, 16, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 102, 'Bruce Steel', 12, 17, 12, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 103, 'Sandra Flash', 15, 13, 10, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 104, 'Jack Diamond', 14, 18, 13, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 105, 'Scarlett King', 20, 28, 25, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 106, 'Brad Dynamite', 25, 40, 35, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
-
-        horse = new Horse( 107, 'Samuel Titanium', 50, 55, 50, Horse.AVG_FORM );
-        this.horsesInShop.push( horse );
+        InitService.initHorsesInShop(this.horsesInShop);
+      
     }
 
     initRaces(): void {
         this.racesLeagues = [];
-
-        let raceLeague = new RaceLeague( 2, "Ungraded", 0 );
-        this.racesLeagues.push( raceLeague );
-
-        let id = 1;
-
-       raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-       raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
-       raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
-       raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
-
-
-        raceLeague = new RaceLeague( 3, "Group 3", 5 );
-        this.racesLeagues.push( raceLeague );
-
-        raceLeague.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
-
-        raceLeague = new RaceLeague( 5, "Group 2", 10 );
-        this.racesLeagues.push( raceLeague );
-
-        raceLeague.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
-
-        raceLeague = new RaceLeague( 9, "World Cup", 15 );
-        this.racesLeagues.push( raceLeague );
-
-        raceLeague.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( id++, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
-
+        InitService.initRaces(this.racesLeagues);
     };
 
     initTrainers(): void {
         this.trainersToSell = [];
-
-        this.trainersToSell.push( new Trainer( 1, "Acceleration Trainer", 2500, 12, HorseSkills.ACCELERATION, 10, 3,
-            "Trains the acceleration every day for the active horse. 1 speed up every 12 days." ) );
-
-        this.trainersToSell.push( new Trainer( 2, "Speed Trainer", 6200, 32, HorseSkills.SPEED, 10, 3,
-            "Trains the speed every day for the active horse. 1 speed up every 10 days." ) );
-
-        this.trainersToSell.push( new Trainer( 3, "Endurance Trainer", 3000, 15, HorseSkills.ENDURANCE, 10, 3,
-            "Trains the endurance every day for the active horse. 1 endurance up every 10 days." ) );
+        InitService.initTrainers(this.trainersToSell);
     }
 
     getHorsesInShop(): Horse[] {
