@@ -15,6 +15,7 @@ export class Player {
     money: number;
     victories: number;
     totalRaces: number;
+    prestigePoints : number;
     trainers: Trainer[];
 
     constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number ) {
@@ -27,6 +28,7 @@ export class Player {
         this.money = money;
         this.victories = 0;
         this.totalRaces = 0;
+        this.prestigePoints = 0;
         this.trainers = [];
         this.recalculateBackground();
     }
@@ -47,6 +49,7 @@ export class Player {
         ret.horses = player.horses;
         ret.trainers = player.trainers;
         ret.totalRaces = player.totalRaces;
+        ret.prestigePoints = player.prestigePoints;
         ret.recalculateBackground();
 
         return ret;
