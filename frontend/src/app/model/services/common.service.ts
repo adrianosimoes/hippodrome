@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from "@angular/router";
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
-import { GameInstance } from './gameinstance';
-import { Utils, StaticData } from './utils';
-import { Player } from './player';
-import { Horse, TrainingHorse, HorseSkills } from './horse';
-import { Race, RaceLeague } from './race';
-import { Trainer } from './trainer';
+import { GameInstance } from '../gameinstance';
+import { Utils, StaticData } from '../utils';
+import { Player } from '../player';
+import { Horse, TrainingHorse, HorseSkills } from '../horse';
+import { Race, RaceLeague } from '../race';
+import { Trainer } from '../trainer';
 
 
 declare var Cookies: any;

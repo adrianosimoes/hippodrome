@@ -4,7 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { MainComponent } from './main.component';
 import { HorseComponent } from '../../widget//horse/horse.component';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 
 

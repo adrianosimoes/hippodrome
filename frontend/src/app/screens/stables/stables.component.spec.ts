@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 import { StablesComponent } from './stables.component';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 
 describe('StablesComponent', () => {

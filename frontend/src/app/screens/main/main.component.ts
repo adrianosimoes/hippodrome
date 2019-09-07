@@ -4,7 +4,7 @@ import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 
 @Component( {

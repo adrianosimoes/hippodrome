@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Player } from './model/player';
 import { GameInstance } from './model/gameinstance';
-import { CommonService } from './model/common.service';
+import { CommonService } from './model/services/common.service';
 import { Angulartics2Clicky } from "angulartics2/clicky";
 
 

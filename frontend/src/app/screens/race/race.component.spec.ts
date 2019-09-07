@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import {MatRadioModule} from '@angular/material/radio';
 import { FormsModule } from '@angular/forms';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 
 import { RaceComponent } from './race.component';

@@ -1,7 +1,7 @@
 import { Horse, HorseInRace, RaceStrategy } from './horse';
 import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
-import { CommonService } from './common.service';
+import { CommonService } from './services/common.service';
 import { Player } from './player';
 import { Utils, BORDER_HEIGHT } from './utils';
 

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 
 

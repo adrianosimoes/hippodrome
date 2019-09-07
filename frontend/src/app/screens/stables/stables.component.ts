@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { Horse, TrainingHorse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 
 @Component( {

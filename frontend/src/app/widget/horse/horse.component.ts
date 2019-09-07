@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from "@angular/router";
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Utils } from "src/app/model/utils";

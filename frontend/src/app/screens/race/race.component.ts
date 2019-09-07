@@ -6,7 +6,7 @@ import { Utils } from '../../model/utils';
 import { Horse, HorseInRace, RaceStrategy } from '../../model/horse';
 import { Race } from '../../model/race';
 import { RaceInstance, RaceState } from '../../model/raceinstance';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 
 @Component( {
     selector: 'app-race',

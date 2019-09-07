@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { CommonService } from './common.service';
+import { CommonService } from './services/common.service';
 import { Horse } from './horse';
 import { RaceInstance, RaceState } from './raceinstance';
 import { Race } from './race';

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router";
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 import { Race, RaceLeague } from '../../model/race';
 import { Player } from "src/app/model/player";

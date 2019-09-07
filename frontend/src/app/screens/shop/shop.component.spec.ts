@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { ShopComponent } from './shop.component';
 import { HorseComponent } from '../../widget//horse/horse.component';
-import { CommonService } from '../../model/common.service';
+import { CommonService } from '../../model/services/common.service';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 
