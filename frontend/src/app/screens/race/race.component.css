@@ -190,7 +190,7 @@ input[type=radio]:focus {
 
 .raceStadium{
 	margin: 0 auto;
-	margin-top: 10px;
+	margin-top: 5px;
 	padding-top: 20px;
 	padding-bottom: 20px;
 	color: #fff;
@@ -199,12 +199,10 @@ input[type=radio]:focus {
 .hideRaceStadium{
 	margin: 0 auto;
 	scale: 0.0;
-	transition: all 1.5s;
-}
-
-.hideRaceTrack {
-	transition: all 1.5s;
-	scale:  0.0;
+	opacity: 0.0;
+	transition-property: margin, scale, opacity;
+	transition-duration: 1.5s, 1.5s, 0.8s;
+	transition-delay: 0s, 0s, 0.6s;
 }
 
 .raceTrack{
@@ -214,6 +212,12 @@ input[type=radio]:focus {
 	border: 3px solid #fff;	
 	border-left: none;
 	border-right: 3px dashed #fff;
+}
+
+.hideRaceTrack {
+	margin-top: 0;
+	scale:  0.0;
+	transition: all 1.5s;
 }
 
 .roundRaceTrack{
