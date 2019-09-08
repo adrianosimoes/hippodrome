@@ -1,5 +1,6 @@
 #appScreen {
 	min-height: 100%;
+	min-width: 830px;
 	-webkit-background-size: cover !important;
   	-moz-background-size: cover  !important;
   	-o-background-size: cover  !important;
