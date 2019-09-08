@@ -334,7 +334,7 @@ input[type=radio]:focus {
 
 .comments {
 	float: left;
-	width: 350px;
+	width: 400px;
 	height: 100px;
 	overflow-y: scroll;
 	border: 1px solid #444;

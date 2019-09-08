@@ -80,6 +80,8 @@ export class CommonService {
 
     loadSavedGame(): void {
         this.gameInstance = this.savedGame;
+        Utils.clickyPagView("loadGame?money=" + this.gameInstance.playerOne.money + "&prestige=" + this.gameInstance.playerOne.prestigePoints
+                + "&victories=" + this.gameInstance.playerOne.victories + "&races=" + this.gameInstance.playerOne.totalRaces ,  "Load Game");
         this.loadBgImage( this.savedGame.date );
     }
 
