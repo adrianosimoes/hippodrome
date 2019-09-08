@@ -78,7 +78,7 @@ export class InitService {
     }
     
     static initXPPerLevel( xpPerLevel: number[] ) {
-        if(Utils.devMode){
+        if(Utils.devMode()){
             InitService.BASE_XP = 20;
         }
             
