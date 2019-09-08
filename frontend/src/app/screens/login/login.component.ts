@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import { Player } from '../../model/player';
 import { CommonService } from '../../model/services/common.service';
 import { GameInstance } from '../../model/gameinstance';
+import { Utils } from "src/app/model/utils";
 
 
 
@@ -33,6 +34,11 @@ export class LoginComponent implements OnInit {
 
     loadGame() : void {
         this.commonService.loadSavedGame();
+        Utils.clickyPagView("loadGame?money=" +  this.commonService.gameInstance.playerOne.money 
+                + "&prestige=" +  this.commonService.gameInstance.playerOne.prestigePoints
+                + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
+                + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
+                + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length, "Load Game");
         this.router.navigate( ['main'] );
     }
     
