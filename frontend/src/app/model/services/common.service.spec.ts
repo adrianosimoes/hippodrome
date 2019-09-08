@@ -21,11 +21,11 @@ describe('CommonService', () => {
   it('Test Horse shop', inject([CommonService], (service: CommonService) => {
       expect(service.getHorsesInShop().length).toBe(7);
       expect(service.getHorsesInShop()[0].name).toBe("Tom Bolt")
-      expect(service.getHorsesInShop()[0].speed).toBe(12);
-      expect(service.getHorsesInShop()[0].endurance).toBe(16);
-      expect(service.getHorsesInShop()[0].acceleration).toBe(14);
+      expect(service.getHorsesInShop()[0].speed).toBe(13);
+      expect(service.getHorsesInShop()[0].endurance).toBe(14);
+      expect(service.getHorsesInShop()[0].acceleration).toBe(16);
       //Horse should start with maxium stamina
-      expect(service.getHorsesInShop()[0].staminaDisplay).toBe(65);
+      expect(service.getHorsesInShop()[0].staminaDisplay).toBe(0);
       
     }));
   
