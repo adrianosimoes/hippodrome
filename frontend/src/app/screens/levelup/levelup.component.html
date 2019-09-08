@@ -1,0 +1,39 @@
+<div id="levelup"  class="screen">
+	<div class="center">
+		<h3>Congratulations!<br/>
+		You reached:</h3>
+		<h1>Level {{newLevel}}</h1>
+	</div>
+	<div class="horizontalDivision"></div>
+	<div>
+		<div class="skillLabel left">Skill Points Avaliable: </div> <div class="skillPoints left">{{skillPoints}}</div><button class="reset" (click)="reset()">Reset</button>
+	</div>
+	<div class="clear skillHelpText">(Speed can only be raised with Skill Points, while other Attributes can be trained)</div>
+	<div class="clear space"></div>
+	<span *ngIf="currPlayer.horses.length==0">You have no horses.</span>
+	<div *ngFor="let currHorse of levelUpHorses">
+			<div [style.float]="left" class="pickHorse">
+				<div class="title">{{currHorse.baseHorse.name}}</div>
+				<div class="skillRow">
+					<div class="left">Speed:</div>
+					<div class="right">{{currHorse.newSpeed | number:'2.0-1'}} <button class="skillButton" [disabled]="editLocked" (click)="upSkill(currHorse,'S')">+</button></div>
+				<div class="clear"></div>
+				</div>
+				<div class="skillRow">
+					<div class="left">Acceleration:</div>
+					<div class="right">{{currHorse.newAcc | number:'2.0-1'}} <button class="skillButton" [disabled]="editLocked" (click)="upSkill(currHorse,'A')">+</button></div>
+				<div class="clear"></div>
+				</div>
+				<div class="skillRow">
+					<div class="left">Endurance:</div>
+					<div class="right">{{currHorse.newEnd| number:'2.0-1' }} <button class="skillButton" [disabled]="editLocked" (click)="upSkill(currHorse,'E')">+</button></div>
+				</div>
+				<div class="clear">Form: {{currHorse.baseHorse.form | formstring}}</div>
+				<div class="clear"><span class="left">Stamina:</span><div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="currHorse.baseHorse.staminaDisplay" [ngClass]="{'noBorder': currHorse.baseHorse.staminaDisplay==0}"  ></div></div><br /></div> 
+			</div>
+	</div>
+	<div class="clear"></div>
+	<div class="formButtonArea">
+		<button (click)="confirm()">Confirm</button>
+	</div>	
+</div>

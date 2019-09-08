@@ -76,11 +76,11 @@
 			<div><span *ngIf="currRace.wonPrize > 0">Congratulations! </span> You finished in  {{currRace.place}}'  place.</div>
 			<div><span *ngIf="currRace.wonPrize > 0">You won <b>{{currRace.wonPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</b> and </span>
 				<span *ngIf="!(currRace.wonPrize > 0)">You won </span>
-				<b>{{currRace.basePrestigePoints + currRace.placePrestigePoints}}</b> Prestige Points.</div>
+				<b>{{currRace.baseXpPoints + currRace.placeXpPoints}}</b> Prestige Points.</div>
 			<div class="prestigeCalc">
-				<div class="prestigePoints left">Finish race</div> 	<div class="prestigePoints right">{{currRace.basePrestigePoints}}</div>
-				<div class="prestigePoints left" *ngIf="currRace.placePrestigePoints > 0">{{currRace.place}}'  place</div><div class="prestigePoints right" *ngIf="currRace.placePrestigePoints > 0">{{currRace.placePrestigePoints}}</div>
-				<div class="prestigePoints left">Total Prestige Points:</div><div class="prestigePoints right total"><b>{{currRace.basePrestigePoints + currRace.placePrestigePoints}}</b></div>
+				<div class="prestigePoints left">Finish race</div> 	<div class="prestigePoints right">{{currRace.baseXpPoints}}</div>
+				<div class="prestigePoints left" *ngIf="currRace.placeXpPoints > 0">{{currRace.place}}'  place</div><div class="prestigePoints right" *ngIf="currRace.placeXpPoints > 0">{{currRace.placeXpPoints}}</div>
+				<div class="prestigePoints left">Total Prestige Points:</div><div class="prestigePoints right total"><b>{{currRace.baseXpPoints + currRace.placeXpPoints}}</b></div>
 				<div class="clear"></div>
 			</div>
 			<button (click)="exitRace()">Continue</button>

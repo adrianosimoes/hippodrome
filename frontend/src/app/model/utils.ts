@@ -127,7 +127,7 @@ export class StaticData {
                             /* Blues */  '#2f2fc7',
                             /* Grey and Brown */ '#000000', '#999999', '#966F33', '#6F4E37', '#7F5217'];
 
-    static saveGameName: string = "gamev5";
+    static saveGameName: string = "gamev6";
 }
 
 

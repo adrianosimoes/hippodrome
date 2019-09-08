@@ -32,8 +32,8 @@ export class RaceInstance {
     raceTimer: number;
     place: number;
     wonPrize: number = 0;
-    basePrestigePoints: number = 0;
-    placePrestigePoints: number = 0;
+    baseXpPoints: number = 0;
+    placeXpPoints: number = 0;
     canceled: boolean = false;
     cssMaxDistance: number;
     worldChampion: boolean = false;
@@ -339,9 +339,9 @@ export class RaceInstance {
         this.playerHorse.baseHorse.calculateStaminaDisplay();
         this.player.totalRaces++;
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
-        this.basePrestigePoints = (this.baseRace.difficulty - 1);
-        this.placePrestigePoints = (this.baseRace.difficulty - 1)  * this.getPlaceMultiplier(this.place);
-        this.player.prestigePoints += this.basePrestigePoints +  this.placePrestigePoints;
+        this.baseXpPoints = (this.baseRace.difficulty - 1);
+        this.placeXpPoints = (this.baseRace.difficulty - 1)  * this.getPlaceMultiplier(this.place);
+        this.player.xpPoints += this.baseXpPoints +  this.placeXpPoints;
         if ( this.baseRace.prizes.length >= this.place ) {
             this.wonPrize = this.baseRace.prizes[this.place - 1];
             this.player.money += this.wonPrize;
@@ -354,7 +354,7 @@ export class RaceInstance {
         }
         Utils.clickyPagView("finishRace:" + this.baseRace.id + "_place:" + this.place 
                 + "_form" + this.playerHorse.baseHorse.form +  "_strategy:" + this.playerHorse.strategy
-                +"_points:" + this.player.prestigePoints,  "Finished Race");
+                +"_points:" + this.player.xpPoints,  "Finished Race");
         this.state = RaceState.RaceFinished;
     }
     

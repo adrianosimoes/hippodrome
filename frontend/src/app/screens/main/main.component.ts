@@ -15,6 +15,7 @@ import { CommonService } from '../../model/services/common.service';
 export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
+    xpNextLevel: number;
     warningText: string = '';
 
     constructor( private router: Router, public commonService: CommonService ) { }
@@ -25,6 +26,10 @@ export class MainComponent implements OnInit {
         }
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
+        this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer);
+        if(this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer) ){
+            this.router.navigate( ['levelUp'] );
+        }
     }
 
     pickRace(): void {
@@ -49,6 +54,10 @@ export class MainComponent implements OnInit {
 
     skipDay(): void {
         this.commonService.skipDay();
+    }
+    
+    gotolevelUp(): void {
+        this.router.navigate( ['levelUp'] );
     }
 
 }

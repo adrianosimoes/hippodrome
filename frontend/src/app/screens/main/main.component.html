@@ -10,7 +10,8 @@
 				<div class="name">{{currPlayer.name}}</div>
 				<div class="clear"></div>
 			</div>
-			Prestige Points: {{currPlayer.prestigePoints}}<br/>
+			Prestige Level:  {{currPlayer.playerLevel}} <small><a *ngIf="this.currPlayer.skillPoints > 0" routerLink="/levelUp">({{this.currPlayer.skillPoints}} skill up)</a></small><br/>
+			Prestige Points: {{currPlayer.xpPoints}}  ({{xpNextLevel}}) <br/>
 			Victories: {{currPlayer.victories}}<br/>
 			Races: {{currPlayer.totalRaces}}<br/>
 			<div class="horizontalDivision"></div>

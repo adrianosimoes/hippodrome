@@ -7,6 +7,7 @@ import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
+import { LevelUpComponent } from './screens/levelup/levelup.component';
 
 const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -16,6 +17,7 @@ const routes: Routes = [
   { path: 'stables', component: StablesComponent },
   { path: 'pickRace', component: PickRaceComponent },
   { path: 'race/:id', component: RaceComponent },
+  { path: 'levelUp', component: LevelUpComponent },
   { path: '**', redirectTo: 'login' }
 ];
 
