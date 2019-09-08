@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 import { StablesComponent } from './stables.component';
+import { HorseComponent } from '../../widget//horse/horse.component';
 import { CommonService } from '../../model/services/common.service';
 
 
@@ -13,7 +14,7 @@ describe('StablesComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ StablesComponent, FormStringPipe]
+      declarations: [ StablesComponent, HorseComponent, FormStringPipe]
     })
     .compileComponents();
   }));
