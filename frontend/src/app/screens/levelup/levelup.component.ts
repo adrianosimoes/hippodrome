@@ -18,6 +18,7 @@ export class LevelUpComponent implements OnInit {
     newLevel: number;
     editLocked: boolean;
     baseSkillPoints: number;
+    levelSkillPoints: number;
     skillPoints: number;
 
     constructor( private router: Router, public commonService: CommonService ) { }
@@ -44,6 +45,7 @@ export class LevelUpComponent implements OnInit {
             this.router.navigate( ['main'] );
         }
         
+        this.levelSkillPoints = this.commonService.getSkillPoints(this.currPlayer);
         this.skillPoints = this.baseSkillPoints;
         this.editLocked=false;
     }
@@ -53,6 +55,12 @@ export class LevelUpComponent implements OnInit {
             horse.confirmSkillUp();
         }
         this.currPlayer.skillPoints = this.skillPoints;
+        Utils.clickyPagView("levelUp?money=" +  this.commonService.gameInstance.playerOne.money
+                + "&skillPoints=" +  this.currPlayer.skillPoints
+                + "&prestige=" +  this.commonService.gameInstance.playerOne.xpPoints
+                + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
+                + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
+                + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length, "Load Game");
         this.router.navigate( ['main'] );
     }
     
@@ -65,22 +73,24 @@ export class LevelUpComponent implements OnInit {
         this.editLocked=false;
     }
     
-    upSkill(horse: LevelUpHorse, skill: string){
+    upSkill( horse: LevelUpHorse, skill: string ) {
         this.editLocked = true;
-        if(this.skillPoints<=0){
+        if ( this.skillPoints <= 0 ) {
             this.editLocked = false;
             return;
         }
-           
+
         this.skillPoints--;
-        if(skill=='S')
+        if ( skill == 'S' )
             horse.newSpeed++;
-        else if(skill=='A')
+        else if ( skill == 'A' )
             horse.newAcc++;
-        else if(skill=='E')
+        else if ( skill == 'E' )
             horse.newEnd++;
-        
-        this.editLocked = false;
+
+        if ( this.skillPoints <= 0 )
+            this.editLocked = true;
+        else this.editLocked = false;
     }
 }
 
