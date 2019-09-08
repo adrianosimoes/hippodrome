@@ -15,7 +15,7 @@ import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
-
+import { LevelUpComponent } from "src/app/screens/levelup/levelup.component";
 
 @NgModule({
   declarations: [
@@ -29,7 +29,8 @@ import { PickRaceComponent } from './screens/pick-race/pick-race.component';
     RaceComponent,
     TrainingComponent,
     StablesComponent,
-    PickRaceComponent
+    PickRaceComponent,
+    LevelUpComponent
   ],
   imports: [
       BrowserModule,

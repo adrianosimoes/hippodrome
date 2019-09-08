@@ -1,0 +1,44 @@
+h1{
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+
+.skillLabel{
+	padding-top: 2px;
+}
+
+.skillPoints{
+	margin-left: 5px;
+	border: 2px solid #999;
+	width: 30px;
+	text-align: center;
+	box-shadow:
+		3px 3px #444;
+}
+
+button.reset{
+	padding: 0px 3px 0px 3px;
+	margin-left: 20px;
+}
+
+.skillHelpText{
+	padding-top: 5px;
+}
+
+.skillRow{
+	height: 30px;
+	vertical-align: center;
+}
+
+.skillButton{
+	padding: 0px 3px 0px 3px;
+}
+
+.space {
+	clear: both;
+	padding-top: 20px;
+}
+
+.pickHorse{
+	width: 180px;
+}

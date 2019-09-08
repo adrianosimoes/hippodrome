@@ -35,7 +35,7 @@ describe( 'RaceInstance', () => {
         expect( raceInstance.horses.length ).toBe( 6 );
         expect( raceInstance.roundTrack ).toBe( false );
         expect( raceInstance.comments.length ).toBe( 0 );
-        expect( raceInstance.playerHorse.staminaDisplay ).toBe( 100 );
+        expect( raceInstance.playerHorse.staminaDisplay ).toBe( 0 );
     } );
 
     it( 'Test race instance finish first', () => {

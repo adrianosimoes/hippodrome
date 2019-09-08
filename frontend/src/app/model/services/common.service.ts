@@ -23,6 +23,8 @@ export class CommonService {
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
+    xpPerLevel: number[];
+    skillPointsPerLevel: number[];
     backgroundImage: SafeStyle;
     loadingBackground: SafeStyle;
 
@@ -30,9 +32,18 @@ export class CommonService {
     public loadingText: string;
 
     constructor( private router: Router) {
-        this.initHorsesInShop();
-        this.initRaces();
-        this.initTrainers();
+        this.horsesInShop = [];
+        this.racesLeagues = [];
+        this.trainersToSell = [];
+        this.xpPerLevel = [];
+        this.skillPointsPerLevel = [];
+        
+        InitService.initHorsesInShop(this.horsesInShop);
+        InitService.initRaces(this.racesLeagues);
+        InitService.initTrainers(this.trainersToSell);
+        InitService.initXPPerLevel(this.xpPerLevel);
+        InitService.initSkillPointsPerLevel(this.skillPointsPerLevel);
+        
         this.loading = false;
 
         let savedGameString: string = Cookies.get( StaticData.saveGameName );
@@ -83,24 +94,16 @@ export class CommonService {
         this.loadBgImage( this.savedGame.date );
     }
 
-    initHorsesInShop(): void {
-        this.horsesInShop = [];
-        InitService.initHorsesInShop(this.horsesInShop);
-      
-    }
-
-    initRaces(): void {
-        this.racesLeagues = [];
-        InitService.initRaces(this.racesLeagues);
-    };
-
-    initTrainers(): void {
-        this.trainersToSell = [];
-        InitService.initTrainers(this.trainersToSell);
-    }
-
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
+    }
+    
+    getNextXPLevel(player: Player): number {
+        return this.xpPerLevel[this.gameInstance.playerOne.playerLevel + 1];
+    }
+    
+    getSkillPoints(player: Player): number {
+        return this.skillPointsPerLevel[this.gameInstance.playerOne.playerLevel];
     }
 
     getPlayer(): Player {

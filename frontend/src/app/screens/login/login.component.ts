@@ -35,7 +35,7 @@ export class LoginComponent implements OnInit {
     loadGame() : void {
         this.commonService.loadSavedGame();
         Utils.clickyPagView("loadGame?money=" +  this.commonService.gameInstance.playerOne.money 
-                + "&prestige=" +  this.commonService.gameInstance.playerOne.prestigePoints
+                + "&prestige=" +  this.commonService.gameInstance.playerOne.xpPoints
                 + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
                 + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
                 + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length, "Load Game");

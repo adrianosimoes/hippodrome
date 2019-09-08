@@ -1,11 +1,13 @@
 import { Horse, TrainingHorse, HorseSkills } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
+import { Utils } from "src/app/model/utils";
 
 
 export class InitService {
 
     static INITIAL_MONEY: number = 6000;
+    static BASE_XP: number = 60;
 
     static initHorsesInShop( horsesInShop: Horse[] ) {
 
@@ -74,5 +76,24 @@ export class InitService {
         trainersToSell.push( new Trainer( 3, "Endurance Trainer", 3000, 15, HorseSkills.ENDURANCE, 10, 3,
             "Trains the endurance every day for the active horse. 1 endurance up every 10 days." ) );
     }
-
+    
+    static initXPPerLevel( xpPerLevel: number[] ) {
+        if(Utils.devMode()){
+            InitService.BASE_XP = 20;
+        }
+            
+        var sum = 0;
+        for ( var i = 0; i < 200; i++ ) {
+            if ( i == 1 )
+                sum = InitService.BASE_XP;
+            else sum += InitService.BASE_XP * i * 1.25;
+            xpPerLevel[i] = sum;
+        }
+    }
+    
+    static initSkillPointsPerLevel(skillPointsPerLevel: number[]){
+        for ( var i = 0; i < 200; i++ ) {
+            skillPointsPerLevel[i] = Utils.precisionRound(1 + (i/7), 0);
+        }
+    }
 }
