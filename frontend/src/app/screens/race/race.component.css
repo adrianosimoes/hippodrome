@@ -82,11 +82,19 @@
 	height: 10px;
 }
 
+.nowidth{
+	width: auto;	
+}
+
 .horsesContainer {
 	margin-top: 20px;
 	border: 0;
 	padding: 0;
 	float: left;
+}
+
+horse {
+	float: left;	
 }
 
 .participants {

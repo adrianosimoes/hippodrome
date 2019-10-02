@@ -90,6 +90,21 @@ export class RaceInstance {
     addHorse( horse: HorseInRace ): void {
         this.horses.push( horse );
     }
+    
+    updateSelectedHorse(): void {
+        let currStrategy : RaceStrategy = this.playerHorse.strategy;
+        let currHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground);
+        for ( let i = 0; i < this.horses.length; i++ ) {
+            if(this.horses[i] == this.playerHorse){
+                this.horses[i] = currHorse;
+                currHorse.setTrack(i + 1);
+            }
+        }
+        this.playerHorse = currHorse;
+        this.playerHorse.strategy = currStrategy;
+        this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
+        this.sortedHorses = this.horses.slice();
+    }
 
     startRace(): void {
 

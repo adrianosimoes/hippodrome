@@ -4,6 +4,7 @@ import { CommonService } from '../../model/services/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Utils } from "src/app/model/utils";
+import { RaceInstance } from "src/app/model/raceinstance";
 
 
 @Component( {
@@ -14,6 +15,8 @@ import { Utils } from "src/app/model/utils";
 export class HorseComponent implements OnInit {
     @Input() horse: Horse;
     @Input() page: string;
+    @Input() race: RaceInstance;
+
     public commonService: CommonService;
 
     constructor( private router: Router, private commService: CommonService ) { }
@@ -43,6 +46,9 @@ export class HorseComponent implements OnInit {
 
     selectHorse(): void {
         this.commonService.selectHorse( this.horse );
+        if(this.race){
+            this.race.updateSelectedHorse();
+        }
     }
 
 }

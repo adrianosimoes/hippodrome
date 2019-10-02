@@ -10,8 +10,12 @@
 					<div class="prizes value" *ngFor="let currPrize of currRace.baseRace.prizes; index as i" [attr.data-index]="i">
 						<div class="prizeValue"> <div class="coinCircle prize{{i+1}}">{{i+1}}</div> &nbsp; {{currPrize | currency: 'EUR' : 'symbol':'1.0-0'}}</div>
 					</div>
-			</div>		
-			<div class="label horsesLabel">Horses:</div>
+			</div>
+			<div class="label horsesLabel nowidth">Select Horse:</div>
+			<div class="horsesContainer nowidth">
+				<horse *ngFor="let currHorse of currRace.player.horses"  [horse]="currHorse" [page]="'myhorses'" [race]="currRace"></horse>
+			</div>
+			<div class="label horsesLabel nowidth">Race Horses:</div>
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses">
 						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
