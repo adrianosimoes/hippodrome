@@ -7,8 +7,6 @@
 				Speed: {{currHorse.baseHorse.speed | number:'2.0-1'}}<br/>
 				Endurance: {{currHorse.baseHorse.endurance | number:'2.0-1'}}<br />
 				<span *ngIf="currHorse">	Form: {{currHorse.baseHorse.form | formstring}}<br/></span>
-				<!--  <span class="price" *ngIf="currHorse">Training Speed Cost:<br /></span> 
-				<span class="price" *ngIf="currHorse">Training Stamina Cost: <br /></span>   -->
 				<div class="buttonArea">
 					<button (click)="trainSpeed(currHorse)">Train Speed ({{currHorse.trainSpeedPrice | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
 					<button (click)="trainEndurance(currHorse)">Train Endurance ({{currHorse.trainEndurancePrice | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
@@ -23,6 +21,7 @@
 				<div class="desc">
 					<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per day</div>
 					<div>Quality: <span class="star"></span><span class="star" [class.black]="currTrainer.quality<5" ></span><span class="star" [class.black]="currTrainer.quality<7"></span></div>
+					<div><span>Training: </span><select [(ngModel)]='currTrainer.trainingHorseId'><option  *ngFor='let horse of currPlayer.horses' [ngValue]="horse.id">{{horse.name}}</option></select></div>
 				</div>
 				<button *ngIf="currTrainer.quality<7" (click)="upgradeTrainer(currTrainer)">Upgrade Trainer ({{currTrainer.upgradePrice | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
 				<a [routerLink]="['/stables']" (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR' : 'symbol':'1.0-0'}})</a>

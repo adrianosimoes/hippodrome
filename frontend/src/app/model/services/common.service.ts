@@ -84,6 +84,7 @@ export class CommonService {
             let newTrainer = new Trainer(trainersJson[i].id,
                     trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
                     trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description);
+            newTrainer.trainingHorseId = trainersJson[i].trainingHorseId;
             this.savedGame.playerOne.trainers.push(newTrainer);
         }
         
@@ -145,16 +146,17 @@ export class CommonService {
     }
 
     applyTrainers( player: Player ): void {
-        let selectedHorse: Horse = this.getSelectedHorse();
         for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
+            let trainHorse: Horse = this.getHorseByID(currTrainer.trainingHorseId);
+
             //Pay salary:
             player.money -= currTrainer.salary;
             if ( currTrainer.trainType == HorseSkills.SPEED ) {
-                selectedHorse.speed += this.calculateTrainSpeed(selectedHorse.speed, currTrainer);
+                trainHorse.speed += this.calculateTrainSpeed(trainHorse.speed, currTrainer);
             } else if(currTrainer.trainType == HorseSkills.ENDURANCE ){
-                selectedHorse.endurance += this.calculateTrainSpeed(selectedHorse.endurance, currTrainer);
+                trainHorse.endurance += this.calculateTrainSpeed(trainHorse.endurance, currTrainer);
             } else if(currTrainer.trainType == HorseSkills.ACCELERATION ){
-                selectedHorse.acceleration += this.calculateTrainSpeed(selectedHorse.acceleration, currTrainer);
+                trainHorse.acceleration += this.calculateTrainSpeed(trainHorse.acceleration, currTrainer);
             }
         }
     }
@@ -191,15 +193,18 @@ export class CommonService {
     selectHorse( horse: Horse ): void {
         this.gameInstance.playerOne.selectedHorseId = horse.id;
     }
-
-    getSelectedHorse(): Horse {
+    
+    getHorseByID(horseId: number): Horse {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
-            if ( currHorse.id === this.gameInstance.playerOne.selectedHorseId ) {
+            if ( currHorse.id === horseId) {
                 return currHorse;
             }
         }
-
         return null;
+    }
+
+    getSelectedHorse(): Horse {
+       return this.getHorseByID(this.gameInstance.playerOne.selectedHorseId); 
     }
     
     setHorseName(horse: Horse, newName: string ): void {
@@ -256,6 +261,10 @@ export class CommonService {
                     trainer.name, trainer.price, trainer.salary,
                     trainer.trainType, trainer.speed, trainer.quality, trainer.description);
             this.gameInstance.playerOne.trainers.push(newTrainer);
+            // Auto-set to train first horse:
+            if( this.gameInstance.playerOne.horses.length > 0){
+                newTrainer.setTrainingHorse(this.gameInstance.playerOne.horses[0]);
+            }
             return true;
         } else {
             return false;
