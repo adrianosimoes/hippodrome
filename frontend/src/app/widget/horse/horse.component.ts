@@ -14,8 +14,10 @@ import { RaceInstance } from "src/app/model/raceinstance";
 } )
 export class HorseComponent implements OnInit {
     @Input() horse: Horse;
-    @Input() page: string;
     @Input() race: RaceInstance;
+    @Input() auction: boolean;
+    @Input() selectable: boolean;
+    @Input() editable: boolean;
 
     public commonService: CommonService;
 

@@ -1,27 +1,28 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
-import { HorseComponent } from './horse.component';
-import { Horse } from '../../model/horse';
+
+import { AuctionComponent } from './auction.component';
+import { HorseComponent } from '../../widget//horse/horse.component';
+import { CommonService } from '../../model/services/common.service';
 
 
-describe('HorseComponent', () => {
-  let component: HorseComponent;
-  let fixture: ComponentFixture<HorseComponent>;
+describe('AuctionComponent', () => {
+  let component: AuctionComponent;
+  let fixture: ComponentFixture<AuctionComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ HorseComponent, FormStringPipe]
+      declarations: [ AuctionComponent, HorseComponent, FormStringPipe]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HorseComponent);
+    fixture = TestBed.createComponent(AuctionComponent);
     component = fixture.componentInstance;
-    component.horse = new Horse(1, "aaa", 10, 10, 11, 10);
+    component.commonService.setInitialized();
     fixture.detectChanges();
   });
 

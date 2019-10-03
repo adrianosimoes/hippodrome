@@ -13,13 +13,13 @@
 			</div>
 			<div class="label horsesLabel nowidth">Select Horse:</div>
 			<div class="horsesContainer nowidth">
-				<horse *ngFor="let currHorse of currRace.player.horses"  [horse]="currHorse" [page]="'myhorses'" [race]="currRace"></horse>
+				<horse *ngFor="let currHorse of currRace.player.horses"  [horse]="currHorse" [selectable]="true" [race]="currRace"></horse>
 			</div>
 			<div class="label horsesLabel nowidth">Race Horses:</div>
 				<div class="horsesContainer">
 					<span class="participants" *ngFor="let currHorse of currRace.horses">
 						<div class="playerHorseMarker" *ngIf="currHorse === currRace.playerHorse" [style.backgroundColor]="currHorse.color"></div>
-						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.baseHorse.name}} (Speed: {{currHorse.baseHorse.speed | number:'2.0-1' }}; End: {{currHorse.baseHorse.endurance | number:'2.0-1'}}; Acc: {{currHorse.baseHorse.acceleration | number:'2.0-1'}})</div>
+						<div class="horseName" [style.color]="currHorse.color">{{currHorse.track}}: {{currHorse.baseHorse.name}} (Speed: {{currHorse.baseHorse.speed | number:'2.0-1' }}; Acc: {{currHorse.baseHorse.acceleration | number:'2.0-1'}}; End: {{currHorse.baseHorse.endurance | number:'2.0-1'}})</div>
 					</span>
 				</div>
 			<div class="strategiesContainer">
@@ -33,7 +33,7 @@
 		</div>
 		<div class="buttonArea"><button [disabled]="!(currRace.player.money >= currRace.baseRace.entranceFee)" class="race" (click)="startRace()">Start Race</button>
 		<span *ngIf="!(currRace.player.money >= currRace.baseRace.entranceFee)">Not enough money to pay entrance fee.</span>
-		<button (click)="exitRace()" class="skip">Skip Race</button>
+		<button (click)="skipRace()" class="skip">Skip Race</button>
 		</div> 		
 	</div>
 	<div class="margintop" *ngIf="currRace.state !== RaceState.PreRace">

@@ -27,6 +27,7 @@ export class CommonService {
     skillPointsPerLevel: number[];
     backgroundImage: SafeStyle;
     loadingBackground: SafeStyle;
+    auctionHorse: Horse;
 
     public loading: boolean;
     public loadingText: string;
@@ -173,10 +174,14 @@ export class CommonService {
     saveGame(): void {
         Cookies.set( StaticData.saveGameName, this.gameInstance, { expires: 7 } );
     }
+    
+    addHorseToPlayer( horse: Horse): boolean {
+        return this.addHorseWithPriceToPlayer(horse, horse.price);
+    }
 
-    addHorseToPlayer( horse: Horse ): boolean {
-        if ( this.gameInstance.playerOne.money >= horse.price ) {
-            this.gameInstance.playerOne.money -= horse.price;
+    addHorseWithPriceToPlayer( horse: Horse, horsePrice: number ): boolean {
+        if ( this.gameInstance.playerOne.money >= horsePrice ) {
+            this.gameInstance.playerOne.money -= horsePrice;
             let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name,
                 horse.speed, horse.endurance, horse.acceleration, horse.form );
             newHorse.owned = true;
@@ -288,6 +293,38 @@ export class CommonService {
             player.trainers.splice( index, 1 )
             player.money += trainer.price / 2;
         }
+    }
+    
+    setAuctionHorse(auctionHorse: Horse) {
+        this.auctionHorse = auctionHorse;
+    }
+    
+    getAuctionHorse(): Horse{
+        return this.auctionHorse;
+    }
+    
+    bidAuction(bidValue: number, auctionHorse: Horse): [boolean, number] {
+        let retValue : [boolean, number];
+        if(bidValue > 0 && bidValue > this.getPlayer().money){
+            retValue = [false, -1];
+            return retValue;
+        }
+        
+        var realBid = this.calculateBid(auctionHorse);
+        if(bidValue >= realBid){
+            this.addHorseWithPriceToPlayer(auctionHorse, bidValue);
+            retValue = [true, bidValue];
+            return retValue;
+        } else{
+            retValue = [false, realBid];
+            return retValue;
+        }
+    }
+    
+    calculateBid(auctionHorse: Horse): number {
+        var minValue : number =  auctionHorse.price * 0.85;
+        var maxValue : number =  auctionHorse.price * 1.15;
+        return Utils.getRandomInt(minValue, maxValue);
     }
 
     isInitialized(): boolean {

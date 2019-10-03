@@ -2,7 +2,7 @@
 	<h3>Stables</h3>
 	<div class="stablesView"><h4>Horses</h4>
 		<span *ngIf="currPlayer.horses.length==0">You have no horses.</span> 
-		<horse *ngFor="let currHorse of currPlayer.horses"  [horse]="currHorse" [page]="'stables'"></horse>
+		<horse *ngFor="let currHorse of currPlayer.horses"  [horse]="currHorse" [editable]="true" [selectable]="true"></horse>
 	</div>
 	<div class="clear"></div>
 	<div class="formButtonArea">

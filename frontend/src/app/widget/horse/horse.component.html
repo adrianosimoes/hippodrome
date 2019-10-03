@@ -1,11 +1,11 @@
-<div [style.float]="horse.owned ? 'none' : 'left' " [ngClass]="{'stables': page=='stables'}"  [class]="page=='myhorses' || page=='stables' ? (horse.id == commonService.gameInstance.playerOne.selectedHorseId ? 'myhorses pickHorse selected' : 'myhorses pickHorse') : 'pickHorse'">
-		<div class="title">{{horse.name}} <a *ngIf="page=='stables'" class="edit" (click)="editName()" [routerLink]="">Edit</a></div>
+<div [style.float]="horse.owned ? 'none' : 'left' " [ngClass]="{'stables': editable}"  [class]="selectable ? (horse.id == commonService.gameInstance.playerOne.selectedHorseId ? 'myhorses pickHorse selected' : 'myhorses pickHorse') : 'pickHorse'">
+		<div class="title">{{horse.name}} <a *ngIf="editable" class="edit" (click)="editName()" [routerLink]="">Edit</a></div>
 		Speed: {{horse.speed | number:'2.0-1'}}<br/>
 		Acceleration: {{horse.acceleration | number:'2.0-1'}}<br/>
 		Endurance: {{horse.endurance| number:'2.0-1' }}<br />
 		<span *ngIf="horse.owned">	Form: {{horse.form | formstring}}<br/></span>
 		<span *ngIf="horse.owned"><span class="left">Stamina:</span><div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="horse.staminaDisplay" [ngClass]="{'noBorder': horse.staminaDisplay==0}"  ></div></div><br /></span> 
-		<span class="price" *ngIf="!horse.owned">Price: {{horse.price | currency: 'EUR' : 'symbol':'1.0-0'}}<br /></span> 
-		<div class="buttonArea" *ngIf="!horse.owned"><button (click)="buyHorse()" >Buy</button></div>
-		<div class="buttonArea" *ngIf="(page=='myhorses' || page=='stables') && commonService.gameInstance.playerOne.horses.length > 1"><button class="select"  *ngIf="(page=='myhorses' || page == 'stables') && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()">Select</button></div>
+		<span class="price" *ngIf="!horse.owned"><span *ngIf="!auction">Price: </span><span *ngIf="auction">Value: </span> {{horse.price | currency: 'EUR' : 'symbol':'1.0-0'}}<br /></span> 
+		<div class="buttonArea" *ngIf="!auction && !horse.owned"><button (click)="buyHorse()" >Buy</button></div>
+		<div class="buttonArea" *ngIf="(selectable) && commonService.gameInstance.playerOne.horses.length > 1"><button class="select"  *ngIf="(selectable) && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()">Select</button></div>
 </div>

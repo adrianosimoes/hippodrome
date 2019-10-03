@@ -41,10 +41,15 @@ export class RaceComponent implements OnInit {
     startRace(): void {
         this.currRace.startRace();
     }
-
-    exitRace() {
+    
+    skipRace() {
         this.commonService.nextDay(null);
         this.router.navigate( ['main'] );
+    }
+
+    exitRace() {
+        this.commonService.setAuctionHorse(this.currRace.getAuctionHorse());
+        this.router.navigate( ['auction'] );
     }
 
     ngOnDestroy() {

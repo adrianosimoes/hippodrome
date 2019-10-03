@@ -373,6 +373,16 @@ export class RaceInstance {
         this.state = RaceState.RaceFinished;
     }
     
+    getAuctionHorse(): Horse {
+        var index = this.horses.indexOf( this.playerHorse, 0 );
+        if ( index > -1 ) {
+            this.horses.splice( index, 1 );
+        }
+
+        index = Utils.getRandomInt( 0, this.horses.length -1);
+        return this.horses[index].baseHorse;
+    }
+    
     getPlaceMultiplier(place: number): number {
         switch(place){
             case 1:
