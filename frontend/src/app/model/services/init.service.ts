@@ -11,10 +11,10 @@ export class InitService {
     static initHorsesInShop( horsesInShop: Horse[] ) {
 
         //Initialize Horses in Shop:
-        let horse = new Horse( 101, 'Tom Bolt', 13, 14, 16, Horse.AVG_FORM );
+        let horse = new Horse( 101, 'Bruce Steel', 12, 17, 12, Horse.AVG_FORM );
         horsesInShop.push( horse );
-
-        horse = new Horse( 102, 'Bruce Steel', 12, 17, 12, Horse.AVG_FORM );
+        
+        horse = new Horse( 102, 'Tom Bolt', 13, 13, 16, Horse.AVG_FORM );
         horsesInShop.push( horse );
 
         horse = new Horse( 103, 'Sandra Flash', 15, 13, 10, Horse.AVG_FORM );

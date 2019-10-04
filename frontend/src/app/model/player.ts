@@ -20,6 +20,8 @@ export class Player {
     playerLevel : number;
     skillPoints : number;
     trainers: Trainer[];
+    lastHorseId: number;
+
 
     constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number ) {
         this.id = id;
@@ -35,6 +37,7 @@ export class Player {
         this.playerLevel = 0;
         this.skillPoints = 0;
         this.trainers = [];
+        this.lastHorseId = 0;
         this.recalculateBackground();
     }
 
@@ -44,6 +47,10 @@ export class Player {
 
     nextSlikType(): void {
         this.silkType = ( this.silkType + 1 ) % GameConstants.MAX_SILK_ID;
+    }
+    
+    getNewHorseId() : number{
+        return ++this.lastHorseId;
     }
 
     static fromJson( player: any ): Player {
@@ -57,6 +64,7 @@ export class Player {
         ret.xpPoints = player.xpPoints;
         ret.playerLevel = player.playerLevel;
         ret.skillPoints = player.skillPoints;
+        ret.lastHorseId = player.lastHorseId;
         ret.recalculateBackground();
 
         return ret;

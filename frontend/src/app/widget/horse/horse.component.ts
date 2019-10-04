@@ -37,6 +37,14 @@ export class HorseComponent implements OnInit {
         }
     }
     
+    sellHorse(): void {
+        let sellConfirm: boolean = window.confirm("Are you sure you want to sell " +  this.horse.name + " at Auction?");
+        if(sellConfirm){
+            this.commonService.setAuctionHorse(this.horse);
+            this.router.navigate(['auction']);
+        }
+    }
+    
     editName(): void {
         let newName: string = window.prompt( "Please select new Horse Name", this.horse.name );
         if ( newName != null ) {

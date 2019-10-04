@@ -3,10 +3,10 @@ import { Race } from "src/app/model/race";
 import { GameConstants } from "src/app/model/services/gameconstants";
 
 const TRAINING_PRICE: number = 1.5;
-const SPEED_SKILL_PRICE: number = 7;
-const ENDURANCE_SKILL_PRICE: number = 4;
-const ACCELERATION_SKILL_PRICE: number = 4;
-const TOTAL_SKILL_PRICE: number = 8;
+const SPEED_SKILL_PRICE: number = 7.5;
+const ENDURANCE_SKILL_PRICE: number = 2.5;
+const ACCELERATION_SKILL_PRICE: number = 2;
+const TOTAL_SKILL_PRICE: number = 8.2;
 const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
 export enum HorseSkills {
@@ -46,6 +46,14 @@ export class Horse {
         }
         this.calculateStaminaDisplay();
     }
+    
+    recalculatePrice(){
+        this.price = Math.round(( ( SPEED_SKILL_PRICE * ( this.speed * ( this.speed / 10 ) ) )
+                + ( ENDURANCE_SKILL_PRICE * ( this.endurance * ( this.endurance / 10 ) ) )
+                + ( ACCELERATION_SKILL_PRICE * ( this.acceleration * ( this.acceleration / 10 ) ) ) ) /
+                TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
+         
+    }
 
     constructor( id: number, name: string, speed: number, endurance: number, acceleration: number, form: number ) {
         this.id = id;
@@ -55,8 +63,7 @@ export class Horse {
         this.endurance = endurance;
         this.acceleration = acceleration;
         this.calculateStaminaDisplay();
-        this.price = Math.round(( ( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) )
-            + ( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) ) ) / TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
+        this.recalculatePrice();
         this.form = form;
         this.owned = false;
     }

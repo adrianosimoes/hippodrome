@@ -17,6 +17,7 @@ import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 import { LevelUpComponent } from "src/app/screens/levelup/levelup.component";
 import { AuctionComponent } from "src/app/screens/auction/auction.component";
+import { CurrencyPipe } from "@angular/common";
 
 @NgModule({
   declarations: [
@@ -38,9 +39,9 @@ import { AuctionComponent } from "src/app/screens/auction/auction.component";
       BrowserModule,
       FormsModule,
       MatRadioModule,
-      AppRoutingModule,
+      AppRoutingModule
   ],
-  providers: [],
+  providers: [CurrencyPipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

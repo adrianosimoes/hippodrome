@@ -9,6 +9,7 @@ import { Horse, TrainingHorse, HorseSkills } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
+import { CurrencyPipe } from "@angular/common";
 
 
 declare var Cookies: any;
@@ -33,7 +34,7 @@ export class CommonService {
     public loading: boolean;
     public loadingText: string;
 
-    constructor( private router: Router) {
+    constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
         this.horsesInShop = [];
         this.racesLeagues = [];
         this.trainersToSell = [];
@@ -48,7 +49,7 @@ export class CommonService {
         
         this.loading = false;
 
-        let savedGameString: string = Cookies.get( StaticData.saveGameName );
+        let savedGameString: string = Cookies.get( GameConstants.saveGameName );
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
@@ -153,6 +154,11 @@ export class CommonService {
 
             //Pay salary:
             player.money -= currTrainer.salary;
+            
+            if(!trainHorse){
+                continue;
+            }
+            
             if ( currTrainer.trainType == HorseSkills.SPEED ) {
                 trainHorse.speed += this.calculateTrainSpeed(trainHorse.speed, currTrainer);
             } else if(currTrainer.trainType == HorseSkills.ENDURANCE ){
@@ -160,6 +166,7 @@ export class CommonService {
             } else if(currTrainer.trainType == HorseSkills.ACCELERATION ){
                 trainHorse.acceleration += this.calculateTrainSpeed(trainHorse.acceleration, currTrainer);
             }
+            trainHorse.recalculatePrice();
         }
     }
     
@@ -173,7 +180,7 @@ export class CommonService {
 
 
     saveGame(): void {
-        Cookies.set( StaticData.saveGameName, this.gameInstance, { expires: 7 } );
+        Cookies.set( GameConstants.saveGameName, this.gameInstance, { expires: 7 } );
     }
     
     addHorseToPlayer( horse: Horse): boolean {
@@ -183,7 +190,7 @@ export class CommonService {
     addHorseWithPriceToPlayer( horse: Horse, horsePrice: number ): boolean {
         if ( this.gameInstance.playerOne.money >= horsePrice ) {
             this.gameInstance.playerOne.money -= horsePrice;
-            let newHorse = new Horse( this.gameInstance.playerOne.horses.length + 1, horse.name,
+            let newHorse = new Horse( this.gameInstance.playerOne.getNewHorseId(), horse.name,
                 horse.speed, horse.endurance, horse.acceleration, horse.form );
             newHorse.owned = true;
             newHorse.calculateForm();
@@ -296,12 +303,34 @@ export class CommonService {
         }
     }
     
+    sellHorse( player: Player, horse: Horse, price: number ) {
+        var index = player.horses.indexOf( horse, 0 );
+        if ( index > -1 ) {
+            player.horses.splice( index, 1 )
+            player.money += price;
+            let horseId = horse.id;
+            for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
+                if(currTrainer.trainingHorseId == horse.id){
+                    currTrainer.trainingHorseId = -1;
+                }
+            }
+        }
+    }
+    
     setAuctionHorse(auctionHorse: Horse) {
         this.auctionHorse = auctionHorse;
     }
     
     getAuctionHorse(): Horse{
         return this.auctionHorse;
+    }
+    
+    ownHorseAuction( auctionHorse: Horse): number {
+        var realBid = this.calculateBid(auctionHorse);
+        if(realBid > 0){
+            this.sellHorse(this.getPlayer(), auctionHorse, realBid);
+        }
+        return realBid;
     }
     
     bidAuction(bidValue: number, auctionHorse: Horse): [boolean, number] {
@@ -323,13 +352,23 @@ export class CommonService {
     }
     
     calculateBid(auctionHorse: Horse): number {
-        var minValue : number =  auctionHorse.price * GameConstants.AUCTION_OTHERS_MIN_PRICE;
-        var maxValue : number =  auctionHorse.price * GameConstants.AUCTION_OTHERS_MAX_PRICE;
+        let minValue : number =  auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MIN_PRICE;
+        let maxValue : number =  auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MAX_PRICE;
+    
+        if ( auctionHorse.owned ) {
+            minValue = auctionHorse.price * GameConstants.AUCTION_OWNED_MIN_PRICE;
+            maxValue = auctionHorse.price * GameConstants.AUCTION_OWNED_MAX_PRICE;
+        }
+    
         return Utils.getRandomInt(minValue, maxValue);
     }
 
     isInitialized(): boolean {
         return this.gameInstance.initialized;
+    }
+    
+    priceFormat(value: number): string {
+        return this.currencyPipe.transform(value, 'EUR', 'symbol', '1.0-0')
     }
 
     generateBgImage() {

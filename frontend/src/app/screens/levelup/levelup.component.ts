@@ -115,5 +115,6 @@ class LevelUpHorse {
         this.baseHorse.speed = this.newSpeed;
         this.baseHorse.acceleration = this.newAcc;
         this.baseHorse.endurance = this.newEnd;
+        this.baseHorse.recalculatePrice();
     }
 }
