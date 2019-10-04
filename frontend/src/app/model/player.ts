@@ -1,6 +1,7 @@
 import { Horse } from './horse';
 import { Trainer } from './trainer';
 import { Utils } from './utils';
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 
 export class Player {
@@ -42,7 +43,7 @@ export class Player {
     }
 
     nextSlikType(): void {
-        this.silkType = ( this.silkType + 1 ) % Utils.MAX_SILK_ID;
+        this.silkType = ( this.silkType + 1 ) % GameConstants.MAX_SILK_ID;
     }
 
     static fromJson( player: any ): Player {

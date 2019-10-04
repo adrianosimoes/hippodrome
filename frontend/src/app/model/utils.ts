@@ -1,10 +1,6 @@
-export var BORDER_HEIGHT: number = 2;
 declare var clicky: any;
 
 export class Utils {
-
-
-    static MAX_SILK_ID: number = 13;
 
     static getRandomInt( initial: number, max: number ): number {
         return Math.floor(( Math.random() * ( max - initial + 1 ) ) + initial );

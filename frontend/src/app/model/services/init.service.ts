@@ -2,12 +2,11 @@ import { Horse, TrainingHorse, HorseSkills } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
 import { Utils } from "src/app/model/utils";
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 
 export class InitService {
 
-    static INITIAL_MONEY: number = 6000;
-    static BASE_XP: number = 60;
 
     static initHorsesInShop( horsesInShop: Horse[] ) {
 
@@ -79,14 +78,14 @@ export class InitService {
     
     static initXPPerLevel( xpPerLevel: number[] ) {
         if(Utils.devMode()){
-            InitService.BASE_XP = 20;
+            GameConstants.BASE_XP = 20;
         }
             
         var sum = 0;
         for ( var i = 0; i < 200; i++ ) {
             if ( i == 1 )
-                sum = InitService.BASE_XP;
-            else sum += InitService.BASE_XP * i * 1.25;
+                sum = GameConstants.BASE_XP;
+            else sum += GameConstants.BASE_XP * i * 1.25;
             xpPerLevel[i] = sum;
         }
     }

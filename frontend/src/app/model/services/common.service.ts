@@ -8,6 +8,7 @@ import { Player } from '../player';
 import { Horse, TrainingHorse, HorseSkills } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 
 declare var Cookies: any;
@@ -53,7 +54,7 @@ export class CommonService {
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-            0, Utils.devMode() ? 105000 : InitService.INITIAL_MONEY );
+            0, Utils.devMode() ? 105000 : GameConstants.INITIAL_MONEY );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
         this.generateBgImage();
     }
@@ -322,8 +323,8 @@ export class CommonService {
     }
     
     calculateBid(auctionHorse: Horse): number {
-        var minValue : number =  auctionHorse.price * 0.85;
-        var maxValue : number =  auctionHorse.price * 1.15;
+        var minValue : number =  auctionHorse.price * GameConstants.AUCTION_OTHERS_MIN_PRICE;
+        var maxValue : number =  auctionHorse.price * GameConstants.AUCTION_OTHERS_MAX_PRICE;
         return Utils.getRandomInt(minValue, maxValue);
     }
 

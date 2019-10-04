@@ -3,7 +3,8 @@ import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
 import { CommonService } from './services/common.service';
 import { Player } from './player';
-import { Utils, BORDER_HEIGHT } from './utils';
+import { Utils } from './utils';
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
@@ -63,7 +64,7 @@ export class RaceInstance {
         this.state = RaceState.PreRace;
         this.debugMessage = "";
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
-        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + BORDER_HEIGHT * 2;
+        this.cssBottom = (( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT) + GameConstants.BORDER_HEIGHT * 2;
 
         this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
         this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
@@ -174,7 +175,7 @@ export class RaceInstance {
             currHorse.cssBaseTop = currHorse.cssTop;
         } else if ( currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
             let curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels / 2 );
-            currHorse.cssTop = currHorse.cssBaseTop + BORDER_HEIGHT + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
+            currHorse.cssTop = currHorse.cssBaseTop + GameConstants.BORDER_HEIGHT + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
             currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( ( Race.ROUND_TRACK_HORSE_CURVE - 4 ) * 2 ) );
             currHorse.distanceDone += step / 1.2;
         } else {
@@ -196,7 +197,7 @@ export class RaceInstance {
                     currHorse.sinceLastLaneChange = 0;
                 }
             } else {
-                let minCssTop : number = this.cssBottom + 68 + BORDER_HEIGHT;
+                let minCssTop : number = this.cssBottom + 68 + GameConstants.BORDER_HEIGHT;
                 if ( currHorse.cssTop > minCssTop) {
                     var rnd: number = Utils.getRandomInt( 0, 70 );
                     let avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse, minCssTop);

@@ -1,5 +1,6 @@
-import { Utils, BORDER_HEIGHT } from './utils';
+import { Utils } from './utils';
 import { Race } from "src/app/model/race";
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7;
@@ -103,7 +104,7 @@ export class HorseInRace {
     
     setTrack(track: number){
         this.track = track;
-        this.cssBaseTop = BORDER_HEIGHT + (this.track - 1) * Race.RACETRACK_HEIGHT;
+        this.cssBaseTop = GameConstants.BORDER_HEIGHT + (this.track - 1) * Race.RACETRACK_HEIGHT;
         this.cssTop =  this.cssBaseTop;
     }
     
