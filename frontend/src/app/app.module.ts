@@ -7,6 +7,8 @@ import { MatRadioModule } from '@angular/material';
 
 import { FormStringPipe, RaceDifficultyPipe } from './model/pipehelpers';
 
+import { AboutComponent } from './screens/about/about.component';
+import { AuctionComponent } from "src/app/screens/auction/auction.component";
 import { MainComponent } from './screens/main/main.component';
 import { LoginComponent } from './screens/login/login.component';
 import { ShopComponent } from './screens/shop/shop.component'; 
@@ -16,7 +18,7 @@ import { TrainingComponent } from './screens/training/training.component';
 import { StablesComponent } from './screens/stables/stables.component';
 import { PickRaceComponent } from './screens/pick-race/pick-race.component';
 import { LevelUpComponent } from "src/app/screens/levelup/levelup.component";
-import { AuctionComponent } from "src/app/screens/auction/auction.component";
+
 import { CurrencyPipe } from "@angular/common";
 
 @NgModule({
@@ -24,6 +26,8 @@ import { CurrencyPipe } from "@angular/common";
     FormStringPipe,
     RaceDifficultyPipe,
     AppComponent,
+    AboutComponent,
+    AuctionComponent,
     LoginComponent,
     MainComponent,
     ShopComponent,
@@ -32,8 +36,7 @@ import { CurrencyPipe } from "@angular/common";
     TrainingComponent,
     StablesComponent,
     PickRaceComponent,
-    LevelUpComponent,
-    AuctionComponent
+    LevelUpComponent
   ],
   imports: [
       BrowserModule,

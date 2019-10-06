@@ -12,7 +12,7 @@ import { Angulartics2Clicky } from "angulartics2/clicky";
     styleUrls: ['./app.component.css']
 } )
 export class AppComponent {
-    title = 'Hippodrome';
+    title = 'The Hippodrome';
     public commonService;
 
     constructor( commService: CommonService ) {

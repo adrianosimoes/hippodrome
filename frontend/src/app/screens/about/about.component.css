@@ -1,0 +1,25 @@
+#about{
+	width: 850px;
+}
+
+.intro {
+	padding: 5px;
+	float: left;
+}
+
+.intro ul{
+	margin-top: 5px;
+	margin-bottom: 5px;
+	list-style-type: square;
+}
+
+h4{
+	margin-bottom: 10px;
+}
+
+.border{
+	border: 4px solid #777;
+	border-radius: 2px;
+	box-shadow:
+		3px 3px #222;
+}

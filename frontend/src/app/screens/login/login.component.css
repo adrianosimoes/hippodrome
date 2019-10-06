@@ -2,11 +2,30 @@
 	height: 100%;
 }
 
+.intro {
+	margin-top: 10px;
+	width: 380px;
+	padding: 5px;
+	float: left;
+}
+
+.screenshot-thumbnail{
+	width: 250px;
+}
+
+.intro ul{
+	margin-top: 5px;
+	list-style-type: square;
+}
+
 .savedGame {
 	margin-left: 30px;
 	margin-top: 10px;
 	margin-bottom: 20px;
+	padding: 25px;
+	padding-top: 0px;
 	float: left;
+	width: 280px;
 }
 
 
@@ -17,8 +36,6 @@ h4{
 .border{
 	border: 4px solid #777;
 	border-radius: 2px;
-	padding: 25px;
-	padding-top: 0px;
 	box-shadow:
 		3px 3px #222;
 }
@@ -39,8 +56,12 @@ h4{
 
 .newGame {
 	margin-top: 10px;
-	margin-left: 40px;
+	margin-left: 30px;
+	width: 280px;
+	padding: 25px;
+	padding-top: 0px;
 	float: left;
+	
 }
 
 .form{

@@ -76,7 +76,7 @@
 }
 
 .horsesLabel {
-	margin-top: 20px;
+	margin-top: 10px;
 	border: 0;
 	width: 60px;
 	height: 10px;
@@ -87,7 +87,7 @@
 }
 
 .horsesContainer {
-	margin-top: 20px;
+	margin-top: 10px;
 	border: 0;
 	padding: 0;
 	float: left;
@@ -165,7 +165,7 @@ input[type=radio]:focus {
 
 
 .buttonArea {
-	padding-top: 40px;
+	padding-top: 20px;
 	margin-left: 15px;
 	clear: left;
 }
