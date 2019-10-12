@@ -4,6 +4,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 import { HorseComponent } from './horse.component';
 import { Horse } from '../../model/horse';
+import { CurrencyPipe } from "@angular/common";
 
 
 describe('HorseComponent', () => {
@@ -13,7 +14,8 @@ describe('HorseComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ HorseComponent, FormStringPipe]
+      declarations: [ HorseComponent, FormStringPipe],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

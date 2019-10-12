@@ -4,6 +4,8 @@ import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 import { TrainingComponent } from './training.component';
 import { CommonService } from '../../model/services/common.service';
+import { FormsModule } from "@angular/forms";
+import { CurrencyPipe } from "@angular/common";
 
 
 describe('TrainingComponent', () => {
@@ -12,8 +14,9 @@ describe('TrainingComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [ TrainingComponent, FormStringPipe]
+      imports: [RouterTestingModule, FormsModule],
+      declarations: [ TrainingComponent, FormStringPipe],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

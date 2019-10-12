@@ -13,7 +13,7 @@ describe( 'RaceInstance', () => {
     beforeEach(() => {
         jasmine.clock().install();
         jasmine.clock().mockDate();
-        commonService = new CommonService( null );
+        commonService = new CommonService(null, null);
      
         testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] );
     } );

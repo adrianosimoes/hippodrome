@@ -3,6 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { PickRaceComponent } from './pick-race.component';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
+import { CurrencyPipe } from "@angular/common";
 
 
 describe('PickRaceComponent', () => {
@@ -12,7 +13,8 @@ describe('PickRaceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ PickRaceComponent, RaceDifficultyPipe]
+      declarations: [ PickRaceComponent, RaceDifficultyPipe],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

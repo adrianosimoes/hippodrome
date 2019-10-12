@@ -5,6 +5,7 @@ import { ShopComponent } from './shop.component';
 import { HorseComponent } from '../../widget//horse/horse.component';
 import { CommonService } from '../../model/services/common.service';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
+import { CurrencyPipe } from "@angular/common";
 
 
 describe('ShopComponent', () => {
@@ -14,7 +15,8 @@ describe('ShopComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ ShopComponent, HorseComponent, FormStringPipe ]
+      declarations: [ ShopComponent, HorseComponent, FormStringPipe ],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

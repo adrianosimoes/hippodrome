@@ -5,6 +5,7 @@ import { MainComponent } from './main.component';
 import { HorseComponent } from '../../widget//horse/horse.component';
 import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 import { CommonService } from '../../model/services/common.service';
+import { CurrencyPipe } from "@angular/common";
 
 
 
@@ -16,7 +17,8 @@ describe('MainComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [RouterTestingModule],
-      declarations: [ MainComponent, HorseComponent, FormStringPipe ]
+      declarations: [ MainComponent, HorseComponent, FormStringPipe ],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

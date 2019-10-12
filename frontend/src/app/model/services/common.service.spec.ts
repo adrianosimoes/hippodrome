@@ -1,15 +1,19 @@
 import { TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CurrencyPipe } from "@angular/common";
+
+
 
 
 import { CommonService } from './common.service';
 import { InitService } from "src/app/model/services/init.service";
+import { GameConstants } from "src/app/model/services/gameconstants";
 
 describe('CommonService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
         imports: [RouterTestingModule],
-      providers: [CommonService]
+      providers: [CommonService, CurrencyPipe]
     });
   });
 
@@ -20,10 +24,10 @@ describe('CommonService', () => {
   
   it('Test Horse shop', inject([CommonService], (service: CommonService) => {
       expect(service.getHorsesInShop().length).toBe(7);
-      expect(service.getHorsesInShop()[0].name).toBe("Tom Bolt")
-      expect(service.getHorsesInShop()[0].speed).toBe(13);
-      expect(service.getHorsesInShop()[0].endurance).toBe(14);
-      expect(service.getHorsesInShop()[0].acceleration).toBe(16);
+      expect(service.getHorsesInShop()[0].name).toBe("Bruce Steel")
+      expect(service.getHorsesInShop()[0].speed).toBe(12);
+      expect(service.getHorsesInShop()[0].endurance).toBe(17);
+      expect(service.getHorsesInShop()[0].acceleration).toBe(12);
       //Horse should start with maxium stamina
       expect(service.getHorsesInShop()[0].staminaDisplay).toBe(0);
       
@@ -55,16 +59,16 @@ describe('CommonService', () => {
       
       expect(service.getPlayer()).toBeDefined();
       expect(service.getPlayer().name).toBe("");
-      expect(service.getPlayer().money).toBe(InitService.INITIAL_MONEY);
+      expect(service.getPlayer().money).toBe(GameConstants.INITIAL_MONEY);
      
   }));
   
   it('Test Buy Horse', inject([CommonService], (service: CommonService) => {
-      expect(service.getPlayer().money).toBe(InitService.INITIAL_MONEY);
+      expect(service.getPlayer().money).toBe(GameConstants.INITIAL_MONEY);
       let buyResult = service.addHorseToPlayer(service.getHorsesInShop()[2]);
       expect(buyResult).toBeTruthy();
       
-      expect(service.getPlayer().money).toBe(InitService.INITIAL_MONEY - 2800);
+      expect(service.getPlayer().money).toBe(GameConstants.INITIAL_MONEY - 2800);
       
       expect(service.getPlayer().horses.length).toBe(1);
       
@@ -78,10 +82,10 @@ describe('CommonService', () => {
   }));
   
   it('Test not enoug money to buy Horse', inject([CommonService], (service: CommonService) => {
-      expect(service.getPlayer().money).toBe(InitService.INITIAL_MONEY);
+      expect(service.getPlayer().money).toBe(GameConstants.INITIAL_MONEY);
       let buyResult = service.addHorseToPlayer(service.getHorsesInShop()[5]);
       expect(buyResult).toBeFalsy();
-      expect(service.getPlayer().money).toBe(InitService.INITIAL_MONEY);
+      expect(service.getPlayer().money).toBe(GameConstants.INITIAL_MONEY);
       expect(service.getPlayer().horses.length).toBe(0);
 
   }));

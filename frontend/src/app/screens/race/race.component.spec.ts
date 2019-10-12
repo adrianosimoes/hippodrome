@@ -7,6 +7,9 @@ import { CommonService } from '../../model/services/common.service';
 
 import { RaceComponent } from './race.component';
 import { RaceInstance, RaceState } from '../../model/raceinstance';
+import { HorseComponent } from "../../widget/horse/horse.component";
+import { CurrencyPipe } from "@angular/common";
+import { FormStringPipe } from "src/app/model/pipehelpers";
 
 describe('RaceComponent', () => {
   let component: RaceComponent;
@@ -15,7 +18,8 @@ describe('RaceComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [MatRadioModule, RouterTestingModule, FormsModule],
-      declarations: [ RaceComponent]
+      declarations: [ RaceComponent, HorseComponent, FormStringPipe],
+      providers: [CurrencyPipe]
     })
     .compileComponents();
   }));

@@ -1,6 +1,7 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { RouterTestingModule } from '@angular/router/testing';
+import { CurrencyPipe } from "@angular/common";
 
 
 describe('AppComponent', () => {
@@ -10,6 +11,7 @@ describe('AppComponent', () => {
       declarations: [                     
         AppComponent
       ],
+      providers: [CurrencyPipe]
     }).compileComponents();
   }));
   it('should create the app', async(() => {
@@ -20,7 +22,7 @@ describe('AppComponent', () => {
   it(`should have as title 'Hippodrome'`, async(() => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('Hippodrome');
+    expect(app.title).toEqual('The Hippodrome');
   }));
   it('should render title in a h1 tag', async(() => {
     const fixture = TestBed.createComponent(AppComponent);
