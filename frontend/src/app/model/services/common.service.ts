@@ -302,73 +302,81 @@ export class CommonService {
             player.money += trainer.price / 2;
         }
     }
-    
+
     sellHorse( player: Player, horse: Horse, price: number ) {
-        var index = player.horses.indexOf( horse, 0 );
+        let index = player.horses.indexOf( horse, 0 );
+        let horseId;
         if ( index > -1 ) {
             player.horses.splice( index, 1 )
             player.money += price;
-            let horseId = horse.id;
+            horseId = horse.id;
             for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
-                if(currTrainer.trainingHorseId == horse.id){
+                if ( currTrainer.trainingHorseId == horse.id ) {
                     currTrainer.trainingHorseId = -1;
                 }
             }
         }
+        if (player.selectedHorseId == horseId ) {
+            let newSelectedHorse = -1;
+            if(player.horses.length >= 1){
+                newSelectedHorse = player.horses[0].id;
+            }
+            player.selectedHorseId = newSelectedHorse;
+        }
     }
-    
-    setAuctionHorse(auctionHorse: Horse) {
+
+    setAuctionHorse( auctionHorse: Horse ) {
         this.auctionHorse = auctionHorse;
     }
-    
-    getAuctionHorse(): Horse{
+
+    getAuctionHorse(): Horse {
         return this.auctionHorse;
     }
-    
-    ownHorseAuction( auctionHorse: Horse): number {
-        var realBid = this.calculateBid(auctionHorse);
-        if(realBid > 0){
-            this.sellHorse(this.getPlayer(), auctionHorse, realBid);
+
+    ownHorseAuction( auctionHorse: Horse ): number {
+        var realBid = this.calculateBid( auctionHorse );
+        if ( realBid > 0 ) {
+            this.sellHorse( this.getPlayer(), auctionHorse, realBid );
         }
         return realBid;
     }
-    
-    bidAuction(bidValue: number, auctionHorse: Horse): [boolean, number] {
-        let retValue : [boolean, number];
-        if(bidValue > 0 && bidValue > this.getPlayer().money){
+
+    bidAuction( bidValue: number, auctionHorse: Horse ): [boolean, number] {
+        let retValue: [boolean, number];
+        if ( bidValue > 0 && bidValue > this.getPlayer().money ) {
             retValue = [false, -1];
             return retValue;
         }
-        
-        var realBid = this.calculateBid(auctionHorse);
-        if(bidValue >= realBid){
-            this.addHorseWithPriceToPlayer(auctionHorse, bidValue);
+
+        var realBid = this.calculateBid( auctionHorse );
+        if ( bidValue >= realBid ) {
+            this.addHorseWithPriceToPlayer( auctionHorse, bidValue );
             retValue = [true, bidValue];
             return retValue;
-        } else{
+        } else {
             retValue = [false, realBid];
             return retValue;
         }
     }
-    
-    calculateBid(auctionHorse: Horse): number {
-        let minValue : number =  auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MIN_PRICE;
-        let maxValue : number =  auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MAX_PRICE;
-    
+
+    calculateBid( auctionHorse: Horse ): number {
+        let minValue: number = auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MIN_PRICE;
+        let maxValue: number = auctionHorse.price * GameConstants.AUCTION_NOT_OWNED_MAX_PRICE;
+
         if ( auctionHorse.owned ) {
             minValue = auctionHorse.price * GameConstants.AUCTION_OWNED_MIN_PRICE;
             maxValue = auctionHorse.price * GameConstants.AUCTION_OWNED_MAX_PRICE;
         }
-    
-        return Utils.getRandomInt(minValue, maxValue);
+
+        return Utils.getRandomInt( minValue, maxValue );
     }
 
     isInitialized(): boolean {
         return this.gameInstance.initialized;
     }
-    
-    priceFormat(value: number): string {
-        return this.currencyPipe.transform(value, 'EUR', 'symbol', '1.0-0')
+
+    priceFormat( value: number ): string {
+        return this.currencyPipe.transform( value, 'EUR', 'symbol', '1.0-0' )
     }
 
     generateBgImage() {
