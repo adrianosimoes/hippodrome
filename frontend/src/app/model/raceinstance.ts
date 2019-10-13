@@ -10,7 +10,7 @@ var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
-var ACCELERATION_UNTIL_TICKS: number = 300;
+var ACCELERATION_UNTIL_TICKS: number = 200;
 
 
 export enum RaceState {
@@ -308,10 +308,6 @@ export class RaceInstance {
             } else if ( this.playerHorse.strategy == RaceStrategy.End && this.playerHorse.distanceDone < ( this.baseRace.distance * 2 ) / 3 ) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
             }
-        }
-
-        if ( this.totalTicks == 70 ) {
-            horse.updateAcc();
         }
 
         if ( this.totalTicks <= ACCELERATION_UNTIL_TICKS ) {

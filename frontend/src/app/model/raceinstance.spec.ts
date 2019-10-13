@@ -96,7 +96,7 @@ describe( 'RaceInstance', () => {
 
     it( 'Test 500 races', () => {
         setTestHorse( 14, 20, 20 );
-        let currRace = new Race( 1, 2, 'Test Race', 400, '#338833', 0, 1, [1000, 450, 200] );
+        let currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [1000, 450, 200] );
         
         testHorses(currRace, getTestHorse( 14, 18, 20 ));
         

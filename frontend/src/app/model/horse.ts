@@ -98,7 +98,7 @@ export class HorseInRace {
         this.fullStamina = Math.round(( horse.endurance * 1.7 ) - 11 );
         this.currentStamina = this.fullStamina;
        
-        this.currentAcceleration = Utils.precisionRound(Math.log10(horse.acceleration)/3, 2);
+        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration-5)/1.8, 2);
         this.color = color;
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
