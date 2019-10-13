@@ -98,20 +98,20 @@ describe( 'RaceInstance', () => {
         setTestHorse( 14, 20, 20 );
         let currRace = new Race( 1, 2, 'Test Race', 400, '#338833', 0, 1, [1000, 450, 200] );
         
-        testHorses(currRace, getTestHorse( 14, 19, 20 ));
+        testHorses(currRace, getTestHorse( 14, 18, 20 ));
         
         testHorses(currRace, getTestHorse( 14, 20, 20 ));
         
-        testHorses(currRace, getTestHorse( 14, 21, 20 ));
-        
         testHorses(currRace, getTestHorse( 14, 22, 20 ));
+        
+        testHorses(currRace, getTestHorse( 14, 24, 20 ));
 
     } );
 
     function testHorses( race: Race, bot: Horse ) {
 
         let numWin: number = 0, numLost: number = 0;
-        let numRaces: number = 500;
+        let numRaces: number = 600;
 
         for ( let i = 0; i < numRaces; i++ ) {
             // Reset Stamina on player horse:

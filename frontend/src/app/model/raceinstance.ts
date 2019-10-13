@@ -323,7 +323,7 @@ export class RaceInstance {
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
         let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
-        if (this.totalTicks > ACCELERATION_UNTIL_TICKS - 330 && step >= formSpeed * speedReduction ) {
+        if (this.totalTicks > ACCELERATION_UNTIL_TICKS && step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
