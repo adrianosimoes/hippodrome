@@ -78,7 +78,7 @@
 .horsesLabel {
 	margin-top: 10px;
 	border: 0;
-	width: 60px;
+	width: 100px;
 	height: 10px;
 }
 
@@ -124,7 +124,8 @@ horse {
 }
 
 .strategiesContainer{
-	clear: both;
+	float: left;
+	margin-top: 5px;
 }
 
 .strategies {
@@ -143,14 +144,14 @@ input[type=radio] {
 
 .strategies label{
 	margin-left: 4px;
-	width: 350px;
+	width: 300px;
 }
 
 .strategies div{
 	display: flex;
 	align-items: center;
 	height: 28px;
-	width: 400px;
+	width: 350px;
 }
 
 input[type=radio]:checked {
@@ -247,7 +248,7 @@ input[type=radio]:focus {
 }
 
 .roundRaceTrackSecond{
-	margin-left: 75px;
+	margin-left: 52px;
 	border: 3px solid #fff;	
 	border-top: none;
 	border-left: none;
@@ -258,7 +259,7 @@ input[type=radio]:focus {
 .roundRaceTrackSecond:before {
     content: ""; 
     display: block;
-    width: 445px; 
+    width: 468px; 
     height: 25px;
     border-bottom: 3px solid #fff;
     border-right: 3px solid #fff;

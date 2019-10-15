@@ -75,6 +75,13 @@ export enum RaceStrategy {
     End = 2
 }
 
+export enum RaceTactic {
+    None = 0,
+    Lead = 1,
+    Pursuit = 2,
+    InThePack = 3
+}
+
 export class HorseInRace {
     baseHorse: Horse;
     track: number;
@@ -91,6 +98,7 @@ export class HorseInRace {
     sinceLastLaneChange;
     staminaDisplay: number;
     strategy: RaceStrategy;
+    tactic: RaceTactic;
 
     constructor( horse: Horse, color: string, cssBackground: string ) {
         this.baseHorse = horse;
@@ -105,6 +113,7 @@ export class HorseInRace {
         this.cssLeft = 12;
       
         this.strategy = RaceStrategy.Everything;
+        this.tactic = RaceTactic.InThePack;
         this.staminaDisplay = 100;
         this.sinceLastLaneChange = 0;
     }

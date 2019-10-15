@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import {MatRadioModule} from '@angular/material/radio';
 import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
-import { Horse, HorseInRace, RaceStrategy } from '../../model/horse';
+import { Horse, HorseInRace, RaceStrategy, RaceTactic } from '../../model/horse';
 import { Race } from '../../model/race';
 import { RaceInstance, RaceState } from '../../model/raceinstance';
 import { CommonService } from '../../model/services/common.service';
@@ -20,6 +20,7 @@ export class RaceComponent implements OnInit {
     debug : boolean = Utils.devMode();
     RaceState : typeof RaceState = RaceState;
     RaceStrategy : typeof RaceStrategy = RaceStrategy;
+    RaceTactic : typeof RaceTactic = RaceTactic;
     curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
     roundTrackBottomDistance: number = Race.ROUND_TRACK_BOTTOM_DISTANCE;
 

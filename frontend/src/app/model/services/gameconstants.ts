@@ -14,5 +14,5 @@ export class GameConstants {
 	
 	static BORDER_HEIGHT: number = 2;
 	
-	 static saveGameName: string = "gamev7";
+	 static saveGameName: string = "gamev8";
 }

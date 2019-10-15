@@ -3,6 +3,7 @@ export class Race {
     static RACETRACK_HEIGHT: number = 16;
     static ROUND_TRACK_BOTTOM_DISTANCE: number = 440;
     static ROUND_TRACK_HORSE_CURVE: number = 38;
+    static AFTER_END_RACE_PIXELS: number = 35;
 
 
     id: number;

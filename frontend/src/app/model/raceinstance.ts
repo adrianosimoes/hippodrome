@@ -1,4 +1,4 @@
-import { Horse, HorseInRace, RaceStrategy } from './horse';
+import { Horse, HorseInRace, RaceStrategy, RaceTactic } from './horse';
 import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
 import { CommonService } from './services/common.service';
@@ -36,7 +36,6 @@ export class RaceInstance {
     baseXpPoints: number = 0;
     placeXpPoints: number = 0;
     canceled: boolean = false;
-    cssMaxDistance: number;
     worldChampion: boolean = false;
     lastCommentHorses: HorseInRace[];
     totalTicks;
@@ -85,7 +84,6 @@ export class RaceInstance {
             this.horses[i].setTrack( i + 1 );
         }
 
-        this.cssMaxDistance = this.baseRace.distance + 40;
     }
 
     addHorse( horse: HorseInRace ): void {
@@ -94,6 +92,7 @@ export class RaceInstance {
     
     updateSelectedHorse(): void {
         let currStrategy : RaceStrategy = this.playerHorse.strategy;
+        let currTactic : RaceTactic = this.playerHorse.tactic;
         let currHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground);
         for ( let i = 0; i < this.horses.length; i++ ) {
             if(this.horses[i] == this.playerHorse){
@@ -103,6 +102,7 @@ export class RaceInstance {
         }
         this.playerHorse = currHorse;
         this.playerHorse.strategy = currStrategy;
+        this.playerHorse.tactic = currTactic;
         this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
         this.sortedHorses = this.horses.slice();
     }
@@ -130,8 +130,8 @@ export class RaceInstance {
 
         //Update movement:
         for ( let currHorse of this.horses ) {
-            if ( ( !this.roundTrack && currHorse.cssLeft >= this.cssMaxDistance ) ||
-                ( this.roundTrack && currHorse.distanceDone >= this.baseRace.distance ) ) {
+            if ( ( !this.roundTrack && currHorse.cssLeft >= this.baseRace.distance + Race.AFTER_END_RACE_PIXELS) ||
+                ( this.roundTrack && currHorse.distanceDone >= this.baseRace.distance && currHorse.cssLeft < - ((155 - ((this.baseRace.distance/2 - Race.ROUND_TRACK_BOTTOM_DISTANCE) * 2)) - 52 - 10))) {
                 continue;
             } else {
                 allFinished = false;
@@ -331,6 +331,15 @@ export class RaceInstance {
                 horse.currentStamina = horse.fullStamina;
             }
         }
+        
+        // Do Race Tactic Bonus:
+        /*if ( horse == this.playerHorse && this.totalTicks % 3 == 0 ) {
+            if(this.playerHorse.tactic == RaceTactic.Pursuit && this.sortedHorses[0] != this.playerHorse){
+                console.log("Pursuit bonus");
+                step = step * 1.1;
+            }
+        }*/
+        
         if ( step > 0 ) {
             step = Math.log( step );
         }
