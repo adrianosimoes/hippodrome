@@ -25,17 +25,17 @@
 			<div class="strategiesContainer">
 				<div class="label horsesLabel">Strategy:</div>
     			<div class="strategies">
-	    			<div><input type="radio" name="staminaStrategy" id="strategy1" [(ngModel)]="currRace.playerHorse.strategy" [value]="RaceStrategy.Everything"/><label for="strategy1"> Full Speed<span class="exclamation">!</span></label></div>
-		    		<div><input type="radio" name="staminaStrategy" id="strategy2" [(ngModel)]="currRace.playerHorse.strategy" [value]="RaceStrategy.HalfWay"/><label for="strategy2"> Sprint Halfway.</label></div>
-		    		<div><input type="radio" name="staminaStrategy" id="strategy3" [(ngModel)]="currRace.playerHorse.strategy" [value]="RaceStrategy.End"/><label for="strategy3"> Sprint only in the end.</label></div>
+	    			<div><input type="radio" name="raceEffort" id="effort1" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.Everything"/><label for="effort1"> Full Speed<span class="exclamation">!</span></label></div>
+		    		<div><input type="radio" name="raceEffort" id="effort2" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.HalfWay"/><label for="effort2"> Sprint Halfway.</label></div>
+		    		<div><input type="radio" name="raceEffort" id="effort3" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.End"/><label for="effort3"> Sprint only in the end.</label></div>
 	    		</div>
 	    	</div>
 	    	<div class="strategiesContainer">
 				<div class="label horsesLabel">Race Tactic:</div>
     			<div class="strategies">
 	    			<div><input type="radio" name="raceTactic"  id="tactic1" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.Lead"/><label for="tactic1"> Lead Race<span class="exclamation">!</span></label></div>
-		    		<div><input type="radio" name="raceTactic"  id="tactic2" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.Pursuit"/><label for="tactic2"> Pursuit.</label></div>
-		    		<div><input type="radio" name="raceTactic"  id="tactic3" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.InThePack"/><label for="tactic3"> Stay in the Pack.</label></div>
+		    		<div><input type="radio" name="raceTactic"  id="tactic2" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.Pursuit"/><label for="tactic2"> Pursuit the Lead.</label></div>
+		    		<div><input type="radio" name="raceTactic"  id="tactic3" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.InThePack"/><label for="tactic3"> Stay in the Back.</label></div>
 	    		</div>
 	    	</div>
 		</div>
@@ -48,6 +48,9 @@
 		<div class="raceTextContainer header">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
 		<div class="raceTextContainer header">
 			<span class="staminaLabel">Stamina:</span> <div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="currRace.playerHorse.staminaDisplay"  [ngClass]="{'noBorder': currRace.playerHorse.staminaDisplay==0}"></div></div>
+		</div>
+		<div class="raceTextContainer header tactic">
+			<span class="staminaLabel">Tactic ({{currRace.playerHorse.tactic}}) Speed Bonus: </span> <span class="bonusValue" [innerHTML]="currRace.bonusText" ></span>
 		</div>
 		<div *ngIf="debug">{{currRace.debugMessage}}</div>
 		<div class="clear"></div>

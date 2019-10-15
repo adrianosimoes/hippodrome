@@ -24,7 +24,7 @@
 					<div><span>Training: </span><select [(ngModel)]='currTrainer.trainingHorseId'><option  *ngFor='let horse of currPlayer.horses' [ngValue]="horse.id">{{horse.name}}</option></select></div>
 				</div>
 				<button *ngIf="currTrainer.quality<7" (click)="upgradeTrainer(currTrainer)">Upgrade Trainer ({{currTrainer.upgradePrice | currency: 'EUR' : 'symbol':'1.0-0'}})</button>
-				<a [routerLink]="['/stables']" (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR' : 'symbol':'1.0-0'}})</a>
+				<a [routerLink]="['/training']" (click)="sellTrainer(currTrainer)">Sell trainer ({{currTrainer.price/2 | currency: 'EUR' : 'symbol':'1.0-0'}})</a>
 			</div>
 		</div>
 	<div class="trainersContainer"><h3>Trainers to hire</h3>
