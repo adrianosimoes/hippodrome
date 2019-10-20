@@ -1,4 +1,4 @@
-import { Horse, HorseInRace, RaceEffort, RaceTactic } from './horse';
+import { Horse, HorseInRace, RaceEffort, RaceTactic, HorseForm } from './horse';
 import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
 import { CommonService } from './services/common.service';
@@ -304,7 +304,7 @@ export class RaceInstance {
 
     /* With Stamina calculation */
     getMovementStep( horse: HorseInRace ): number {
-        let maxSpeed: number = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
+        let maxSpeed: number = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
         if ( horse == this.playerHorse ) {
             if ( this.playerHorse.raceEffort == RaceEffort.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2 ) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
@@ -321,7 +321,7 @@ export class RaceInstance {
 
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
-        let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / Horse.AVG_FORM, 2 );
+        let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
         if ( this.totalTicks > ACCELERATION_UNTIL_TICKS && step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {

@@ -23,19 +23,19 @@
 					</span>
 				</div>
 			<div class="strategiesContainer">
-				<div class="label horsesLabel">Strategy:</div>
-    			<div class="strategies">
-	    			<div><input type="radio" name="raceEffort" id="effort1" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.Everything"/><label for="effort1"> Full Speed<span class="exclamation">!</span></label></div>
-		    		<div><input type="radio" name="raceEffort" id="effort2" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.HalfWay"/><label for="effort2"> Sprint Halfway.</label></div>
-		    		<div><input type="radio" name="raceEffort" id="effort3" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.End"/><label for="effort3"> Sprint only in the end.</label></div>
-	    		</div>
-	    	</div>
-	    	<div class="strategiesContainer">
 				<div class="label horsesLabel">Race Tactic:</div>
     			<div class="strategies">
 	    			<div><input type="radio" name="raceTactic"  id="tactic1" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.Lead"/><label for="tactic1"> Lead Race<span class="exclamation">!</span></label></div>
 		    		<div><input type="radio" name="raceTactic"  id="tactic2" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.Pursuit"/><label for="tactic2"> Pursuit the Lead.</label></div>
 		    		<div><input type="radio" name="raceTactic"  id="tactic3" [(ngModel)]="currRace.playerHorse.tactic" [value]="RaceTactic.InThePack"/><label for="tactic3"> Stay in the Back.</label></div>
+	    		</div>
+	    	</div>	
+			<div class="strategiesContainer">
+				<div class="label horsesLabel">Stamina Strategy:</div>
+    			<div class="strategies">
+	    			<div><input type="radio" name="raceEffort" id="effort1" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.Everything"/><label for="effort1"> Full Speed<span class="exclamation">!</span></label></div>
+		    		<div><input type="radio" name="raceEffort" id="effort2" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.HalfWay"/><label for="effort2"> Sprint Halfway.</label></div>
+		    		<div><input type="radio" name="raceEffort" id="effort3" [(ngModel)]="currRace.playerHorse.raceEffort" [value]="RaceEffort.End"/><label for="effort3"> Sprint only in the end.</label></div>
 	    		</div>
 	    	</div>
 		</div>

@@ -1,4 +1,4 @@
-import { Horse, TrainingHorse, HorseSkills } from '../horse';
+import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
 import { Utils } from "src/app/model/utils";
@@ -11,25 +11,25 @@ export class InitService {
     static initHorsesInShop( horsesInShop: Horse[] ) {
 
         //Initialize Horses in Shop:
-        let horse = new Horse( 101, 'Bruce Steel', 12, 17, 12, Horse.AVG_FORM );
+        let horse = new Horse( 101, 'Bruce Steel', 13, 17, 12, HorseForm.AVERAGE );
         horsesInShop.push( horse );
         
-        horse = new Horse( 102, 'Tom Bolt', 13, 13, 16, Horse.AVG_FORM );
+        horse = new Horse( 102, 'Tom Bolt', 13, 13, 17, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 103, 'Sandra Flash', 15, 13, 10, Horse.AVG_FORM );
+        horse = new Horse( 103, 'Sandra Flash', 15, 13, 11, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 104, 'Jack Diamond', 14, 16, 13, Horse.AVG_FORM );
+        horse = new Horse( 104, 'Jack Diamond', 14, 16, 14, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 105, 'Scarlett King', 20, 28, 25, Horse.AVG_FORM );
+        horse = new Horse( 105, 'Scarlett King', 20, 28, 25, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 106, 'Brad Dynamite', 25, 40, 35, Horse.AVG_FORM );
+        horse = new Horse( 106, 'Brad Dynamite', 25, 40, 35, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 107, 'Samuel Titanium', 50, 55, 50, Horse.AVG_FORM );
+        horse = new Horse( 107, 'Samuel Titanium', 50, 55, 50, HorseForm.AVERAGE );
         horsesInShop.push( horse );
     }
 

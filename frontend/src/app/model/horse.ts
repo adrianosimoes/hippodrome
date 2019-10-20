@@ -4,8 +4,8 @@ import { GameConstants } from "src/app/model/services/gameconstants";
 
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7.5;
-const ENDURANCE_SKILL_PRICE: number = 2.5;
-const ACCELERATION_SKILL_PRICE: number = 2;
+const ENDURANCE_SKILL_PRICE: number = 2.2;
+const ACCELERATION_SKILL_PRICE: number = 1.7;
 const TOTAL_SKILL_PRICE: number = 8.2;
 const SKILL_TO_PRICE_MULTIPLIER: number = 100;
 
@@ -15,8 +15,13 @@ export enum HorseSkills {
     ACCELERATION = 3,
 }
 
+export enum HorseForm {
+    BAD = 15,
+    AVERAGE = 16,
+    GOOD = 17,
+}
+
 export class Horse {
-    static AVG_FORM: number = 11;
     
     id: number;
     name: string;
@@ -29,7 +34,7 @@ export class Horse {
     staminaSpeed: number;
     staminaDisplay: number;
     calculateForm(): void {
-        this.form = Utils.getRandomInt( 10, 12 );
+        this.form = Utils.getRandomInt( HorseForm.BAD, HorseForm.GOOD );
     };
     
     calculateStaminaDisplay(): void{

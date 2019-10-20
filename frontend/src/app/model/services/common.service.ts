@@ -5,7 +5,7 @@ import { InitService } from './init.service';
 import { GameInstance } from '../gameinstance';
 import { Utils, StaticData } from '../utils';
 import { Player } from '../player';
-import { Horse, TrainingHorse, HorseSkills } from '../horse';
+import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
 import { Race, RaceLeague } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
@@ -245,7 +245,7 @@ export class CommonService {
             ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
             ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ),
             ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
-            Horse.AVG_FORM );
+            HorseForm.AVERAGE);
     }
 
     chargeEntranceFee( race: Race ) {

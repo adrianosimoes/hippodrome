@@ -1,7 +1,7 @@
 import { TestBed, inject } from '@angular/core/testing';
 
 import { CommonService } from './services/common.service';
-import { Horse, HorseInRace } from './horse';
+import { Horse, HorseInRace, HorseForm } from './horse';
 import { RaceInstance, RaceState } from './raceinstance';
 import { Race } from './race';
 import { delay } from "q";
@@ -21,18 +21,18 @@ describe( 'RaceInstance', () => {
 
     function setTestHorseWithSpeed( speed: number ): void {
         commonService.gameInstance.playerOne.horses = [];
-        commonService.gameInstance.playerOne.horses.push( new Horse( 103, 'Sandra Test', speed, 13, 10, Horse.AVG_FORM ) );
+        commonService.gameInstance.playerOne.horses.push( new Horse( 103, 'Sandra Test', speed, 13, 10, HorseForm.AVERAGE ) );
         commonService.gameInstance.playerOne.selectedHorseId = 103;
     }
 
     function setTestHorse( speed: number, acc: number, end: number ): void {
         commonService.gameInstance.playerOne.horses = [];
-        commonService.gameInstance.playerOne.horses.push( new Horse( 103, 'Sandra Test', speed, end, acc, Horse.AVG_FORM ) );
+        commonService.gameInstance.playerOne.horses.push( new Horse( 103, 'Sandra Test', speed, end, acc, HorseForm.AVERAGE ) );
         commonService.gameInstance.playerOne.selectedHorseId = 103;
     }
 
     function getTestHorse( speed: number, acc: number, end: number ): Horse {
-        return new Horse( 204, 'Bot', speed, end, acc, Horse.AVG_FORM );
+        return new Horse( 204, 'Bot', speed, end, acc, HorseForm.AVERAGE );
     }
 
     afterEach( function() {
