@@ -40,7 +40,7 @@ export class InitService {
         let id = 1;
 
         raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 550, '#626f3d', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 500, '#626f3d', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( id++, 2, 'Pembrokeshire', 730, '#d9e37d', 100, 6, [1000, 450, 200] ) );
 

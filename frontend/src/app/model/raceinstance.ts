@@ -10,7 +10,8 @@ var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
-var ACCELERATION_UNTIL_TICKS: number = 200;
+var ACCELERATION_UNTIL_TICKS: number = 230;
+var STAMINA_STARTS_TICKS: number = 230;
 var BIG_BONUS_VALUE: number = 0.1;
 var SMALL_BONUS_VALUE: number = 0.05;
 
@@ -322,7 +323,7 @@ export class RaceInstance {
         //If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         let speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
         let formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
-        if ( this.totalTicks > ACCELERATION_UNTIL_TICKS && step >= formSpeed * speedReduction ) {
+        if ( this.totalTicks > STAMINA_STARTS_TICKS && step >= formSpeed * speedReduction ) {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
