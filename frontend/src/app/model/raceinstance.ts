@@ -308,9 +308,9 @@ export class RaceInstance {
         let maxSpeed: number = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
         if ( horse == this.playerHorse ) {
             if ( this.playerHorse.raceEffort == RaceEffort.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2 ) {
-                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.85 * maxSpeed;
             } else if ( this.playerHorse.raceEffort == RaceEffort.End && this.playerHorse.distanceDone < ( this.baseRace.distance * 2 ) / 3 ) {
-                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.9 * maxSpeed;
+                maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.85 * maxSpeed;
             }
         }
 
@@ -327,7 +327,7 @@ export class RaceInstance {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
-                    horse.speed--;
+                    horse.speed -= 0.8;
                     if ( horse == this.playerHorse ) {
                         horse.staminaDisplay = Utils.calculateDisplayStamina( horse.speed, horse.baseHorse.speed, 100 );
                     }

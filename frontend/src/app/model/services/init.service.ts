@@ -17,7 +17,7 @@ export class InitService {
         horse = new Horse( 102, 'Tom Bolt', 13, 13, 17, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
-        horse = new Horse( 103, 'Sandra Flash', 15, 13, 11, HorseForm.AVERAGE );
+        horse = new Horse( 103, 'Sandra Flash', 15, 14, 10, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
         horse = new Horse( 104, 'Jack Diamond', 14, 16, 14, HorseForm.AVERAGE );
@@ -40,7 +40,7 @@ export class InitService {
         let id = 1;
 
         raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 500, '#626f3d', 100, 6, [1000, 450, 200] ) );
+        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 470, '#626f3d', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
         raceLeague.addRace( new Race( id++, 2, 'Pembrokeshire', 730, '#d9e37d', 100, 6, [1000, 450, 200] ) );
 
