@@ -8,6 +8,7 @@ import { CurrencyPipe } from "@angular/common";
 import { CommonService } from './common.service';
 import { InitService } from "src/app/model/services/init.service";
 import { GameConstants } from "src/app/model/services/gameconstants";
+import { HorseForm } from "src/app/model/horse";
 
 describe('CommonService', () => {
   beforeEach(() => {
@@ -25,7 +26,7 @@ describe('CommonService', () => {
   it('Test Horse shop', inject([CommonService], (service: CommonService) => {
       expect(service.getHorsesInShop().length).toBe(7);
       expect(service.getHorsesInShop()[0].name).toBe("Bruce Steel")
-      expect(service.getHorsesInShop()[0].speed).toBe(12);
+      expect(service.getHorsesInShop()[0].speed).toBe(13);
       expect(service.getHorsesInShop()[0].endurance).toBe(17);
       expect(service.getHorsesInShop()[0].acceleration).toBe(12);
       //Horse should start with maxium stamina
@@ -74,8 +75,8 @@ describe('CommonService', () => {
       
       expect(service.getPlayer().horses[0].id).toBe(1);
       expect(service.getPlayer().horses[0].name).toBe("Sandra Flash");
-      expect(service.getPlayer().horses[0].form).toBeGreaterThanOrEqual(10);
-      expect(service.getPlayer().horses[0].form).toBeLessThanOrEqual(12);
+      expect(service.getPlayer().horses[0].form).toBeGreaterThanOrEqual(HorseForm.BAD);
+      expect(service.getPlayer().horses[0].form).toBeLessThanOrEqual(HorseForm.GOOD);
       expect(service.getPlayer().horses[0].owned).toBeTruthy();
       expect(service.getPlayer().selectedHorseId).toBe(1);
 
