@@ -239,13 +239,25 @@ export class CommonService {
         return StaticData.colors[Utils.getRandomInt( 0, StaticData.colors.length - 1 )];
     }
 
-    createRandomHorse( num: number, difficulty: number ): Horse {
+    createRandomHorse( num: number, difficulty: number, totalHorses: number ): Horse {
         let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
+        let speed: number = ( difficulty * 5 ) +  Utils.getRandomInt( 2, 7 );
+        let endurance: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
+        let acceleration: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
+    
+        // The last 2 horses should be weaker speed and acc. (and high endurance so they are never too behind).
+        if(num >= totalHorses - 2) {
+            speed = ( difficulty * 5 ) + Utils.getRandomInt( 2, 3 );
+            endurance = ( difficulty * 5 ) + Utils.getRandomInt( 5, 8 );
+            acceleration = ( difficulty * 5 ) + Utils.getRandomInt( 1, 5 );
+            console.log("Generated horse:"  + name + speed + "; " + acceleration + "; " + endurance);
+        }
+    
         return new Horse( 1000 + num, name,
-            ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
-            ( difficulty * 5 ) + 2 + Utils.getRandomInt( 0, 6 ),
-            ( difficulty * 5 ) + 1 + Utils.getRandomInt( 0, 6 ),
-            HorseForm.AVERAGE);
+            speed,
+            endurance,
+            acceleration,
+            HorseForm.AVERAGE );
     }
 
     chargeEntranceFee( race: Race ) {

@@ -10,8 +10,8 @@ var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
 var COMMENT_EVERY_TICKS: number = 134;
 var FIRST_TICK_COMMENT = 67;
-var ACCELERATION_UNTIL_TICKS: number = 230;
-var STAMINA_STARTS_TICKS: number = 230;
+var ACCELERATION_UNTIL_TICKS: number = 240;
+var STAMINA_STARTS_TICKS: number = 250;
 var BIG_BONUS_VALUE: number = 0.1;
 var SMALL_BONUS_VALUE: number = 0.05;
 
@@ -76,7 +76,7 @@ export class RaceInstance {
 
         for ( let i = 1; i < this.baseRace.numHorses; i++ ) {
             let color: string = this.commonService.createRandomColor();
-            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty ), color, color );
+            let horse = new HorseInRace( this.commonService.createRandomHorse( i, this.baseRace.difficulty, this.baseRace.numHorses ), color, color );
             this.addHorse( horse );
         }
 
@@ -327,7 +327,7 @@ export class RaceInstance {
             horse.currentStamina--;
             if ( horse.currentStamina < 0 ) {
                 if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
-                    horse.speed -= 0.8;
+                    horse.speed -= 0.85;
                     if ( horse == this.playerHorse ) {
                         horse.staminaDisplay = Utils.calculateDisplayStamina( horse.speed, horse.baseHorse.speed, 100 );
                     }

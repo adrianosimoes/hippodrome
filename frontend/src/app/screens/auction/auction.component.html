@@ -18,6 +18,6 @@
 	</div>
 	<div class="clear"></div>
 	<div class="formButtonArea">
-		<button *ngIf="!auctionHorse.owned" (click)="mainScreen()">Skip Auction</button>
+		<button *ngIf="auctionHorse && !auctionHorse.owned" (click)="mainScreen()">Skip Auction</button>
 	</div>	
 </div>

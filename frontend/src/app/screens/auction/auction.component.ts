@@ -28,7 +28,7 @@ export class AuctionComponent implements OnInit {
         this.currPlayer = this.commonService.getPlayer();
         this.auctionHorse = this.commonService.getAuctionHorse();
         this.bidValue = 0;
-        if(this.auctionHorse.owned){
+        if(this.auctionHorse && this.auctionHorse.owned){
             this.auctionResult =  "Doing Auction...";
             setTimeout(() => {this.doAuction()}, 1000);
         };
