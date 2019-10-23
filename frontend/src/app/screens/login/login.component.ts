@@ -28,17 +28,18 @@ export class LoginComponent implements OnInit {
         if(this.player.name==''){
             this.player.name = 'The McCoys';
         }
+        Utils.clickyPagView( "startGame", "Start Game: " + this.player.name + "_silk:" + this.player.calculateBackground);
         this.router.navigate( ['shop'] );
         this.commonService.setInitialized();
     }
 
     loadGame() : void {
         this.commonService.loadSavedGame();
-        Utils.clickyPagView("loadGame?money=" +  this.commonService.gameInstance.playerOne.money 
+        Utils.clickyPagView("loadGame", "Load Game: " + "money=" +  this.commonService.gameInstance.playerOne.money 
                 + "&prestige=" +  this.commonService.gameInstance.playerOne.xpPoints
                 + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
                 + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
-                + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length, "Load Game");
+                + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length);
         this.router.navigate( ['main'] );
     }
     

@@ -55,12 +55,12 @@ export class LevelUpComponent implements OnInit {
             horse.confirmSkillUp();
         }
         this.currPlayer.skillPoints = this.skillPoints;
-        Utils.clickyPagView("levelUp?money=" +  this.commonService.gameInstance.playerOne.money
-                + "&skillPoints=" +  this.currPlayer.skillPoints
-                + "&prestige=" +  this.commonService.gameInstance.playerOne.xpPoints
-                + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
-                + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
-                + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length, "Load Game");
+        Utils.clickyPagView("levelUp", "Level Up:" + "money=" +  this.commonService.gameInstance.playerOne.money
+            + "&skillPoints=" +  this.currPlayer.skillPoints
+            + "&prestige=" +  this.commonService.gameInstance.playerOne.xpPoints
+            + "&victories=" +  this.commonService.gameInstance.playerOne.victories 
+            + "&races=" +  this.commonService.gameInstance.playerOne.totalRaces
+            + "&horses=" +  this.commonService.gameInstance.playerOne.horses.length);
         this.router.navigate( ['main'] );
     }
     
