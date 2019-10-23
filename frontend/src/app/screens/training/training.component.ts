@@ -69,7 +69,7 @@ export class TrainingComponent implements OnInit {
     upgradeTrainer( trainer: Trainer ): void {
         let success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
         if ( success ) {
-            Utils.clickyPagView("upgradeTrainer", "Upgrade Trainer: " +  + trainer.name + "q:" + trainer.quality);
+            Utils.clickyPagView("upgradeTrainer", "Upgrade Trainer: " +  + trainer.name + " q:" + trainer.quality);
             this.commonService.nextDay(null);
             this.reload();
         } else {

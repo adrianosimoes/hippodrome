@@ -30,7 +30,7 @@ export class HorseComponent implements OnInit {
     buyHorse(): void {
         let success = this.commonService.addHorseToPlayer( this.horse );
         if ( success ) {
-            Utils.clickyPagView("buyHorse", "BuyHorse:" + this.horse.id + "_name:" + this.horse.name);
+            Utils.clickyPagView("buyHorse", "BuyHorse: " + this.horse.id + " name:" + this.horse.name);
             this.router.navigate( ['main']);
         } else {
             alert( 'Not enough money' );
