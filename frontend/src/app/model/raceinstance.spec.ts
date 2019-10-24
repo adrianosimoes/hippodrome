@@ -41,9 +41,9 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance creation', () => {
         setTestHorseWithSpeed( 90 );
-        let raceInstance = new RaceInstance( testRace, commonService );
+        let raceInstance = new RaceInstance( testRace, commonService, []);
         expect( raceInstance.state ).toBe( RaceState.PreRace );
-        expect( raceInstance.horses.length ).toBe( 6 );
+        expect( raceInstance.horses.length ).toBe( 1 );
         expect( raceInstance.roundTrack ).toBe( false );
         expect( raceInstance.comments.length ).toBe( 0 );
         expect( raceInstance.playerHorse.staminaDisplay ).toBe( 0 );
@@ -51,7 +51,7 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance finish first', () => {
         setTestHorseWithSpeed( 90 );
-        let raceInstance = new RaceInstance( testRace, commonService );
+        let raceInstance = new RaceInstance( testRace, commonService, [] );
         let startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
         raceInstance.tickTime = 1;
@@ -76,7 +76,15 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance finish last', () => {
         setTestHorseWithSpeed( 5 );
-        let raceInstance = new RaceInstance( testRace, commonService );
+        let raceInstance = new RaceInstance( testRace, commonService, [] );
+        
+        for ( let i = 0; i < 5; i++ ) {
+            let botInRace: HorseInRace = new HorseInRace( getTestHorse( 14, 18, 20 ), null, null );
+            raceInstance.addHorse( botInRace );
+            raceInstance.sortedHorses.push( botInRace );
+            raceInstance.numberOfHorses++;
+        }
+        
         let startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
         raceInstance.tickTime = 1;
@@ -85,7 +93,7 @@ describe( 'RaceInstance', () => {
         // Check entrance fee was changed:
         expect( commonService.gameInstance.playerOne.money ).toBe( startMoney - 100 );
 
-        jasmine.clock().tick( 1500 );
+        jasmine.clock().tick( 2000 );
         expect( raceInstance.state ).toBe( RaceState.RaceFinished );
 
         // Expect horse with Speed 5 to lose.
@@ -116,7 +124,7 @@ describe( 'RaceInstance', () => {
         for ( let i = 0; i < numRaces; i++ ) {
             // Reset Stamina on player horse:
             commonService.gameInstance.playerOne.horses[0].staminaSpeed = commonService.gameInstance.playerOne.horses[0].speed;
-            let raceInstance = new RaceInstance( race, commonService );
+            let raceInstance = new RaceInstance( race, commonService, [] );
 
             let botInRace: HorseInRace = new HorseInRace( bot, null, null );
             raceInstance.addHorse( botInRace );

@@ -1,12 +1,15 @@
 <div id="pickRace"  class="screen">
 	<h3>Select Race League</h3>
-  	<div  class="raceLeague level{{currLeague.difficulty}}" *ngFor="let currLeague of commonService.racesLeagues">
-	  	<h4>{{currLeague.name}}</h4>
-	  	<div>Entrance Fee: {{currLeague.races[0].entranceFee | currency: 'EUR': 'symbol':'1.0-0'}}</div>
-	  	<div>First Place: &nbsp;{{currLeague.races[0].prizes[0] | currency: 'EUR': 'symbol':'1.0-0'}}</div>
-	  	<div>Difficulty: {{currLeague.difficulty | racedifficulty}}</div>
-	  	<div>Victories Needed: {{currLeague.numberOfWins}}</div>
-	  	<button (click)="gotoRace(currLeague)" [disabled]="!debug && (commonService.loading || this.currPlayer.victories < currLeague.numberOfWins)">Select</button>
+  	<div  class="raceLeague level{{currLeagueInstance.baseRaceLeague.difficulty}}" *ngFor="let currLeagueInstance of racesLeagueInstances">
+	  	<h4>{{currLeagueInstance.baseRaceLeague.name}}</h4>
+	  	<div>Entrance Fee: {{currLeagueInstance.baseRaceLeague.races[0].entranceFee | currency: 'EUR': 'symbol':'1.0-0'}}</div>
+	  	<div>First Place: &nbsp;{{currLeagueInstance.baseRaceLeague.races[0].prizes[0] | currency: 'EUR': 'symbol':'1.0-0'}}</div>
+	  	<div>Difficulty: {{currLeagueInstance.baseRaceLeague.difficulty | racedifficulty}}</div>
+	  	<div>Victories Needed: {{currLeagueInstance.baseRaceLeague.numberOfWins}}</div>
+	  	<div>Teams: <span *ngFor="let currTeam of currLeagueInstance.teamsInLeague">{{currTeam.name}}, </span>
+  		</div>
+	  	<button (click)="gotoRace(currLeagueInstance)" [disabled]="!debug && (commonService.loading || this.currPlayer.victories < currLeagueInstance.baseRaceLeague.numberOfWins)">Select</button>
+  		  	
   	</div>
   	<div class="clear"></div> 
 </div>

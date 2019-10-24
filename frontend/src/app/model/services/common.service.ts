@@ -6,10 +6,11 @@ import { GameInstance } from '../gameinstance';
 import { Utils, StaticData } from '../utils';
 import { Player } from '../player';
 import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
-import { Race, RaceLeague } from '../race';
+import { Race, } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
 import { CurrencyPipe } from "@angular/common";
+import { RaceLeagueInstance } from "src/app/model/raceleague";
 
 
 declare var Cookies: any;
@@ -21,7 +22,7 @@ declare var JSON: any;
 export class CommonService {
 
     horsesInShop: Horse[];
-    racesLeagues: RaceLeague[];
+    racesLeagueInstances: RaceLeagueInstance[];
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
@@ -36,13 +37,13 @@ export class CommonService {
 
     constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
         this.horsesInShop = [];
-        this.racesLeagues = [];
+        this.racesLeagueInstances = [];
         this.trainersToSell = [];
         this.xpPerLevel = [];
         this.skillPointsPerLevel = [];
         
         InitService.initHorsesInShop(this.horsesInShop);
-        InitService.initRaces(this.racesLeagues);
+        InitService.initRaces(this.racesLeagueInstances);
         InitService.initTrainers(this.trainersToSell);
         InitService.initXPPerLevel(this.xpPerLevel);
         InitService.initSkillPointsPerLevel(this.skillPointsPerLevel);
@@ -225,10 +226,21 @@ export class CommonService {
     }
 
     getRace( raceId: number ): Race {
-        for ( let raceLeague of this.racesLeagues ) {
-            for ( let race of raceLeague.races ) {
+        for ( let raceLeague of this.racesLeagueInstances ) {
+            for ( let race of raceLeague.baseRaceLeague.races ) {
                 if ( race.id == raceId ) {
                     return race;
+                }
+            }
+        }
+        return null;
+    }
+    
+    getLeague( raceId: number ): RaceLeagueInstance {
+        for ( let raceLeague of this.racesLeagueInstances ) {
+            for ( let race of raceLeague.baseRaceLeague.races ) {
+                if ( race.id == raceId ) {
+                    return raceLeague;
                 }
             }
         }
