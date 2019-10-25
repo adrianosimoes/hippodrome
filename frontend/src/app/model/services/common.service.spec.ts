@@ -32,10 +32,10 @@ describe('CommonService', () => {
     }));
   
   it('Test race leagues and tracks are created', inject([CommonService], (service: CommonService) => { 
-      expect(service.leagues.length).toBe(4);
-      expect(service.leagues[0].name).toBe("Ungraded");
-      expect(service.leagues[0].difficulty).toBe(2);
-      expect(service.leagues[0].races.length).toBe(4);
+      expect(service.gameInstance.leagues.length).toBe(4);
+      expect(service.gameInstance.leagues[0].name).toBe("Ungraded");
+      expect(service.gameInstance.leagues[0].difficulty).toBe(2);
+      expect(service.gameInstance.leagues[0].races.length).toBe(4);
       expect(service.getRace(1).name).toBe("Colwall Park");
       expect(service.getRace(1).difficulty).toBe(2);
       expect(service.getRace(1).distance).toBe(400);

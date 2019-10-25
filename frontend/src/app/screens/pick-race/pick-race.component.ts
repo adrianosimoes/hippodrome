@@ -26,12 +26,7 @@ export class PickRaceComponent implements OnInit {
             return;
         }
         this.currPlayer = this.commonService.getPlayer();
-        for(let i=0; i < this.commonService.leagues.length;i++){
-            if(!this.commonService.leagues[i].isInitialized()){
-                this.commonService.leagues[i].restartLeague(this.commonService);
-            }
-        }
-        this.leagues = this.commonService.leagues;
+        this.leagues = this.commonService.initLeagues();
     }
 
     gotoRace(): void {

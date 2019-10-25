@@ -26,7 +26,7 @@ export class Player {
     lastHorseId: number;
 
 
-    constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number, leagueId:number ) {
+    constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -42,7 +42,6 @@ export class Player {
         this.trainers = [];
         this.lastHorseId = 0;
         this.recalculateBackground();
-        this.leagueId= leagueId;
     }
 
     recalculateBackground() {
@@ -59,7 +58,7 @@ export class Player {
 
     static fromJson( player: any): Player {
         let ret = new Player( player.id, player.name, player.color, player.secColor,
-            player.silkType !== undefined ? player.silkType : 2, player.money, player.leagueID);
+            player.silkType !== undefined ? player.silkType : 2, player.money);
         ret.victories = player.victories;
         ret.selectedHorseId = player.selectedHorseId;
         ret.horses = player.horses;
@@ -68,6 +67,7 @@ export class Player {
         ret.xpPoints = player.xpPoints;
         ret.playerLevel = player.playerLevel;
         ret.skillPoints = player.skillPoints;
+        ret.leagueId = player.leagueId;
         ret.lastHorseId = player.lastHorseId;
         ret.recalculateBackground();
 

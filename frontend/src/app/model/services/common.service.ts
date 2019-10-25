@@ -22,7 +22,6 @@ declare var JSON: any;
 export class CommonService {
 
     horsesInShop: Horse[];
-    leagues: League[];
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
@@ -37,61 +36,37 @@ export class CommonService {
 
     constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
         this.horsesInShop = [];
-        this.leagues = [];
         this.trainersToSell = [];
         this.xpPerLevel = [];
         this.skillPointsPerLevel = [];
 
         InitService.initHorsesInShop( this.horsesInShop );
-        InitService.initRaces( this.leagues );
         InitService.initTrainers( this.trainersToSell );
         InitService.initXPPerLevel( this.xpPerLevel );
         InitService.initSkillPointsPerLevel( this.skillPointsPerLevel );
 
         this.loading = false;
 
-        let savedGameString: string = Cookies.get( GameConstants.saveGameName );
+        
+        let savedGameString: string = localStorage.getItem(GameConstants.saveGameName);
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-            0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY, this.leagues[0].id );
-        this.gameInstance = new GameInstance( playerOne, new Date(), false );
+            0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY );
+        this.gameInstance = new GameInstance();
+        this.gameInstance.init( playerOne, new Date(), false );
         this.generateBgImage();
+
+        this.gameInstance.leagues = [];
+        InitService.initRaces( this.gameInstance.leagues );
+        playerOne.leagueId = this.gameInstance.leagues[0].id;
     }
 
     loadToSavedSlot( savedGameString: string ): void {
-        this.savedGame = JSON.parse( savedGameString );
-        this.savedGame.date = new Date( this.savedGame.date );
-
-        //Load player:
-        this.savedGame.playerOne = Player.fromJson( this.savedGame.playerOne );
-
-        //Load Horses:
-        let horsesJson: Horse[] = this.savedGame.playerOne.horses;
-        this.savedGame.playerOne.horses = [];
-        for ( let i = 0; i < horsesJson.length; i++ ) {
-            let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
-                horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].acceleration, horsesJson[i].form );
-            horseInstance.owned = true;
-            if ( horsesJson[i].staminaSpeed > 0 ) {
-                horseInstance.staminaSpeed = horsesJson[i].staminaSpeed;
-            }
-            horseInstance.calculateStaminaDisplay();
-            this.savedGame.playerOne.horses.push( horseInstance );
-        }
-        //Load Trainers:
-        let trainersJson: Trainer[] = this.savedGame.playerOne.trainers;
-        this.savedGame.playerOne.trainers = [];
-        for ( let i = 0; i < trainersJson.length; i++ ) {
-            let newTrainer = new Trainer( trainersJson[i].id,
-                trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
-                trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description );
-            newTrainer.trainingHorseId = trainersJson[i].trainingHorseId;
-            this.savedGame.playerOne.trainers.push( newTrainer );
-        }
-
+        this.savedGame = new GameInstance();
+        this.savedGame.load( JSON.parse( savedGameString ) );
     }
 
     loadSavedGame(): void {
@@ -181,7 +156,7 @@ export class CommonService {
 
 
     saveGame(): void {
-        Cookies.set( GameConstants.saveGameName, this.gameInstance, { expires: 7 } );
+        localStorage.setItem(GameConstants.saveGameName, JSON.stringify(this.gameInstance));
     }
 
     addHorseToPlayer( horse: Horse ): boolean {
@@ -225,8 +200,17 @@ export class CommonService {
         horse.name = newName;
     }
 
+    initLeagues(): League[] {
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( !this.gameInstance.leagues[i].isInitialized() ) {
+                this.gameInstance.leagues[i].restartLeague( this );
+            }
+        }
+        return this.gameInstance.leagues;
+    }
+
     getRace( raceId: number ): Race {
-        for ( let raceLeague of this.leagues ) {
+        for ( let raceLeague of this.gameInstance.leagues ) {
             for ( let race of raceLeague.races ) {
                 if ( race.id == raceId ) {
                     return race;
@@ -237,7 +221,7 @@ export class CommonService {
     }
 
     getLeague( raceId: number ): League {
-        for ( let raceLeague of this.leagues ) {
+        for ( let raceLeague of this.gameInstance.leagues ) {
             for ( let race of raceLeague.races ) {
                 if ( race.id == raceId ) {
                     return raceLeague;
@@ -248,7 +232,7 @@ export class CommonService {
     }
 
     getCurrentLeague(): League {
-        for ( let league of this.leagues ) {
+        for ( let league of this.gameInstance.leagues ) {
             if ( league.id == this.getPlayer().leagueId ) {
                 return league;
             }

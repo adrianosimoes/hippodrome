@@ -30,8 +30,8 @@ export class League {
     races: Race[];
     teamsInLeague: TeamInLeague[];
     raceNumber: number;
-    numberOfHorses: number;
     numberOfWins: number;
+    numberOfHorses: number;
 
     constructor( id: number, difficulty: number, name: string, numberOfWins: number, numberOfHorses: number ) {
         this.id = id;
@@ -40,8 +40,8 @@ export class League {
         this.races = [];
         this.teamsInLeague = [];
         this.raceNumber = 0;
-        this.numberOfHorses = numberOfHorses;
         this.numberOfWins = numberOfWins;
+        this.numberOfHorses = numberOfHorses;
     }
 
     addRace( race: Race ): void {
