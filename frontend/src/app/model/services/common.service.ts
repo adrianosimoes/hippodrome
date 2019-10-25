@@ -10,7 +10,7 @@ import { Race, } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
 import { CurrencyPipe } from "@angular/common";
-import { RaceLeagueInstance } from "src/app/model/raceleague";
+import { League } from "src/app/model/league";
 
 
 declare var Cookies: any;
@@ -22,7 +22,7 @@ declare var JSON: any;
 export class CommonService {
 
     horsesInShop: Horse[];
-    racesLeagueInstances: RaceLeagueInstance[];
+    leagues: League[];
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
@@ -37,17 +37,17 @@ export class CommonService {
 
     constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
         this.horsesInShop = [];
-        this.racesLeagueInstances = [];
+        this.leagues = [];
         this.trainersToSell = [];
         this.xpPerLevel = [];
         this.skillPointsPerLevel = [];
-        
-        InitService.initHorsesInShop(this.horsesInShop);
-        InitService.initRaces(this.racesLeagueInstances);
-        InitService.initTrainers(this.trainersToSell);
-        InitService.initXPPerLevel(this.xpPerLevel);
-        InitService.initSkillPointsPerLevel(this.skillPointsPerLevel);
-        
+
+        InitService.initHorsesInShop( this.horsesInShop );
+        InitService.initRaces( this.leagues );
+        InitService.initTrainers( this.trainersToSell );
+        InitService.initXPPerLevel( this.xpPerLevel );
+        InitService.initSkillPointsPerLevel( this.skillPointsPerLevel );
+
         this.loading = false;
 
         let savedGameString: string = Cookies.get( GameConstants.saveGameName );
@@ -56,7 +56,7 @@ export class CommonService {
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-            0, Utils.devMode() ? 105000 : GameConstants.INITIAL_MONEY );
+            0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY, this.leagues[0].id );
         this.gameInstance = new GameInstance( playerOne, new Date(), false );
         this.generateBgImage();
     }
@@ -85,13 +85,13 @@ export class CommonService {
         let trainersJson: Trainer[] = this.savedGame.playerOne.trainers;
         this.savedGame.playerOne.trainers = [];
         for ( let i = 0; i < trainersJson.length; i++ ) {
-            let newTrainer = new Trainer(trainersJson[i].id,
-                    trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
-                    trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description);
+            let newTrainer = new Trainer( trainersJson[i].id,
+                trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
+                trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description );
             newTrainer.trainingHorseId = trainersJson[i].trainingHorseId;
-            this.savedGame.playerOne.trainers.push(newTrainer);
+            this.savedGame.playerOne.trainers.push( newTrainer );
         }
-        
+
     }
 
     loadSavedGame(): void {
@@ -102,12 +102,12 @@ export class CommonService {
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
     }
-    
-    getNextXPLevel(player: Player): number {
+
+    getNextXPLevel( player: Player ): number {
         return this.xpPerLevel[this.gameInstance.playerOne.playerLevel + 1];
     }
-    
-    getSkillPoints(player: Player): number {
+
+    getSkillPoints( player: Player ): number {
         return this.skillPointsPerLevel[this.gameInstance.playerOne.playerLevel];
     }
 
@@ -121,7 +121,7 @@ export class CommonService {
 
     exhibition(): void {
         this.loading = true;
-        Utils.clickyPagView("exhibition" , "Exhibition:" + this.gameInstance.playerOne.money);
+        Utils.clickyPagView( "exhibition", "Exhibition:" + this.gameInstance.playerOne.money );
         this.gameInstance.playerOne.money += 100;
         this.nextDay( null );
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
@@ -151,30 +151,30 @@ export class CommonService {
 
     applyTrainers( player: Player ): void {
         for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
-            let trainHorse: Horse = this.getHorseByID(currTrainer.trainingHorseId);
+            let trainHorse: Horse = this.getHorseByID( currTrainer.trainingHorseId );
 
             //Pay salary:
             player.money -= currTrainer.salary;
-            
-            if(!trainHorse){
+
+            if ( !trainHorse ) {
                 continue;
             }
-            
+
             if ( currTrainer.trainType == HorseSkills.SPEED ) {
-                trainHorse.speed += this.calculateTrainSpeed(trainHorse.speed, currTrainer);
-            } else if(currTrainer.trainType == HorseSkills.ENDURANCE ){
-                trainHorse.endurance += this.calculateTrainSpeed(trainHorse.endurance, currTrainer);
-            } else if(currTrainer.trainType == HorseSkills.ACCELERATION ){
-                trainHorse.acceleration += this.calculateTrainSpeed(trainHorse.acceleration, currTrainer);
+                trainHorse.speed += this.calculateTrainSpeed( trainHorse.speed, currTrainer );
+            } else if ( currTrainer.trainType == HorseSkills.ENDURANCE ) {
+                trainHorse.endurance += this.calculateTrainSpeed( trainHorse.endurance, currTrainer );
+            } else if ( currTrainer.trainType == HorseSkills.ACCELERATION ) {
+                trainHorse.acceleration += this.calculateTrainSpeed( trainHorse.acceleration, currTrainer );
             }
             trainHorse.recalculatePrice();
         }
     }
-    
-    calculateTrainSpeed(skill: number, trainer: Trainer ): number {
+
+    calculateTrainSpeed( skill: number, trainer: Trainer ): number {
         let trainStep = 2 / trainer.speed;
         // Dont train when horse has reacherd trainer quality.
-        if(skill + trainStep  >= trainer.quality * 10)
+        if ( skill + trainStep >= trainer.quality * 10 )
             return 0;
         return trainStep;
     }
@@ -183,9 +183,9 @@ export class CommonService {
     saveGame(): void {
         Cookies.set( GameConstants.saveGameName, this.gameInstance, { expires: 7 } );
     }
-    
-    addHorseToPlayer( horse: Horse): boolean {
-        return this.addHorseWithPriceToPlayer(horse, horse.price);
+
+    addHorseToPlayer( horse: Horse ): boolean {
+        return this.addHorseWithPriceToPlayer( horse, horse.price );
     }
 
     addHorseWithPriceToPlayer( horse: Horse, horsePrice: number ): boolean {
@@ -207,10 +207,10 @@ export class CommonService {
     selectHorse( horse: Horse ): void {
         this.gameInstance.playerOne.selectedHorseId = horse.id;
     }
-    
-    getHorseByID(horseId: number): Horse {
+
+    getHorseByID( horseId: number ): Horse {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
-            if ( currHorse.id === horseId) {
+            if ( currHorse.id === horseId ) {
                 return currHorse;
             }
         }
@@ -218,16 +218,16 @@ export class CommonService {
     }
 
     getSelectedHorse(): Horse {
-       return this.getHorseByID(this.gameInstance.playerOne.selectedHorseId); 
+        return this.getHorseByID( this.gameInstance.playerOne.selectedHorseId );
     }
-    
-    setHorseName(horse: Horse, newName: string ): void {
+
+    setHorseName( horse: Horse, newName: string ): void {
         horse.name = newName;
     }
 
     getRace( raceId: number ): Race {
-        for ( let raceLeague of this.racesLeagueInstances ) {
-            for ( let race of raceLeague.baseRaceLeague.races ) {
+        for ( let raceLeague of this.leagues ) {
+            for ( let race of raceLeague.races ) {
                 if ( race.id == raceId ) {
                     return race;
                 }
@@ -235,13 +235,22 @@ export class CommonService {
         }
         return null;
     }
-    
-    getLeague( raceId: number ): RaceLeagueInstance {
-        for ( let raceLeague of this.racesLeagueInstances ) {
-            for ( let race of raceLeague.baseRaceLeague.races ) {
+
+    getLeague( raceId: number ): League {
+        for ( let raceLeague of this.leagues ) {
+            for ( let race of raceLeague.races ) {
                 if ( race.id == raceId ) {
                     return raceLeague;
                 }
+            }
+        }
+        return null;
+    }
+
+    getCurrentLeague(): League {
+        for ( let league of this.leagues ) {
+            if ( league.id == this.getPlayer().leagueId ) {
+                return league;
             }
         }
         return null;
@@ -253,18 +262,18 @@ export class CommonService {
 
     createRandomHorse( num: number, difficulty: number, totalHorses: number ): Horse {
         let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
-        let speed: number = ( difficulty * 5 ) +  Utils.getRandomInt( 2, 7 );
+        let speed: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 7 );
         let endurance: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
         let acceleration: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
-    
+
         // The last 2 horses should be weaker speed and acc. (and high endurance so they are never too behind).
-        if(num >= totalHorses - 2) {
+        if ( num >= totalHorses - 2 ) {
             speed = ( difficulty * 5 ) + Utils.getRandomInt( 2, 3 );
             endurance = ( difficulty * 5 ) + Utils.getRandomInt( 5, 8 );
             acceleration = ( difficulty * 5 ) + Utils.getRandomInt( 1, 5 );
-            console.log("Generated horse:"  + name + speed + "; " + acceleration + "; " + endurance);
+            //console.log( "Generated horse:" + name + speed + "; " + acceleration + "; " + endurance );
         }
-    
+
         return new Horse( 1000 + num, name,
             speed,
             endurance,
@@ -294,24 +303,24 @@ export class CommonService {
     buyTrainer( player: Player, trainer: Trainer ) {
         if ( player.money >= trainer.price ) {
             player.money -= trainer.price;
-            let newTrainer = new Trainer(10 + this.gameInstance.playerOne.trainers.length,
-                    trainer.name, trainer.price, trainer.salary,
-                    trainer.trainType, trainer.speed, trainer.quality, trainer.description);
-            this.gameInstance.playerOne.trainers.push(newTrainer);
+            let newTrainer = new Trainer( 10 + this.gameInstance.playerOne.trainers.length,
+                trainer.name, trainer.price, trainer.salary,
+                trainer.trainType, trainer.speed, trainer.quality, trainer.description );
+            this.gameInstance.playerOne.trainers.push( newTrainer );
             // Auto-set to train first horse:
-            if( this.gameInstance.playerOne.horses.length > 0){
-                newTrainer.setTrainingHorse(this.gameInstance.playerOne.horses[0]);
+            if ( this.gameInstance.playerOne.horses.length > 0 ) {
+                newTrainer.setTrainingHorse( this.gameInstance.playerOne.horses[0] );
             }
             return true;
         } else {
             return false;
         }
     }
-    
+
     upgradeTrainer( player: Player, trainer: Trainer ) {
         if ( player.money >= trainer.upgradePrice ) {
             player.money -= trainer.upgradePrice;
-            trainer.quality +=2;
+            trainer.quality += 2;
             trainer.calculateUpgradePrice();
             return true;
         } else {
@@ -340,9 +349,9 @@ export class CommonService {
                 }
             }
         }
-        if (player.selectedHorseId == horseId ) {
+        if ( player.selectedHorseId == horseId ) {
             let newSelectedHorse = -1;
-            if(player.horses.length >= 1){
+            if ( player.horses.length >= 1 ) {
                 newSelectedHorse = player.horses[0].id;
             }
             player.selectedHorseId = newSelectedHorse;

@@ -2,9 +2,6 @@ import { TestBed, inject } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { CurrencyPipe } from "@angular/common";
 
-
-
-
 import { CommonService } from './common.service';
 import { InitService } from "src/app/model/services/init.service";
 import { GameConstants } from "src/app/model/services/gameconstants";
@@ -35,10 +32,10 @@ describe('CommonService', () => {
     }));
   
   it('Test race leagues and tracks are created', inject([CommonService], (service: CommonService) => { 
-      expect(service.racesLeagueInstances.length).toBe(4);
-      expect(service.racesLeagueInstances[0].baseRaceLeague.name).toBe("Ungraded");
-      expect(service.racesLeagueInstances[0].baseRaceLeague.difficulty).toBe(2);
-      expect(service.racesLeagueInstances[0].baseRaceLeague.races.length).toBe(4);
+      expect(service.leagues.length).toBe(4);
+      expect(service.leagues[0].name).toBe("Ungraded");
+      expect(service.leagues[0].difficulty).toBe(2);
+      expect(service.leagues[0].races.length).toBe(4);
       expect(service.getRace(1).name).toBe("Colwall Park");
       expect(service.getRace(1).difficulty).toBe(2);
       expect(service.getRace(1).distance).toBe(400);

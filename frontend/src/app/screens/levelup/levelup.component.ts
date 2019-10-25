@@ -26,6 +26,7 @@ export class LevelUpComponent implements OnInit {
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
+            return;
         }
         this.currPlayer = this.commonService.getPlayer();
         this.newLevel = this.currPlayer.playerLevel;

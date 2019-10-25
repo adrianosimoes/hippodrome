@@ -3,7 +3,7 @@ import { Race } from '../race';
 import { Trainer } from '../trainer';
 import { Utils } from "src/app/model/utils";
 import { GameConstants } from "src/app/model/services/gameconstants";
-import { RaceLeague, RaceLeagueInstance } from "src/app/model/raceleague";
+import { League } from "src/app/model/league";
 
 
 export class InitService {
@@ -34,42 +34,38 @@ export class InitService {
         horsesInShop.push( horse );
     }
 
-    static initRaces( racesLeagueInstances: RaceLeagueInstance[] ) {
-        let raceLeague = new RaceLeague( 2, "Ungraded", 0, 6 );
-        let raceLeagueInstance = new RaceLeagueInstance(raceLeague);
-        racesLeagueInstances.push( raceLeagueInstance );
+    static initRaces( leagues: League[] ) {
+        let league = new League(1, 2, "Ungraded", 0, 6 ); 
+        leagues.push( league );
 
         let id = 1;
 
-        raceLeague.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 470, '#626f3d', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
-        raceLeague.addRace( new Race( id++, 2, 'Pembrokeshire', 730, '#d9e37d', 100, 6, [1000, 450, 200] ) );
+        league.addRace( new Race( id++, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] ) );
+        league.addRace( new Race( id++, 2, 'Rous Memorial Stakes', 470, '#626f3d', 100, 6, [1000, 450, 200] ) );
+        league.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [1000, 450, 200] ) );
+        league.addRace( new Race( id++, 2, 'Pembrokeshire', 730, '#d9e37d', 100, 6, [1000, 450, 200] ) );
 
 
-        raceLeague = new RaceLeague( 3, "Group 3", 5, 8 );
-        raceLeagueInstance = new RaceLeagueInstance(raceLeague);
-        racesLeagueInstances.push( raceLeagueInstance );
+        league = new League(2, 3, "Group 3", 5, 8 );
+        leagues.push( league );
 
-        raceLeague.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
-        raceLeague.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
+        league.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
+        league.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
+        league.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
 
-        raceLeague = new RaceLeague( 5, "Group 2", 10, 8 );
-        raceLeagueInstance = new RaceLeagueInstance(raceLeague);
-        racesLeagueInstances.push( raceLeagueInstance );
+        league = new League(3, 5, "Group 2", 10, 8 );
+        leagues.push( league );
 
-        raceLeague.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
-        raceLeague.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
+        league.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
+        league.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
+        league.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
 
-        raceLeague = new RaceLeague( 9, "World Cup", 15, 8 );
-        raceLeagueInstance = new RaceLeagueInstance(raceLeague);
-        racesLeagueInstances.push( raceLeagueInstance );
+        league = new League(4, 9, "World Championship", 15, 8 );
+        leagues.push( league );
 
-        raceLeague.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( id++, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
-        raceLeague.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
 
     }
 

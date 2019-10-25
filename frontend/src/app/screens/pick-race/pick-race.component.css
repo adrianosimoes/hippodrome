@@ -3,12 +3,12 @@
 	padding: 10px;
 	float: left;
 	border: 5px solid #ffffff;
-	width: 180px;
+	width: 320px;
 	box-shadow:
 		3px 3px #666;
 }
 
-.raceLeague div {
+.raceLeague  >div {
 	margin-bottom: 5px;
 }
 
@@ -33,4 +33,35 @@ h4 {
 
 button {
 	margin-top: 10px;
+}
+
+.leagueTable {
+	margin: 15px;
+}
+
+.leagueHeader div{
+	display: table-header-group;
+	border-top: 2px solid #000 !important; 
+}
+
+.leagueRow{
+	display: table-row;
+}
+
+.leagueRow div {
+	border: 2px solid #000;
+	display: table-cell;
+	border-top: none; 
+}
+
+.teamName{
+	width: 190px;
+	border-right: none !important;
+	padding: 5px;
+}
+
+.teamPoints{
+	width: 55px;
+	text-align: right;
+	padding: 5px;	
 }

@@ -4,7 +4,7 @@ import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 import { Race } from '../../model/race';
 import { Player } from "src/app/model/player";
-import { RaceLeague, RaceLeagueInstance } from "src/app/model/raceleague";
+import { League } from "src/app/model/league";
 
 
 
@@ -15,7 +15,7 @@ import { RaceLeague, RaceLeagueInstance } from "src/app/model/raceleague";
 } )
 export class PickRaceComponent implements OnInit {
     currPlayer: Player;
-    racesLeagueInstances: RaceLeagueInstance[];
+    leagues: League[];
     debug : boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
@@ -23,20 +23,21 @@ export class PickRaceComponent implements OnInit {
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
+            return;
         }
         this.currPlayer = this.commonService.getPlayer();
-        for(let i=0;i< this.commonService.racesLeagueInstances.length;i++){
-            if(!this.commonService.racesLeagueInstances[i].isInitialized()){
-                this.commonService.racesLeagueInstances[i].restartLeague(this.commonService);
+        for(let i=0; i < this.commonService.leagues.length;i++){
+            if(!this.commonService.leagues[i].isInitialized()){
+                this.commonService.leagues[i].restartLeague(this.commonService);
             }
         }
-        this.racesLeagueInstances = this.commonService.racesLeagueInstances;
+        this.leagues = this.commonService.leagues;
     }
 
-
-    gotoRace( currLeague: RaceLeagueInstance ): void {
+    gotoRace(): void {
+        let currLeague: League = this.commonService.getCurrentLeague();
         let index: number = currLeague.getNextRace();
-        this.router.navigate( ['race', currLeague.baseRaceLeague.races[index].id] );
+        this.router.navigate( ['race', currLeague.races[index].id] );
     }
 
 }

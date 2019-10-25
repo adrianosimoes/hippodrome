@@ -5,7 +5,7 @@ import { CommonService } from './services/common.service';
 import { Player } from './player';
 import { Utils } from './utils';
 import { GameConstants } from "src/app/model/services/gameconstants";
-import { TeamInLeague } from "src/app/model/raceleague";
+import { TeamInLeague } from "src/app/model/league";
 
 var START_TIMEOUT: number = 500;
 var TICK_MILLISECONDS: number = 15;
@@ -76,7 +76,8 @@ export class RaceInstance {
         this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
 
         for ( let i = 0; i < teamsInLeague.length; i++ ) {
-           this.addHorse(new HorseInRace(teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color));
+            if(!teamsInLeague[i].isPlayer)
+                this.addHorse(new HorseInRace(teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color));
         }
 
         this.numberOfHorses = this.horses.length;

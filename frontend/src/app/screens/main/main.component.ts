@@ -23,7 +23,9 @@ export class MainComponent implements OnInit {
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
+            return;
         }
+
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
         this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer);
