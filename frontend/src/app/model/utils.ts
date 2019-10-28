@@ -49,7 +49,6 @@ export class Utils {
             ( maxSpeed - ( maxSpeed / 2 ) ) * baseValue;
     }
 
-
     static getCssBackground( color: string, secColor: string, silkType: number ): string {
         if ( silkType == 2 ) {
             return color; //use simple color.
@@ -111,7 +110,7 @@ let defaultCmp: Comparator<any> = ( a, b ) => {
 }
 
 export class StaticData {
-    static horseNames: string[] = ['Annabel', 'Adagio', 'Aida','Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby',
+    static horseNames: string[] = ['Annabel', 'Adagio', 'Aida', 'Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby',
         'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
         'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand',
         'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo', 'Velvet', 'Verona', 'Vegas', 'Virgo'];
@@ -122,8 +121,8 @@ export class StaticData {
                             /*Greens */ '#00ff00', '#aaaa00', '#808000', '#00dddd', '#556B2F', '#6B8E23',
                             /* Blues */  '#2f2fc7',
                             /* Grey and Brown */ '#000000', '#999999', '#966F33', '#6F4E37', '#7F5217'];
-    
-   static teamNames: string[] = ['Racing', 'Stables', 'Team'];
+
+    static teamNames: string[] = ['Racing', 'Stables', 'Team'];
 
 }
 

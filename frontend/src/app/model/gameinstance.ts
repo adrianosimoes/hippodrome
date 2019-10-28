@@ -10,9 +10,6 @@ export class GameInstance {
     playerOne: Player;
     leagues: League[];
 
-    constructor() {
-    }
-
     init( player: Player, date: Date, initialized: boolean ) {
         this.playerOne = player;
         this.date = date;
@@ -55,12 +52,21 @@ export class GameInstance {
         let leaguesJson = savedGameJson.leagues;
         this.leagues = [];
         for ( let i = 0; i < leaguesJson.length; i++ ) {
-            let league = new League(leaguesJson[i].id, leaguesJson[i].difficulty , leaguesJson[i].name, 
-                    leaguesJson[i].numberOfWins, leaguesJson[i].numberOfWins);
+            let league = new League( leaguesJson[i].id, leaguesJson[i].difficulty, leaguesJson[i].name,
+                leaguesJson[i].numberOfWins, leaguesJson[i].numberOfHorses );
             league.raceNumber = leaguesJson[i].raceNumber;
             league.races = leaguesJson[i].races;
             league.teamsInLeague = leaguesJson[i].teamsInLeague;
-            this.leagues.push(league);
+            this.leagues.push( league );
+
+            if ( league.id == this.playerOne.leagueId ) {
+                for ( let i = 0; i < league.teamsInLeague.length; i++ ) {
+                    if ( league.teamsInLeague[i].isPlayer ) {
+                        this.playerOne.team = league.teamsInLeague[i];
+                        break;
+                    }
+                }
+            }
         }
     }
 }

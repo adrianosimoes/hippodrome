@@ -2,7 +2,7 @@ import { Horse } from './horse';
 import { Trainer } from './trainer';
 import { Utils } from './utils';
 import { GameConstants } from "src/app/model/services/gameconstants";
-import { League } from "src/app/model/league";
+import { League, TeamInLeague } from "src/app/model/league";
 import { CommonService } from "src/app/model/services/common.service";
 
 
@@ -15,6 +15,7 @@ export class Player {
     calculateBackground: string;
     horses: Horse[];
     leagueId: number;
+    team: TeamInLeague;
     selectedHorseId: number;
     money: number;
     victories: number;

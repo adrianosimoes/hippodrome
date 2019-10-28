@@ -47,8 +47,8 @@ export class CommonService {
 
         this.loading = false;
 
-        
-        let savedGameString: string = localStorage.getItem(GameConstants.saveGameName);
+
+        let savedGameString: string = localStorage.getItem( GameConstants.saveGameName );
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
@@ -156,7 +156,7 @@ export class CommonService {
 
 
     saveGame(): void {
-        localStorage.setItem(GameConstants.saveGameName, JSON.stringify(this.gameInstance));
+        localStorage.setItem( GameConstants.saveGameName, JSON.stringify( this.gameInstance ) );
     }
 
     addHorseToPlayer( horse: Horse ): boolean {
@@ -200,11 +200,12 @@ export class CommonService {
         horse.name = newName;
     }
 
-    initLeagues(): League[] {
+    getLeagues(): League[] {
         for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
-            if ( !this.gameInstance.leagues[i].isInitialized() ) {
+            if ( !this.gameInstance.leagues[i].isInitialized() || this.gameInstance.leagues[i].raceNumber ==0) {
                 this.gameInstance.leagues[i].restartLeague( this );
             }
+            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
         }
         return this.gameInstance.leagues;
     }

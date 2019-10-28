@@ -16,7 +16,7 @@ import { League } from "src/app/model/league";
 export class PickRaceComponent implements OnInit {
     currPlayer: Player;
     leagues: League[];
-    debug : boolean = Utils.devMode();
+    debug: boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
 
@@ -26,9 +26,9 @@ export class PickRaceComponent implements OnInit {
             return;
         }
         this.currPlayer = this.commonService.getPlayer();
-        this.leagues = this.commonService.initLeagues();
+        this.leagues = this.commonService.getLeagues();
     }
-
+    
     gotoRace(): void {
         let currLeague: League = this.commonService.getCurrentLeague();
         let index: number = currLeague.getNextRace();

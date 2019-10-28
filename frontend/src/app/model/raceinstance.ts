@@ -59,7 +59,7 @@ export class RaceInstance {
         this.baseRace = race;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
-        this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground );
+        this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground, this.player.team);
         this.horses = [];
         this.horses.push( this.playerHorse );
         this.lastCommentHorses = [];
@@ -77,7 +77,7 @@ export class RaceInstance {
 
         for ( let i = 0; i < teamsInLeague.length; i++ ) {
             if(!teamsInLeague[i].isPlayer)
-                this.addHorse(new HorseInRace(teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color));
+                this.addHorse(new HorseInRace(teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color,  teamsInLeague[i]));
         }
 
         this.numberOfHorses = this.horses.length;
@@ -97,7 +97,7 @@ export class RaceInstance {
     updateSelectedHorse(): void {
         let currStrategy: RaceEffort = this.playerHorse.raceEffort;
         let currTactic: RaceTactic = this.playerHorse.tactic;
-        let currHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground );
+        let currHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground, this.player.team);
         for ( let i = 0; i < this.horses.length; i++ ) {
             if ( this.horses[i] == this.playerHorse ) {
                 this.horses[i] = currHorse;
@@ -424,6 +424,7 @@ export class RaceInstance {
         this.playerHorse.baseHorse.staminaSpeed = this.playerHorse.speed;
         this.playerHorse.baseHorse.calculateStaminaDisplay();
         this.player.totalRaces++;
+        this.givePoints();
         this.place = this.getPlace( this.playerHorse, this.sortedHorses );
         this.baseXpPoints = ( this.baseRace.difficulty - 1 );
         this.placeXpPoints = ( this.baseRace.difficulty - 1 ) * this.getPlaceMultiplier( this.place );
@@ -442,6 +443,13 @@ export class RaceInstance {
                 + " form" + this.playerHorse.baseHorse.form +  " tactic:" + this.playerHorse.tactic +  " strategy:" + this.playerHorse.raceEffort
                 + " points:" + this.player.xpPoints );
         this.state = RaceState.RaceFinished;
+    }
+    
+    givePoints(){
+        for ( let i = 0; i < this.sortedHorses.length; i++ ) {
+            let points = 1 + this.getPlaceMultiplier( i+1);
+            this.sortedHorses[i].team.points += points; 
+        }
     }
 
     getAuctionHorse(): Horse {

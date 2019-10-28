@@ -1,6 +1,7 @@
 import { Utils } from './utils';
 import { Race } from "src/app/model/race";
 import { GameConstants } from "src/app/model/services/gameconstants";
+import { TeamInLeague } from "src/app/model/league";
 
 const TRAINING_PRICE: number = 1.5;
 const SPEED_SKILL_PRICE: number = 7.5;
@@ -89,6 +90,7 @@ export enum RaceTactic {
 
 export class HorseInRace {
     baseHorse: Horse;
+    team: TeamInLeague;
     track: number;
     speed: number;
     fullStamina: number;
@@ -105,8 +107,9 @@ export class HorseInRace {
     raceEffort: RaceEffort;
     tactic: RaceTactic;
 
-    constructor( horse: Horse, color: string, cssBackground: string ) {
+    constructor( horse: Horse, color: string, cssBackground: string, team: TeamInLeague ) {
         this.baseHorse = horse;
+        this.team = team;
         this.speed = horse.staminaSpeed;
         this.fullStamina = Math.round(( horse.endurance * 1.7 ) - 11 );
         this.currentStamina = this.fullStamina;

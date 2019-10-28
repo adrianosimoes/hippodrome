@@ -59,7 +59,9 @@ export class League {
     }
 
     restartLeague( commonService: CommonService ) {
-        for ( let i = 0; i < this.numberOfHorses - 1; i++ ) {
+        this.teamsInLeague = [];
+        let numberOfHorses = this.numberOfHorses - (commonService.getPlayer().leagueId == this.id ? 1 : 0);
+        for ( let i = 0; i < numberOfHorses; i++ ) {
             let color: string = commonService.createRandomColor();
             let horse = commonService.createRandomHorse( i, this.difficulty, this.numberOfHorses );
             let team: TeamInLeague = new TeamInLeague( horse, null, color, false );
@@ -68,6 +70,9 @@ export class League {
         if ( commonService.getPlayer().leagueId == this.id ) {
             let team: TeamInLeague = new TeamInLeague( null, commonService.getPlayer().name, commonService.getPlayer().color, true );
             this.teamsInLeague.push( team );
+            commonService.getPlayer().team = team;
+        }else{
+            this.raceNumber = 1;
         }
     }
 }
