@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'training', component: TrainingComponent },
   { path: 'stables', component: StablesComponent },
-  { path: 'pickRace', component: PickRaceComponent },
+  { path: 'league/:action', component: PickRaceComponent },
   { path: 'race/:id', component: RaceComponent },
   { path: 'levelUp', component: LevelUpComponent },
   { path: '**', redirectTo: 'login' }

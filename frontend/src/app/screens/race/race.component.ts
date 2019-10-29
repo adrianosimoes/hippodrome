@@ -45,13 +45,14 @@ export class RaceComponent implements OnInit {
     
     skipRace() {
         this.commonService.simulateRace(this.commonService.getLeague(this.raceId ), this.currRace.baseRace, false);
-        this.commonService.nextDay(null);
-        this.router.navigate( ['main'] );
+        this.commonService.updateLeagues();
+        this.router.navigate( ['league','nextDay'] );
     }
 
     exitRace() {
+        this.commonService.updateLeagues();
         this.commonService.setAuctionHorse(this.currRace.getAuctionHorse());
-        this.router.navigate( ['auction'] );
+        this.router.navigate( ['league','auction'] );
     }
 
     ngOnDestroy() {

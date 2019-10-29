@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router, ActivatedRoute } from "@angular/router";
 import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 import { Race } from '../../model/race';
@@ -16,9 +16,10 @@ import { League } from "src/app/model/league";
 export class PickRaceComponent implements OnInit {
     currPlayer: Player;
     leagues: League[];
+    nextAction: string;
     debug: boolean = Utils.devMode();
 
-    constructor( private router: Router, public commonService: CommonService ) { }
+    constructor( private router: Router, public commonService: CommonService, public activeRoute: ActivatedRoute ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
@@ -27,12 +28,14 @@ export class PickRaceComponent implements OnInit {
         }
         this.currPlayer = this.commonService.getPlayer();
         this.leagues = this.commonService.gameInstance.leagues;
+        this.nextAction = this.activeRoute.snapshot.params['action'];
     }
     
-    gotoRace(): void {
-        let currLeague: League = this.commonService.getCurrentLeague();
-        let index: number = currLeague.getNextRace();
-        this.router.navigate( ['race', currLeague.races[index].id] );
+    next(){
+        if(this.nextAction=='nextDay'){
+            this.commonService.nextDay(null);
+            this.nextAction="main";
+        }
+        this.router.navigate( [this.nextAction] );
     }
-
 }

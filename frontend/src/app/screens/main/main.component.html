@@ -1,4 +1,4 @@
-<div id="main-screen"  class="screen">
+<div id="main-screen" *ngIf="currPlayer"  class="screen">
 	<h3>Main Screen</h3>
 	<div class="mainContainer">
 		<div class="playerView">
@@ -30,9 +30,10 @@
 			<h4>{{currGame.date | date: "longDate" }}</h4>
 			<div class="mainButtonArea">
 				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="pickRace()">RACE</button>
-				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>
-				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race or exhibit.</div>
-				<!-- <button class="skip" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>  -->
+				<!-- <button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>  -->
+				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race or exhibit.</div> 
+				<button class="skip" *ngIf="utils.devMode()" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
+				<button class="exhibition" (click)="gotoLeague()">League</button>
 			</div>
 		</div>
 	</div>

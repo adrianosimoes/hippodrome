@@ -17,7 +17,7 @@ describe( 'RaceInstance', () => {
         jasmine.clock().mockDate();
         commonService = new CommonService( null, null );
 
-        testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [1000, 450, 200] );
+        testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [500, 220, 100] );
     } );
 
     function setTestHorseWithSpeed( speed: number ): void {
@@ -77,7 +77,7 @@ describe( 'RaceInstance', () => {
         // Expect horse with speed 90 to win.
         expect( raceInstance.place ).toBe( 1 );
         // Check prize money was paid:
-        expect( commonService.gameInstance.playerOne.money ).toBe( startMoney + 1000 );
+        expect( commonService.gameInstance.playerOne.money ).toBe( startMoney + 500 );
     } );
 
     it( 'Test race instance finish last', () => {
@@ -111,7 +111,7 @@ describe( 'RaceInstance', () => {
 
     it( 'Test 500 races', () => {
         setTestHorse( 14, 20, 20 );
-        let currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [1000, 450, 200] );
+        let currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [500, 220, 100] );
         
         testHorses(currRace, getTestHorse( 14, 18, 20 ));
         

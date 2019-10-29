@@ -110,8 +110,8 @@ export class CommonService {
                 let currRace = this.gameInstance.leagues[i].races[this.gameInstance.leagues[i].getNextRace()];
                 this.simulateRace( this.gameInstance.leagues[i], currRace, false );
             }
+            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
         }
-        this.checkInitLeagues();
     }
 
     checkInitLeagues() {
@@ -137,7 +137,7 @@ export class CommonService {
             setTimeout(() => { this.loading = false; }, delay != null ? delay : 200 );
         }
 
-        this.updateLeagues();
+        this.checkInitLeagues();
 
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
@@ -172,7 +172,7 @@ export class CommonService {
     }
 
     calculateTrainSpeed( skill: number, trainer: Trainer ): number {
-        let trainStep = 2 / trainer.speed;
+        let trainStep = (1.5 / trainer.speed);
         // Dont train when horse has reacherd trainer quality.
         if ( skill + trainStep >= trainer.quality * 10 )
             return 0;

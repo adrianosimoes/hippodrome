@@ -5,6 +5,7 @@ import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/services/common.service';
+import { League } from "src/app/model/league";
 
 
 @Component( {
@@ -15,6 +16,7 @@ import { CommonService } from '../../model/services/common.service';
 export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
+    utils: Utils;
     xpNextLevel: number;
     warningText: string = '';
 
@@ -29,13 +31,16 @@ export class MainComponent implements OnInit {
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
         this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer);
+        this.utils = Utils;
         if(this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer) ){
             this.router.navigate( ['levelUp'] );
         }
     }
 
     pickRace(): void {
-        this.router.navigate( ['pickRace'] );
+        let currLeague: League = this.commonService.getCurrentLeague();
+        let index: number = currLeague.getNextRace();
+        this.router.navigate( ['race', currLeague.races[index].id] );
     }
 
     gotoTraining(): void {
@@ -55,11 +60,15 @@ export class MainComponent implements OnInit {
     }
 
     skipDay(): void {
-        this.commonService.nextDay(400);
+        this.commonService.nextDay(9400);
     }
     
     gotolevelUp(): void {
         this.router.navigate( ['levelUp'] );
+    }
+    
+    gotoLeague(){
+        this.router.navigate( ['league','main'] );
     }
 
 }

@@ -31,7 +31,6 @@ h4 {
 	top: 0;
 	left: 0;
 	background-color: rgba(30, 30, 30, 0.8);
-	display: flex;
 	justify-content: center;
 	align-items: center;
 }

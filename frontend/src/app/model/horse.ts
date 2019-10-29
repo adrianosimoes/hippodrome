@@ -45,7 +45,7 @@ export class Horse {
     updateDaillyFitness(): void {
         if(this.staminaSpeed < this.speed){
             this.staminaSpeed = Utils.precisionRound(this.staminaSpeed + 
-                    (this.staminaSpeed * 0.04 * (this.endurance/20)), 2);
+                    (this.staminaSpeed * 0.08 * (this.endurance/20)), 2);
             if(this.staminaSpeed > this.speed){
                 this.staminaSpeed = this.speed;
             } 
