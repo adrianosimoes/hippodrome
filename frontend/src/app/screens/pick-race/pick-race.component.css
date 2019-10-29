@@ -57,13 +57,13 @@ button {
 }
 
 .teamName{
-	width: 190px;
+	width: 210px;
 	border-right: none !important;
 	padding: 2px;
 }
 
 .teamPoints{
-	width: 55px;
+	width: 65px;
 	text-align: right;
 	padding: 2px;	
 }

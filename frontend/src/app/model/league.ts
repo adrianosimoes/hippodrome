@@ -71,8 +71,6 @@ export class League {
             let team: TeamInLeague = new TeamInLeague( null, commonService.getPlayer().name, commonService.getPlayer().color, true );
             this.teamsInLeague.push( team );
             commonService.getPlayer().team = team;
-        }else{
-            this.raceNumber = 1;
         }
     }
 }

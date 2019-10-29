@@ -11,6 +11,7 @@ import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
 import { CurrencyPipe } from "@angular/common";
 import { League } from "src/app/model/league";
+import { RaceInstance } from "src/app/model/raceinstance";
 
 
 declare var Cookies: any;
@@ -103,9 +104,30 @@ export class CommonService {
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
 
-    skipDay(): void {
-        this.nextDay( 400 );
+    updateLeagues() {
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( this.gameInstance.leagues[i].id !== this.gameInstance.playerOne.leagueId ) {
+                let currRace = this.gameInstance.leagues[i].races[this.gameInstance.leagues[i].getNextRace()];
+                this.simulateRace( this.gameInstance.leagues[i], currRace, false );
+            }
+        }
+        this.checkInitLeagues();
     }
+
+    checkInitLeagues() {
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( !this.gameInstance.leagues[i].isInitialized() || this.gameInstance.leagues[i].raceNumber == 0 ) {
+                this.gameInstance.leagues[i].restartLeague( this );
+            }
+            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
+        }
+    }
+
+    simulateRace( league: League, race: Race, isOwnRace: boolean ) {
+        let currRaceInstance = new RaceInstance( race, this, league.teamsInLeague, isOwnRace, true);
+        currRaceInstance.startRace();
+    }
+
 
     nextDay( delay: number ): void {
         this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
@@ -114,6 +136,9 @@ export class CommonService {
             this.loading = true;
             setTimeout(() => { this.loading = false; }, delay != null ? delay : 200 );
         }
+
+        this.updateLeagues();
+
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
         this.applyTrainers( this.gameInstance.playerOne );
@@ -200,16 +225,6 @@ export class CommonService {
         horse.name = newName;
     }
 
-    getLeagues(): League[] {
-        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
-            if ( !this.gameInstance.leagues[i].isInitialized() || this.gameInstance.leagues[i].raceNumber ==0) {
-                this.gameInstance.leagues[i].restartLeague( this );
-            }
-            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
-        }
-        return this.gameInstance.leagues;
-    }
-
     getRace( raceId: number ): Race {
         for ( let raceLeague of this.gameInstance.leagues ) {
             for ( let race of raceLeague.races ) {
@@ -266,11 +281,8 @@ export class CommonService {
             HorseForm.AVERAGE );
     }
 
-    chargeEntranceFee( race: Race ) {
-        this.gameInstance.playerOne.money -= race.entranceFee;
-    }
-
     setInitialized() {
+        this.checkInitLeagues();
         this.gameInstance.initialized = true;
     }
 

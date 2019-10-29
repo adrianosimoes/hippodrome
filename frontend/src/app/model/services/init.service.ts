@@ -50,6 +50,7 @@ export class InitService {
         leagues.push( league );
 
         league.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [2600, 1200, 550] ) );
+        league.addRace( new Race( id++, 3, 'Marseille Borely Racecourse', 500, '#2a822a', 200, 8, [2600, 1200, 550] ) );
         league.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [2600, 1200, 550] ) );
         league.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [2600, 1200, 550] ) );
 
@@ -58,14 +59,16 @@ export class InitService {
 
         league.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [5200, 2400, 1100] ) );
         league.addRace( new Race( id++, 5, 'Alexandra Park', 650, '#485130', 400, 8, [5200, 2400, 1100] ) );
-        league.addRace( new Race( id++, 5, 'Brecknock', 850, '#8a8c7c', 400, 8, [5200, 2400, 1100] ) );
+        league.addRace( new Race( id++, 5, 'Brecknock', 800, '#cca714', 400, 8, [5200, 2400, 1100] ) );
+        league.addRace( new Race( id++, 5, 'Chantilly Racecourse', 850, '#abd016', 400, 8, [5200, 2400, 1100] ) );
 
         league = new League(4, 9, "World Championship", 15, 8 );
         leagues.push( league );
 
-        league.addRace( new Race( id++, 9, 'Dorchester', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
-        league.addRace( new Race( id++, 9, 'Hastings and St. Leonards', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
-        league.addRace( new Race( id++, 9, 'Walsall', 950, '#3d5102', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Hippodrome d\'Auteuil', 550, '#145114', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Hippodrome de Bellerive', 650, '#555650', 1000, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Hippodrome de la C&ocirc;te d\'Azur', 950, '#3d5102', 900, 8, [13000, 6000, 2800] ) );
+        league.addRace( new Race( id++, 9, 'Hippodrome de la Prairie', 950, '#6a8223', 1000, 8, [13000, 6000, 2800] ) );
 
     }
 

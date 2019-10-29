@@ -26,7 +26,7 @@ export class PickRaceComponent implements OnInit {
             return;
         }
         this.currPlayer = this.commonService.getPlayer();
-        this.leagues = this.commonService.getLeagues();
+        this.leagues = this.commonService.gameInstance.leagues;
     }
     
     gotoRace(): void {

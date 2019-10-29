@@ -3,7 +3,6 @@
 	<div><button (click)="gotoRace(currLeague)">Next</button></div>	  	
   	<div  class="raceLeague level{{currLeague.difficulty}}" *ngFor="let currLeague of leagues">
 	  	<h4>{{currLeague.name}}</h4>
-	  	<div>Entrance Fee per Race: {{currLeague.races[0].entranceFee | currency: 'EUR': 'symbol':'1.0-0'}}</div>
 	  	<div>Difficulty: {{currLeague.difficulty | racedifficulty}}</div>
 	  	<div class="leagueTable">
 	  		<div class="leagueHeader leagueRow">

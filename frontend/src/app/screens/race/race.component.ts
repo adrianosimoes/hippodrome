@@ -36,8 +36,7 @@ export class RaceComponent implements OnInit {
         this.raceId = this.activeRoute.snapshot.params['id'];
         let race = this.commonService.getRace( this.raceId );
         let currLeague = this.commonService.getLeague( this.raceId );
-        this.currRace = new RaceInstance( race, this.commonService, currLeague.teamsInLeague);
-
+        this.currRace = new RaceInstance( race, this.commonService, currLeague.teamsInLeague, true, false);
     }
     
     startRace(): void {
@@ -45,6 +44,7 @@ export class RaceComponent implements OnInit {
     }
     
     skipRace() {
+        this.commonService.simulateRace(this.commonService.getLeague(this.raceId ), this.currRace.baseRace, false);
         this.commonService.nextDay(null);
         this.router.navigate( ['main'] );
     }

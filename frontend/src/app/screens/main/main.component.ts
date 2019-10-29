@@ -55,7 +55,7 @@ export class MainComponent implements OnInit {
     }
 
     skipDay(): void {
-        this.commonService.skipDay();
+        this.commonService.nextDay(400);
     }
     
     gotolevelUp(): void {

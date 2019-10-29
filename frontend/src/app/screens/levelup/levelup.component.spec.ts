@@ -6,7 +6,6 @@ import { CommonService } from '../../model/services/common.service';
 import { LevelUpComponent } from "src/app/screens/levelup/levelup.component";
 import { CurrencyPipe } from "@angular/common";
 
-
 describe('LevelUpComponent', () => {
   let component: LevelUpComponent;
   let fixture: ComponentFixture<LevelUpComponent>;
@@ -24,6 +23,7 @@ describe('LevelUpComponent', () => {
     fixture = TestBed.createComponent(LevelUpComponent);
     component = fixture.componentInstance;
     component.commonService.setInitialized();
+    component.commonService.getPlayer().skillPoints = 1;
     fixture.detectChanges();
   });
 
