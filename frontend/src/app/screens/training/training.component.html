@@ -19,7 +19,7 @@
 		<div class="pickTrainer" *ngFor="let currTrainer of currPlayer.trainers">
 				<div class="title">{{currTrainer.name}}</div>
 				<div class="desc">
-					<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per day</div>
+					<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per week</div>
 					<div>Quality: <span class="star"></span><span class="star" [class.black]="currTrainer.quality<5" ></span><span class="star" [class.black]="currTrainer.quality<7"></span></div>
 					<div><span>Training: </span><select [(ngModel)]='currTrainer.trainingHorseId'><option  *ngFor='let horse of currPlayer.horses' [ngValue]="horse.id">{{horse.name}}</option></select></div>
 				</div>
@@ -31,7 +31,7 @@
 		<div class="pickTrainer" *ngFor="let currTrainer of commonService.trainersToSell">
 			<div class="title">{{currTrainer.name}}</div>
 			<div class="desc">
-				<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per day</div>
+				<div class="description">Salary: {{currTrainer.salary | currency: 'EUR' : 'symbol':'1.0-0'}} per week</div>
 				<div>Quality: <span class="star"></span><span class="star" [class.black]="currTrainer.quality<5" ></span><span class="star" [class.black]="currTrainer.quality<7"></span></div>
 			</div>
 				<div class="buttonArea">

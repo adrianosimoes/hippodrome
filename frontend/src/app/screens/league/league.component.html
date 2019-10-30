@@ -10,7 +10,7 @@
 	  	</div> 
 	  		<div class="leagueRow" *ngFor="let currTeam of currLeague.teamsInLeague; let i = index">
 	  			<div class="teamRanking left clear" [class.promote]="currLeague.difficulty<9 && i<2" [class.demote]="currLeague.difficulty>2 && i>=6">{{i+1}}</div>
-	  			<div class="teamName left" [style.color]="currTeam.color">{{currTeam.name}}</div>
+	  			<div class="teamName left" [style.color]="currTeam.color" [class.ownTeam]="currTeam.isPlayer" >{{currTeam.name}}</div>
 	  			<div class="teamPoints left" [style.color]="currTeam.color">{{currTeam.points}}</div>	
 	  		</div>
   		</div>

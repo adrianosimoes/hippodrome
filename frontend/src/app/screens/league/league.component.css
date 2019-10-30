@@ -70,6 +70,10 @@ button {
 	padding-left: 5px;
 }
 
+.ownTeam{
+	text-decoration: underline;
+}
+
 .promote{
 	background-color: #a4ff51;
 }

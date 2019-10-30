@@ -72,5 +72,6 @@ export class League {
             this.teamsInLeague.push( team );
             commonService.getPlayer().team = team;
         }
+        Utils.randomizeArray(this.teamsInLeague);
     }
 }

@@ -27,7 +27,8 @@
 		</div>
 		<div class="verticalDivision"></div>
 		<div class="nextArea">
-			<h4>{{commonService.getWeekDescription()}}</h4>
+			<h4>{{commonService.getCurrentLeague().name}}<br/>
+			{{commonService.getWeekDescription()}}</h4>
 			<div class="mainButtonArea">
 				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="next()"><span *ngIf="this.commonService.getThisWeekRaceIndex()>=0">RACE</span><span *ngIf="this.commonService.getThisWeekRaceIndex()<0">Next Week</span></button>
 				<!-- <button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>  -->
