@@ -6,6 +6,7 @@ import { Trainer } from "src/app/model/trainer";
 export class GameInstance {
     name: string;
     date: Date;
+    weekNumber: number;
     initialized: boolean;
     playerOne: Player;
     leagues: League[];
@@ -13,11 +14,13 @@ export class GameInstance {
     init( player: Player, date: Date, initialized: boolean ) {
         this.playerOne = player;
         this.date = date;
+        this.weekNumber = 0;
         this.initialized = initialized;
     }
 
     load( savedGameJson ) {
         this.date = new Date( savedGameJson.date );
+        this.weekNumber = savedGameJson.weekNumber;
         this.initialized = savedGameJson.initialized;
 
         //Load player:
@@ -54,7 +57,6 @@ export class GameInstance {
         for ( let i = 0; i < leaguesJson.length; i++ ) {
             let league = new League( leaguesJson[i].id, leaguesJson[i].difficulty, leaguesJson[i].name,
                 leaguesJson[i].numberOfWins, leaguesJson[i].numberOfHorses );
-            league.raceNumber = leaguesJson[i].raceNumber;
             league.races = leaguesJson[i].races;
             league.teamsInLeague = leaguesJson[i].teamsInLeague;
             this.leagues.push( league );

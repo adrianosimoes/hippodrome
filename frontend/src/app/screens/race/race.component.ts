@@ -46,7 +46,7 @@ export class RaceComponent implements OnInit {
     skipRace() {
         this.commonService.simulateRace(this.commonService.getLeague(this.raceId ), this.currRace.baseRace, false);
         this.commonService.updateLeagues();
-        this.router.navigate( ['league','nextDay'] );
+        this.router.navigate( ['league','nextWeek'] );
     }
 
     exitRace() {

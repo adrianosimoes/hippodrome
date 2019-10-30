@@ -9,11 +9,11 @@ import { League } from "src/app/model/league";
 
 
 @Component( {
-    selector: 'app-pick-race',
-    templateUrl: './pick-race.component.html',
-    styleUrls: ['./pick-race.component.css']
+    selector: 'app-league',
+    templateUrl: './league.component.html',
+    styleUrls: ['./league.component.css']
 } )
-export class PickRaceComponent implements OnInit {
+export class LeagueComponent implements OnInit {
     currPlayer: Player;
     leagues: League[];
     nextAction: string;
@@ -32,8 +32,8 @@ export class PickRaceComponent implements OnInit {
     }
     
     next(){
-        if(this.nextAction=='nextDay'){
-            this.commonService.nextDay(null);
+        if(this.nextAction=='nextWeek'){
+            this.commonService.nextWeek(null);
             this.nextAction="main";
         }
         this.router.navigate( [this.nextAction] );

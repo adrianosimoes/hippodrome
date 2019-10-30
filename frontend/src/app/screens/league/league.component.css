@@ -56,10 +56,26 @@ button {
 	border-top: none; 
 }
 
+.teamRanking{
+	width: 20px;
+	padding: 2px;
+	text-align: center;
+	border-right: none !important;
+}
+
 .teamName{
-	width: 210px;
+	width: 182px;
 	border-right: none !important;
 	padding: 2px;
+	padding-left: 5px;
+}
+
+.promote{
+	background-color: #a4ff51;
+}
+
+.demote{
+	background-color: #e79292;
 }
 
 .teamPoints{

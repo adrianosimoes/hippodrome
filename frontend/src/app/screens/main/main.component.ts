@@ -30,17 +30,21 @@ export class MainComponent implements OnInit {
 
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
-        this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer);
+        this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer );
         this.utils = Utils;
-        if(this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer) ){
+        if ( this.currPlayer.xpPoints >= this.commonService.getNextXPLevel( this.currPlayer ) ) {
             this.router.navigate( ['levelUp'] );
         }
     }
 
-    pickRace(): void {
+    next(): void {
         let currLeague: League = this.commonService.getCurrentLeague();
-        let index: number = currLeague.getNextRace();
-        this.router.navigate( ['race', currLeague.races[index].id] );
+        let index: number = this.commonService.getThisWeekRaceIndex();
+        if ( index >= 0 ) {
+            this.router.navigate( ['race', currLeague.races[index].id] );
+        } else {
+            this.commonService.nextWeek(200);
+        }
     }
 
     gotoTraining(): void {
@@ -60,15 +64,15 @@ export class MainComponent implements OnInit {
     }
 
     skipDay(): void {
-        this.commonService.nextDay(9400);
+        this.commonService.nextWeek( 200 );
     }
-    
+
     gotolevelUp(): void {
         this.router.navigate( ['levelUp'] );
     }
-    
-    gotoLeague(){
-        this.router.navigate( ['league','main'] );
+
+    gotoLeague() {
+        this.router.navigate( ['league', 'main'] );
     }
 
 }

@@ -10,7 +10,7 @@ import { Race, } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
 import { CurrencyPipe } from "@angular/common";
-import { League } from "src/app/model/league";
+import { League, LeagueDay } from "src/app/model/league";
 import { RaceInstance } from "src/app/model/raceinstance";
 
 
@@ -26,6 +26,7 @@ export class CommonService {
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
+    seasonDefinition: number[];
     xpPerLevel: number[];
     skillPointsPerLevel: number[];
     backgroundImage: SafeStyle;
@@ -45,9 +46,9 @@ export class CommonService {
         InitService.initTrainers( this.trainersToSell );
         InitService.initXPPerLevel( this.xpPerLevel );
         InitService.initSkillPointsPerLevel( this.skillPointsPerLevel );
+        this.seasonDefinition = GameConstants.SEASON_DEFINITION;
 
         this.loading = false;
-
 
         let savedGameString: string = localStorage.getItem( GameConstants.saveGameName );
         if ( savedGameString ) {
@@ -57,7 +58,7 @@ export class CommonService {
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
             0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY );
         this.gameInstance = new GameInstance();
-        this.gameInstance.init( playerOne, new Date(), false );
+        this.gameInstance.init( playerOne, new Date( '2019-01-06' ), false );
         this.generateBgImage();
 
         this.gameInstance.leagues = [];
@@ -77,6 +78,21 @@ export class CommonService {
 
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
+    }
+
+    getThisWeekRaceIndex() {
+        return this.seasonDefinition[this.gameInstance.weekNumber % this.seasonDefinition.length];
+    }
+
+    getWeekDescription(): string {
+        let weekValue = this.seasonDefinition[this.gameInstance.weekNumber % this.seasonDefinition.length];
+        if ( weekValue >= 0 ) {
+            return "Race " + ( weekValue + 1 );
+        } else if ( weekValue == LeagueDay.NO_RACE ) {
+            return "Rest week";
+        } else if ( weekValue == LeagueDay.END_OF_SEASON_DAY_1 || weekValue == LeagueDay.END_OF_SEASON_DAY_2 ) {
+            return "End of season week " + ( -weekValue );
+        }
     }
 
     getNextXPLevel( player: Player ): number {
@@ -99,7 +115,7 @@ export class CommonService {
         this.loading = true;
         Utils.clickyPagView( "exhibition", "Exhibition:" + this.gameInstance.playerOne.money );
         this.gameInstance.playerOne.money += 100;
-        this.nextDay( null );
+        this.nextWeek( null );
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
@@ -107,16 +123,35 @@ export class CommonService {
     updateLeagues() {
         for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
             if ( this.gameInstance.leagues[i].id !== this.gameInstance.playerOne.leagueId ) {
-                let currRace = this.gameInstance.leagues[i].races[this.gameInstance.leagues[i].getNextRace()];
-                this.simulateRace( this.gameInstance.leagues[i], currRace, false );
+                let raceIndex = this.getThisWeekRaceIndex();
+                if ( raceIndex >= 0 ) {
+                    this.simulateRace( this.gameInstance.leagues[i], this.gameInstance.leagues[i].races[raceIndex], false );
+                }
             }
             Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
         }
     }
 
     checkInitLeagues() {
+        let shouldRestart = ( this.gameInstance.weekNumber % this.seasonDefinition.length ) == 0;
+
+        // Apply promotions / demotions:
         for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
-            if ( !this.gameInstance.leagues[i].isInitialized() || this.gameInstance.leagues[i].raceNumber == 0 ) {
+            if ( shouldRestart && this.gameInstance.leagues[i].teamsInLeague.length > 0 && this.getPlayer().leagueId == this.gameInstance.leagues[i].id ) {
+                // Check promotion on all leagues except World Championship (last):
+                if ( i < this.gameInstance.leagues.length - 1 && ( this.gameInstance.leagues[i].teamsInLeague[0].isPlayer || this.gameInstance.leagues[i].teamsInLeague[1].isPlayer ) ) {
+                    this.getPlayer().leagueId = this.gameInstance.leagues[i + 1].id;
+                    break;
+                } // Check demotion on all leagues, excepct first (lower level)
+                else if ( i > 0 && ( this.gameInstance.leagues[i].teamsInLeague[6].isPlayer || this.gameInstance.leagues[i].teamsInLeague[7].isPlayer) ) {
+                    this.getPlayer().leagueId = this.gameInstance.leagues[i - 1].id;
+                    break;
+                }
+            }
+        }
+
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( !this.gameInstance.leagues[i].isInitialized() || shouldRestart ) {
                 this.gameInstance.leagues[i].restartLeague( this );
             }
             Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
@@ -124,13 +159,14 @@ export class CommonService {
     }
 
     simulateRace( league: League, race: Race, isOwnRace: boolean ) {
-        let currRaceInstance = new RaceInstance( race, this, league.teamsInLeague, isOwnRace, true);
+        let currRaceInstance = new RaceInstance( race, this, league.teamsInLeague, isOwnRace, true );
         currRaceInstance.startRace();
     }
 
 
-    nextDay( delay: number ): void {
-        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
+    nextWeek( delay: number ): void {
+        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 7 );
+        this.gameInstance.weekNumber++;
         this.generateBgImage();
         if ( !this.loading ) {
             this.loading = true;
@@ -172,7 +208,7 @@ export class CommonService {
     }
 
     calculateTrainSpeed( skill: number, trainer: Trainer ): number {
-        let trainStep = (1.5 / trainer.speed);
+        let trainStep = ( 1.5 / trainer.speed );
         // Dont train when horse has reacherd trainer quality.
         if ( skill + trainStep >= trainer.quality * 10 )
             return 0;
@@ -256,12 +292,21 @@ export class CommonService {
         return null;
     }
 
-    createRandomColor(): string {
-        return StaticData.colors[Utils.getRandomInt( 0, StaticData.colors.length - 1 )];
+    getRandomDifferentItems( numberOfItems: number, baseItems: string[] ): string[] {
+        let items: string[] = [];
+
+        for ( let i = 0; i < numberOfItems; i++ ) {
+            let currItem: string;
+            do {
+                currItem = baseItems[Utils.getRandomInt( 0, baseItems.length - 1 )];
+            }
+            while ( items.includes( currItem ) );
+            items.push( currItem );
+        }
+        return items;
     }
 
-    createRandomHorse( num: number, difficulty: number, totalHorses: number ): Horse {
-        let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
+    createRandomHorse( name: string, num: number, difficulty: number, totalHorses: number ): Horse {
         let speed: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 7 );
         let endurance: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
         let acceleration: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );

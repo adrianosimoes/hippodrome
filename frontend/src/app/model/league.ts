@@ -3,6 +3,12 @@ import { Horse } from "src/app/model/horse";
 import { CommonService } from "src/app/model/services/common.service";
 import { Utils, StaticData } from "src/app/model/utils";
 
+export enum LeagueDay {
+    END_OF_SEASON_DAY_1 = -1,
+    END_OF_SEASON_DAY_2 = -2,
+    NO_RACE = -3
+}
+
 export class TeamInLeague {
     name: string;
     horse: Horse;
@@ -29,7 +35,6 @@ export class League {
     name: string;
     races: Race[];
     teamsInLeague: TeamInLeague[];
-    raceNumber: number;
     numberOfWins: number;
     numberOfHorses: number;
 
@@ -39,7 +44,6 @@ export class League {
         this.name = name;
         this.races = [];
         this.teamsInLeague = [];
-        this.raceNumber = 0;
         this.numberOfWins = numberOfWins;
         this.numberOfHorses = numberOfHorses;
     }
@@ -52,19 +56,15 @@ export class League {
         return this.teamsInLeague.length > 0;
     }
 
-    getNextRace(): number {
-        let oldRace = this.raceNumber;
-        this.raceNumber = ( this.raceNumber + 1 ) % this.races.length;
-        return oldRace;
-    }
-
     restartLeague( commonService: CommonService ) {
         this.teamsInLeague = [];
         let numberOfHorses = this.numberOfHorses - (commonService.getPlayer().leagueId == this.id ? 1 : 0);
+        let randomColors: string[] = commonService.getRandomDifferentItems(numberOfHorses, StaticData.colors);
+        let randomNames: string[] = commonService.getRandomDifferentItems(numberOfHorses, StaticData.horseNames);
+
         for ( let i = 0; i < numberOfHorses; i++ ) {
-            let color: string = commonService.createRandomColor();
-            let horse = commonService.createRandomHorse( i, this.difficulty, this.numberOfHorses );
-            let team: TeamInLeague = new TeamInLeague( horse, null, color, false );
+            let horse = commonService.createRandomHorse(randomNames[i], i, this.difficulty, this.numberOfHorses );
+            let team: TeamInLeague = new TeamInLeague( horse, null, randomColors[i], false );
             this.teamsInLeague.push( team );
         }
         if ( commonService.getPlayer().leagueId == this.id ) {

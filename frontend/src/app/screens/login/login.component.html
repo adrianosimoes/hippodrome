@@ -17,7 +17,7 @@
 		<h3>Load Game</h3>
 		Team Name: {{savedGame.playerOne.name}} <br /> Money:
 		{{savedGame.playerOne.money | currency: 'EUR' : 'symbol':'1.0-0' }} <br /> Date:
-		{{savedGame.date | date: "longDate"}}
+		{{savedGame.date | date: "fullDate"}}
 		<div class="formButtonArea">
 			<button (click)="loadGame()">Load Game</button>
 		</div>

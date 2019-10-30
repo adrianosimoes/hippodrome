@@ -61,7 +61,7 @@ export class AuctionComponent implements OnInit {
     }
     
     mainScreen() {
-        this.commonService.nextDay(null);
+        this.commonService.nextWeek(null);
         this.router.navigate( ['main'] );
     }
 }

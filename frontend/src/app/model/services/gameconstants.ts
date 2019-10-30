@@ -1,6 +1,10 @@
+import { LeagueDay } from "src/app/model/league";
+
 export class GameConstants {
 
     static INITIAL_MONEY: number = 6000;
+    
+    static SEASON_DEFINITION : number[] = [0, 1, LeagueDay.NO_RACE, 2, 3, LeagueDay.END_OF_SEASON_DAY_1, LeagueDay.END_OF_SEASON_DAY_2];
 
     static BASE_XP: number = 60;
 
@@ -14,5 +18,5 @@ export class GameConstants {
 	
 	static BORDER_HEIGHT: number = 2;
 	
-	 static saveGameName: string = "gamev11";
+	 static saveGameName: string = "gamev12";
 }
