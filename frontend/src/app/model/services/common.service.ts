@@ -6,10 +6,12 @@ import { GameInstance } from '../gameinstance';
 import { Utils, StaticData } from '../utils';
 import { Player } from '../player';
 import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
-import { Race, RaceLeague } from '../race';
+import { Race, } from '../race';
 import { Trainer } from '../trainer';
 import { GameConstants } from "src/app/model/services/gameconstants";
 import { CurrencyPipe } from "@angular/common";
+import { League, LeagueDay } from "src/app/model/league";
+import { RaceInstance } from "src/app/model/raceinstance";
 
 
 declare var Cookies: any;
@@ -21,10 +23,10 @@ declare var JSON: any;
 export class CommonService {
 
     horsesInShop: Horse[];
-    racesLeagues: RaceLeague[];
     trainersToSell: Trainer[];
     gameInstance: GameInstance;
     savedGame: GameInstance;
+    seasonDefinition: number[];
     xpPerLevel: number[];
     skillPointsPerLevel: number[];
     backgroundImage: SafeStyle;
@@ -36,61 +38,37 @@ export class CommonService {
 
     constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
         this.horsesInShop = [];
-        this.racesLeagues = [];
         this.trainersToSell = [];
         this.xpPerLevel = [];
         this.skillPointsPerLevel = [];
-        
-        InitService.initHorsesInShop(this.horsesInShop);
-        InitService.initRaces(this.racesLeagues);
-        InitService.initTrainers(this.trainersToSell);
-        InitService.initXPPerLevel(this.xpPerLevel);
-        InitService.initSkillPointsPerLevel(this.skillPointsPerLevel);
-        
+
+        InitService.initHorsesInShop( this.horsesInShop );
+        InitService.initTrainers( this.trainersToSell );
+        InitService.initXPPerLevel( this.xpPerLevel );
+        InitService.initSkillPointsPerLevel( this.skillPointsPerLevel );
+        this.seasonDefinition = GameConstants.SEASON_DEFINITION;
+
         this.loading = false;
 
-        let savedGameString: string = Cookies.get( GameConstants.saveGameName );
+        let savedGameString: string = localStorage.getItem( GameConstants.saveGameName );
         if ( savedGameString ) {
             this.loadToSavedSlot( savedGameString );
         }
 
         let playerOne = new Player( 1, '', '#1281f1', '#feda10',
-            0, Utils.devMode() ? 105000 : GameConstants.INITIAL_MONEY );
-        this.gameInstance = new GameInstance( playerOne, new Date(), false );
+            0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY );
+        this.gameInstance = new GameInstance();
+        this.gameInstance.init( playerOne, new Date( '2019-01-06' ), false );
         this.generateBgImage();
+
+        this.gameInstance.leagues = [];
+        InitService.initRaces( this.gameInstance.leagues );
+        playerOne.leagueId = this.gameInstance.leagues[0].id;
     }
 
     loadToSavedSlot( savedGameString: string ): void {
-        this.savedGame = JSON.parse( savedGameString );
-        this.savedGame.date = new Date( this.savedGame.date );
-
-        //Load player:
-        this.savedGame.playerOne = Player.fromJson( this.savedGame.playerOne );
-
-        //Load Horses:
-        let horsesJson: Horse[] = this.savedGame.playerOne.horses;
-        this.savedGame.playerOne.horses = [];
-        for ( let i = 0; i < horsesJson.length; i++ ) {
-            let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
-                horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].acceleration, horsesJson[i].form );
-            horseInstance.owned = true;
-            if ( horsesJson[i].staminaSpeed > 0 ) {
-                horseInstance.staminaSpeed = horsesJson[i].staminaSpeed;
-            }
-            horseInstance.calculateStaminaDisplay();
-            this.savedGame.playerOne.horses.push( horseInstance );
-        }
-        //Load Trainers:
-        let trainersJson: Trainer[] = this.savedGame.playerOne.trainers;
-        this.savedGame.playerOne.trainers = [];
-        for ( let i = 0; i < trainersJson.length; i++ ) {
-            let newTrainer = new Trainer(trainersJson[i].id,
-                    trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
-                    trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description);
-            newTrainer.trainingHorseId = trainersJson[i].trainingHorseId;
-            this.savedGame.playerOne.trainers.push(newTrainer);
-        }
-        
+        this.savedGame = new GameInstance();
+        this.savedGame.load( JSON.parse( savedGameString ) );
     }
 
     loadSavedGame(): void {
@@ -101,12 +79,27 @@ export class CommonService {
     getHorsesInShop(): Horse[] {
         return this.horsesInShop;
     }
-    
-    getNextXPLevel(player: Player): number {
+
+    getThisWeekRaceIndex() {
+        return this.seasonDefinition[this.gameInstance.weekNumber % this.seasonDefinition.length];
+    }
+
+    getWeekDescription(): string {
+        let weekValue = this.seasonDefinition[this.gameInstance.weekNumber % this.seasonDefinition.length];
+        if ( weekValue >= 0 ) {
+            return "Race " + ( weekValue + 1 );
+        } else if ( weekValue == LeagueDay.NO_RACE ) {
+            return "Rest week";
+        } else if ( weekValue == LeagueDay.END_OF_SEASON_DAY_1 || weekValue == LeagueDay.END_OF_SEASON_DAY_2 ) {
+            return "End of season week " + ( -weekValue );
+        }
+    }
+
+    getNextXPLevel( player: Player ): number {
         return this.xpPerLevel[this.gameInstance.playerOne.playerLevel + 1];
     }
-    
-    getSkillPoints(player: Player): number {
+
+    getSkillPoints( player: Player ): number {
         return this.skillPointsPerLevel[this.gameInstance.playerOne.playerLevel];
     }
 
@@ -120,24 +113,68 @@ export class CommonService {
 
     exhibition(): void {
         this.loading = true;
-        Utils.clickyPagView("exhibition" , "Exhibition:" + this.gameInstance.playerOne.money);
+        Utils.clickyPagView( "exhibition", "Exhibition:" + this.gameInstance.playerOne.money );
         this.gameInstance.playerOne.money += 100;
-        this.nextDay( null );
+        this.nextWeek( null );
         this.loadingText = "You participated in a exhibition and earned 100 €. \n Waiting 5 seconds."
         setTimeout(() => { this.loading = false; this.loadingText = ""; }, 5000 );
     }
 
-    skipDay(): void {
-        this.nextDay( 400 );
+    updateLeagues() {
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( this.gameInstance.leagues[i].id !== this.gameInstance.playerOne.leagueId ) {
+                let raceIndex = this.getThisWeekRaceIndex();
+                if ( raceIndex >= 0 ) {
+                    this.simulateRace( this.gameInstance.leagues[i], this.gameInstance.leagues[i].races[raceIndex], false );
+                }
+            }
+            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
+        }
     }
 
-    nextDay( delay: number ): void {
-        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 1 );
+    checkInitLeagues() {
+        let shouldRestart = ( this.gameInstance.weekNumber % this.seasonDefinition.length ) == 0;
+
+        // Apply promotions / demotions:
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( shouldRestart && this.gameInstance.leagues[i].teamsInLeague.length > 0 && this.getPlayer().leagueId == this.gameInstance.leagues[i].id ) {
+                // Check promotion on all leagues except World Championship (last):
+                if ( i < this.gameInstance.leagues.length - 1 && ( this.gameInstance.leagues[i].teamsInLeague[0].isPlayer || this.gameInstance.leagues[i].teamsInLeague[1].isPlayer ) ) {
+                    this.getPlayer().leagueId = this.gameInstance.leagues[i + 1].id;
+                    break;
+                } // Check demotion on all leagues, excepct first (lower level)
+                else if ( i > 0 && ( this.gameInstance.leagues[i].teamsInLeague[6].isPlayer || this.gameInstance.leagues[i].teamsInLeague[7].isPlayer) ) {
+                    this.getPlayer().leagueId = this.gameInstance.leagues[i - 1].id;
+                    break;
+                }
+            }
+        }
+
+        for ( let i = 0; i < this.gameInstance.leagues.length; i++ ) {
+            if ( !this.gameInstance.leagues[i].isInitialized() || shouldRestart ) {
+                this.gameInstance.leagues[i].restartLeague( this );
+            }
+            Utils.stableSort( this.gameInstance.leagues[i].teamsInLeague, ( t1, t2 ) => t2.points - t1.points );
+        }
+    }
+
+    simulateRace( league: League, race: Race, isOwnRace: boolean ) {
+        let currRaceInstance = new RaceInstance( race, this, league.teamsInLeague, isOwnRace, true );
+        currRaceInstance.startRace();
+    }
+
+
+    nextWeek( delay: number ): void {
+        this.gameInstance.date.setDate( this.gameInstance.date.getDate() + 7 );
+        this.gameInstance.weekNumber++;
         this.generateBgImage();
         if ( !this.loading ) {
             this.loading = true;
             setTimeout(() => { this.loading = false; }, delay != null ? delay : 200 );
         }
+
+        this.checkInitLeagues();
+
         ///Only copied date is updated in the interface.
         this.gameInstance.date = new Date( this.gameInstance.date );
         this.applyTrainers( this.gameInstance.playerOne );
@@ -150,41 +187,41 @@ export class CommonService {
 
     applyTrainers( player: Player ): void {
         for ( let currTrainer of this.gameInstance.playerOne.trainers ) {
-            let trainHorse: Horse = this.getHorseByID(currTrainer.trainingHorseId);
+            let trainHorse: Horse = this.getHorseByID( currTrainer.trainingHorseId );
 
             //Pay salary:
             player.money -= currTrainer.salary;
-            
-            if(!trainHorse){
+
+            if ( !trainHorse ) {
                 continue;
             }
-            
+
             if ( currTrainer.trainType == HorseSkills.SPEED ) {
-                trainHorse.speed += this.calculateTrainSpeed(trainHorse.speed, currTrainer);
-            } else if(currTrainer.trainType == HorseSkills.ENDURANCE ){
-                trainHorse.endurance += this.calculateTrainSpeed(trainHorse.endurance, currTrainer);
-            } else if(currTrainer.trainType == HorseSkills.ACCELERATION ){
-                trainHorse.acceleration += this.calculateTrainSpeed(trainHorse.acceleration, currTrainer);
+                trainHorse.speed += this.calculateTrainSpeed( trainHorse.speed, currTrainer );
+            } else if ( currTrainer.trainType == HorseSkills.ENDURANCE ) {
+                trainHorse.endurance += this.calculateTrainSpeed( trainHorse.endurance, currTrainer );
+            } else if ( currTrainer.trainType == HorseSkills.ACCELERATION ) {
+                trainHorse.acceleration += this.calculateTrainSpeed( trainHorse.acceleration, currTrainer );
             }
             trainHorse.recalculatePrice();
         }
     }
-    
-    calculateTrainSpeed(skill: number, trainer: Trainer ): number {
-        let trainStep = 2 / trainer.speed;
+
+    calculateTrainSpeed( skill: number, trainer: Trainer ): number {
+        let trainStep = ( 2.5 / trainer.speed );
         // Dont train when horse has reacherd trainer quality.
-        if(skill + trainStep  >= trainer.quality * 10)
+        if ( skill + trainStep >= trainer.quality * 10 )
             return 0;
         return trainStep;
     }
 
 
     saveGame(): void {
-        Cookies.set( GameConstants.saveGameName, this.gameInstance, { expires: 7 } );
+        localStorage.setItem( GameConstants.saveGameName, JSON.stringify( this.gameInstance ) );
     }
-    
-    addHorseToPlayer( horse: Horse): boolean {
-        return this.addHorseWithPriceToPlayer(horse, horse.price);
+
+    addHorseToPlayer( horse: Horse ): boolean {
+        return this.addHorseWithPriceToPlayer( horse, horse.price );
     }
 
     addHorseWithPriceToPlayer( horse: Horse, horsePrice: number ): boolean {
@@ -206,10 +243,10 @@ export class CommonService {
     selectHorse( horse: Horse ): void {
         this.gameInstance.playerOne.selectedHorseId = horse.id;
     }
-    
-    getHorseByID(horseId: number): Horse {
+
+    getHorseByID( horseId: number ): Horse {
         for ( let currHorse of this.gameInstance.playerOne.horses ) {
-            if ( currHorse.id === horseId) {
+            if ( currHorse.id === horseId ) {
                 return currHorse;
             }
         }
@@ -217,15 +254,15 @@ export class CommonService {
     }
 
     getSelectedHorse(): Horse {
-       return this.getHorseByID(this.gameInstance.playerOne.selectedHorseId); 
+        return this.getHorseByID( this.gameInstance.playerOne.selectedHorseId );
     }
-    
-    setHorseName(horse: Horse, newName: string ): void {
+
+    setHorseName( horse: Horse, newName: string ): void {
         horse.name = newName;
     }
 
     getRace( raceId: number ): Race {
-        for ( let raceLeague of this.racesLeagues ) {
+        for ( let raceLeague of this.gameInstance.leagues ) {
             for ( let race of raceLeague.races ) {
                 if ( race.id == raceId ) {
                     return race;
@@ -235,24 +272,53 @@ export class CommonService {
         return null;
     }
 
-    createRandomColor(): string {
-        return StaticData.colors[Utils.getRandomInt( 0, StaticData.colors.length - 1 )];
+    getLeague( raceId: number ): League {
+        for ( let raceLeague of this.gameInstance.leagues ) {
+            for ( let race of raceLeague.races ) {
+                if ( race.id == raceId ) {
+                    return raceLeague;
+                }
+            }
+        }
+        return null;
     }
 
-    createRandomHorse( num: number, difficulty: number, totalHorses: number ): Horse {
-        let name: string = StaticData.horseNames[Utils.getRandomInt( 0, StaticData.horseNames.length - 1 )];
-        let speed: number = ( difficulty * 5 ) +  Utils.getRandomInt( 2, 7 );
+    getCurrentLeague(): League {
+        for ( let league of this.gameInstance.leagues ) {
+            if ( league.id == this.getPlayer().leagueId ) {
+                return league;
+            }
+        }
+        return null;
+    }
+
+    getRandomDifferentItems( numberOfItems: number, baseItems: string[] ): string[] {
+        let items: string[] = [];
+
+        for ( let i = 0; i < numberOfItems; i++ ) {
+            let currItem: string;
+            do {
+                currItem = baseItems[Utils.getRandomInt( 0, baseItems.length - 1 )];
+            }
+            while ( items.includes( currItem ) );
+            items.push( currItem );
+        }
+        return items;
+    }
+
+    createRandomHorse( name: string, num: number, difficulty: number, totalHorses: number ): Horse {
+        let speed: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 7 );
         let endurance: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
         let acceleration: number = ( difficulty * 5 ) + Utils.getRandomInt( 2, 8 );
-    
+
         // The last 2 horses should be weaker speed and acc. (and high endurance so they are never too behind).
-        if(num >= totalHorses - 2) {
+        if ( num >= totalHorses - 2 ) {
             speed = ( difficulty * 5 ) + Utils.getRandomInt( 2, 3 );
             endurance = ( difficulty * 5 ) + Utils.getRandomInt( 5, 8 );
             acceleration = ( difficulty * 5 ) + Utils.getRandomInt( 1, 5 );
-            console.log("Generated horse:"  + name + speed + "; " + acceleration + "; " + endurance);
+            //console.log( "Generated horse:" + name + speed + "; " + acceleration + "; " + endurance );
         }
-    
+
         return new Horse( 1000 + num, name,
             speed,
             endurance,
@@ -260,11 +326,8 @@ export class CommonService {
             HorseForm.AVERAGE );
     }
 
-    chargeEntranceFee( race: Race ) {
-        this.gameInstance.playerOne.money -= race.entranceFee;
-    }
-
     setInitialized() {
+        this.checkInitLeagues();
         this.gameInstance.initialized = true;
     }
 
@@ -282,24 +345,24 @@ export class CommonService {
     buyTrainer( player: Player, trainer: Trainer ) {
         if ( player.money >= trainer.price ) {
             player.money -= trainer.price;
-            let newTrainer = new Trainer(10 + this.gameInstance.playerOne.trainers.length,
-                    trainer.name, trainer.price, trainer.salary,
-                    trainer.trainType, trainer.speed, trainer.quality, trainer.description);
-            this.gameInstance.playerOne.trainers.push(newTrainer);
+            let newTrainer = new Trainer( 10 + this.gameInstance.playerOne.trainers.length,
+                trainer.name, trainer.price, trainer.salary,
+                trainer.trainType, trainer.speed, trainer.quality, trainer.description );
+            this.gameInstance.playerOne.trainers.push( newTrainer );
             // Auto-set to train first horse:
-            if( this.gameInstance.playerOne.horses.length > 0){
-                newTrainer.setTrainingHorse(this.gameInstance.playerOne.horses[0]);
+            if ( this.gameInstance.playerOne.horses.length > 0 ) {
+                newTrainer.setTrainingHorse( this.gameInstance.playerOne.horses[0] );
             }
             return true;
         } else {
             return false;
         }
     }
-    
+
     upgradeTrainer( player: Player, trainer: Trainer ) {
         if ( player.money >= trainer.upgradePrice ) {
             player.money -= trainer.upgradePrice;
-            trainer.quality +=2;
+            trainer.quality += 2;
             trainer.calculateUpgradePrice();
             return true;
         } else {
@@ -328,9 +391,9 @@ export class CommonService {
                 }
             }
         }
-        if (player.selectedHorseId == horseId ) {
+        if ( player.selectedHorseId == horseId ) {
             let newSelectedHorse = -1;
-            if(player.horses.length >= 1){
+            if ( player.horses.length >= 1 ) {
                 newSelectedHorse = player.horses[0].id;
             }
             player.selectedHorseId = newSelectedHorse;

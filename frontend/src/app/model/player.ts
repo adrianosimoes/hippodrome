@@ -2,6 +2,8 @@ import { Horse } from './horse';
 import { Trainer } from './trainer';
 import { Utils } from './utils';
 import { GameConstants } from "src/app/model/services/gameconstants";
+import { League, TeamInLeague } from "src/app/model/league";
+import { CommonService } from "src/app/model/services/common.service";
 
 
 export class Player {
@@ -12,6 +14,8 @@ export class Player {
     silkType: number;
     calculateBackground: string;
     horses: Horse[];
+    leagueId: number;
+    team: TeamInLeague;
     selectedHorseId: number;
     money: number;
     victories: number;
@@ -23,7 +27,7 @@ export class Player {
     lastHorseId: number;
 
 
-    constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number ) {
+    constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number) {
         this.id = id;
         this.name = name;
         this.color = color;
@@ -53,9 +57,9 @@ export class Player {
         return ++this.lastHorseId;
     }
 
-    static fromJson( player: any ): Player {
+    static fromJson( player: any): Player {
         let ret = new Player( player.id, player.name, player.color, player.secColor,
-            player.silkType !== undefined ? player.silkType : 2, player.money );
+            player.silkType !== undefined ? player.silkType : 2, player.money);
         ret.victories = player.victories;
         ret.selectedHorseId = player.selectedHorseId;
         ret.horses = player.horses;
@@ -64,6 +68,7 @@ export class Player {
         ret.xpPoints = player.xpPoints;
         ret.playerLevel = player.playerLevel;
         ret.skillPoints = player.skillPoints;
+        ret.leagueId = player.leagueId;
         ret.lastHorseId = player.lastHorseId;
         ret.recalculateBackground();
 

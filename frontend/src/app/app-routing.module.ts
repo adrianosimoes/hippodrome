@@ -9,7 +9,7 @@ import { ShopComponent }      from './screens/shop/shop.component';
 import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 import { StablesComponent } from './screens/stables/stables.component';
-import { PickRaceComponent } from './screens/pick-race/pick-race.component';
+import { LeagueComponent } from './screens/league/league.component';
 import { LevelUpComponent } from './screens/levelup/levelup.component';
 
 const routes: Routes = [
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'shop', component: ShopComponent },
   { path: 'training', component: TrainingComponent },
   { path: 'stables', component: StablesComponent },
-  { path: 'pickRace', component: PickRaceComponent },
+  { path: 'league/:action', component: LeagueComponent },
   { path: 'race/:id', component: RaceComponent },
   { path: 'levelUp', component: LevelUpComponent },
   { path: '**', redirectTo: 'login' }

@@ -5,6 +5,7 @@ import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/services/common.service';
+import { League } from "src/app/model/league";
 
 
 @Component( {
@@ -15,6 +16,7 @@ import { CommonService } from '../../model/services/common.service';
 export class MainComponent implements OnInit {
     currPlayer: Player;
     currGame: GameInstance;
+    utils: Utils;
     xpNextLevel: number;
     warningText: string = '';
 
@@ -23,17 +25,26 @@ export class MainComponent implements OnInit {
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
             this.router.navigate( ['login'] );
+            return;
         }
+
         this.currPlayer = this.commonService.getPlayer();
         this.currGame = this.commonService.getGameInstance();
-        this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer);
-        if(this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer) ){
+        this.xpNextLevel = this.commonService.getNextXPLevel( this.currPlayer );
+        this.utils = Utils;
+        if ( this.currPlayer.xpPoints >= this.commonService.getNextXPLevel( this.currPlayer ) ) {
             this.router.navigate( ['levelUp'] );
         }
     }
 
-    pickRace(): void {
-        this.router.navigate( ['pickRace'] );
+    next(): void {
+        let currLeague: League = this.commonService.getCurrentLeague();
+        let index: number = this.commonService.getThisWeekRaceIndex();
+        if ( index >= 0 ) {
+            this.router.navigate( ['race', currLeague.races[index].id] );
+        } else {
+            this.commonService.nextWeek(200);
+        }
     }
 
     gotoTraining(): void {
@@ -53,11 +64,15 @@ export class MainComponent implements OnInit {
     }
 
     skipDay(): void {
-        this.commonService.skipDay();
+        this.commonService.nextWeek( 200 );
     }
-    
+
     gotolevelUp(): void {
         this.router.navigate( ['levelUp'] );
+    }
+
+    gotoLeague() {
+        this.router.navigate( ['league', 'main'] );
     }
 
 }

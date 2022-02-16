@@ -35,8 +35,8 @@ export class RaceComponent implements OnInit {
         }
         this.raceId = this.activeRoute.snapshot.params['id'];
         let race = this.commonService.getRace( this.raceId );
-        this.currRace = new RaceInstance( race, this.commonService );
-
+        let currLeague = this.commonService.getLeague( this.raceId );
+        this.currRace = new RaceInstance( race, this.commonService, currLeague.teamsInLeague, true, false);
     }
     
     startRace(): void {
@@ -44,13 +44,15 @@ export class RaceComponent implements OnInit {
     }
     
     skipRace() {
-        this.commonService.nextDay(null);
-        this.router.navigate( ['main'] );
+        this.commonService.simulateRace(this.commonService.getLeague(this.raceId ), this.currRace.baseRace, false);
+        this.commonService.updateLeagues();
+        this.router.navigate( ['league','nextWeek'] );
     }
 
     exitRace() {
+        this.commonService.updateLeagues();
         this.commonService.setAuctionHorse(this.currRace.getAuctionHorse());
-        this.router.navigate( ['auction'] );
+        this.router.navigate( ['league','auction'] );
     }
 
     ngOnDestroy() {
