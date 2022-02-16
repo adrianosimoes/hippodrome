@@ -456,7 +456,7 @@ export class RaceInstance {
                     }
                 }
             }
-            Utils.clickyPagView( "finishRace", "Finished Race:" + this.baseRace.id + " place:" + this.place
+            Utils.clickyPagView( "finishRace?race=" +  this.baseRace.id + "&place=" + this.place, "Finished Race:" + this.baseRace.id + " place:" + this.place
                 + " form" + this.playerHorse.baseHorse.form + " tactic:" + this.playerHorse.tactic + " strategy:" + this.playerHorse.raceEffort
                 + " points:" + this.player.xpPoints );
         }

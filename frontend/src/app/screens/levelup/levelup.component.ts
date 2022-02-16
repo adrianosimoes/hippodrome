@@ -56,7 +56,7 @@ export class LevelUpComponent implements OnInit {
             horse.confirmSkillUp();
         }
         this.currPlayer.skillPoints = this.skillPoints;
-        Utils.clickyPagView("levelUp", "Level Up:" + " money:" +  this.commonService.gameInstance.playerOne.money
+        Utils.clickyPagView("levelUp?level=" + this.newLevel, "Level Up:" + " money:" +  this.commonService.gameInstance.playerOne.money
             + " skillPoints:" +  this.currPlayer.skillPoints
             + " prestige:" +  this.commonService.gameInstance.playerOne.xpPoints
             + " victories:" +  this.commonService.gameInstance.playerOne.victories 
