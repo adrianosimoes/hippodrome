@@ -6,7 +6,7 @@ html {
 
 @font-face {
 	font-family: "PixelFont";
-	src: local('Arial'), url("assets/PIXELADE.TTF");
+	src: url("assets/PIXELADE.TTF") format('truetype'),  local('Arial');
 	font-display: swap;
 }
 
