@@ -4,7 +4,6 @@ import { CommonService } from './services/common.service';
 import { Horse, HorseInRace, HorseForm } from './horse';
 import { RaceInstance, RaceState } from './raceinstance';
 import { Race } from './race';
-import { delay } from "q";
 import { Utils } from "src/app/model/utils";
 import { TeamInLeague } from "src/app/model/league";
 
@@ -13,12 +12,15 @@ describe( 'RaceInstance', () => {
     let testRace: Race;
 
     beforeEach(() => {
-        jasmine.clock().uninstall();
         jasmine.clock().install();
         jasmine.clock().mockDate();
         commonService = new CommonService( null, null );
 
         testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [500, 220, 100] );
+    } );
+
+    afterEach(() => {
+        jasmine.clock().uninstall();
     } );
 
     function setTestHorseWithSpeed( speed: number ): void {
