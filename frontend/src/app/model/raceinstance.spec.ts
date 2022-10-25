@@ -13,6 +13,7 @@ describe( 'RaceInstance', () => {
     let testRace: Race;
 
     beforeEach(() => {
+        jasmine.clock().uninstall();
         jasmine.clock().install();
         jasmine.clock().mockDate();
         commonService = new CommonService( null, null );
@@ -35,10 +36,6 @@ describe( 'RaceInstance', () => {
     function getTestHorse( speed: number, acc: number, end: number ): Horse {
         return new Horse( 204, 'Bot', speed, end, acc, HorseForm.AVERAGE );
     }
-
-    afterEach( function() {
-        jasmine.clock().uninstall();
-    } );
 
     it( 'Test race instance creation', () => {
         setTestHorseWithSpeed( 90 );
