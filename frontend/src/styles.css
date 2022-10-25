@@ -5,8 +5,9 @@ html {
 }
 
 @font-face {
-font-family: "PixelFont";
-src: url("assets/PIXELADE.TTF");
+	font-family: "PixelFont";
+	src: local('Arial'), url("assets/PIXELADE.TTF");
+	font-display: swap;
 }
 
 
