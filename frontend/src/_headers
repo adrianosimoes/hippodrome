@@ -1,4 +1,4 @@
 #Netlify cache control:
 # A path:
 /assets/*
-   cache-control: max-age=360000
+   cache-control: max-age=3600000
