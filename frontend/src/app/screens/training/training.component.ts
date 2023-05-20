@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Horse, TrainingHorse, HorseSkills } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
@@ -35,7 +35,7 @@ export class TrainingComponent implements OnInit {
     }
 
     trainSpeed( horse: TrainingHorse ): void {
-        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.SPEED );
+        const success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.SPEED );
         if ( success ) {
             this.reload();
         } else {
@@ -44,7 +44,7 @@ export class TrainingComponent implements OnInit {
     }
 
     trainEndurance( horse: TrainingHorse ): void {
-        let success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.ENDURANCE);
+        const success = this.commonService.buyHorseSkill( this.currPlayer, horse, HorseSkills.ENDURANCE);
         if ( success ) {
             this.reload();
         } else {
@@ -54,19 +54,19 @@ export class TrainingComponent implements OnInit {
     }
 
     buyTrainer( trainer: Trainer ): void {
-        let success = this.commonService.buyTrainer( this.currPlayer, trainer );
+        const success = this.commonService.buyTrainer( this.currPlayer, trainer );
         if ( success ) {
-            Utils.clickyPagView("buyTrainer" , "Buy Trainer: " + trainer.name);
+            Utils.clickyPagView('buyTrainer' , 'Buy Trainer: ' + trainer.name);
             this.reload();
         } else {
             alert( 'Not enough money' );
         }
     }
-    
+
     upgradeTrainer( trainer: Trainer ): void {
-        let success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
+        const success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
         if ( success ) {
-            Utils.clickyPagView("upgradeTrainer", "Upgrade Trainer: " +  + trainer.name + " q:" + trainer.quality);
+            Utils.clickyPagView('upgradeTrainer', 'Upgrade Trainer: ' +  + trainer.name + ' q:' + trainer.quality);
             this.reload();
         } else {
             alert( 'Not enough money' );

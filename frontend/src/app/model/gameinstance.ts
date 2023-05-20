@@ -1,7 +1,7 @@
 import { Player } from './player';
-import { League } from "src/app/model/league";
-import { Horse } from "src/app/model/horse";
-import { Trainer } from "src/app/model/trainer";
+import { League } from 'src/app/model/league';
+import { Horse } from 'src/app/model/horse';
+import { Trainer } from 'src/app/model/trainer';
 
 export class GameInstance {
     name: string;
@@ -23,14 +23,14 @@ export class GameInstance {
         this.weekNumber = savedGameJson.weekNumber;
         this.initialized = savedGameJson.initialized;
 
-        //Load player:
+        // Load player:
         this.playerOne = Player.fromJson( savedGameJson.playerOne );
 
-        //Load Horses:
-        let horsesJson: Horse[] = savedGameJson.playerOne.horses;
+        // Load Horses:
+        const horsesJson: Horse[] = savedGameJson.playerOne.horses;
         this.playerOne.horses = [];
         for ( let i = 0; i < horsesJson.length; i++ ) {
-            let horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
+            const horseInstance: Horse = new Horse( horsesJson[i].id, horsesJson[i].name,
                 horsesJson[i].speed, horsesJson[i].endurance, horsesJson[i].acceleration, horsesJson[i].form );
             horseInstance.owned = true;
             if ( horsesJson[i].staminaSpeed > 0 ) {
@@ -40,22 +40,22 @@ export class GameInstance {
             this.playerOne.horses.push( horseInstance );
         }
 
-        //Load Trainers:
-        let trainersJson: Trainer[] = savedGameJson.playerOne.trainers;
+        // Load Trainers:
+        const trainersJson: Trainer[] = savedGameJson.playerOne.trainers;
         this.playerOne.trainers = [];
         for ( let i = 0; i < trainersJson.length; i++ ) {
-            let newTrainer = new Trainer( trainersJson[i].id,
+            const newTrainer = new Trainer( trainersJson[i].id,
                 trainersJson[i].name, trainersJson[i].price, trainersJson[i].salary,
                 trainersJson[i].trainType, trainersJson[i].speed, trainersJson[i].quality, trainersJson[i].description );
             newTrainer.trainingHorseId = trainersJson[i].trainingHorseId;
             this.playerOne.trainers.push( newTrainer );
         }
 
-        //Load Leagues:
-        let leaguesJson = savedGameJson.leagues;
+        // Load Leagues:
+        const leaguesJson = savedGameJson.leagues;
         this.leagues = [];
         for ( let i = 0; i < leaguesJson.length; i++ ) {
-            let league = new League( leaguesJson[i].id, leaguesJson[i].difficulty, leaguesJson[i].name,
+            const league = new League( leaguesJson[i].id, leaguesJson[i].difficulty, leaguesJson[i].name,
                 leaguesJson[i].numberOfWins, leaguesJson[i].numberOfHorses );
             league.races = leaguesJson[i].races;
             league.teamsInLeague = leaguesJson[i].teamsInLeague;

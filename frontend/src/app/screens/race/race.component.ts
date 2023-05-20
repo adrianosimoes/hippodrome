@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 import {MatRadioModule} from '@angular/material/radio';
 import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
@@ -17,10 +17,10 @@ export class RaceComponent implements OnInit {
     raceId: number;
     currRace: RaceInstance = null;
     maxDistance: number = null;
-    debug : boolean = Utils.devMode();
-    RaceState : typeof RaceState = RaceState;
-    RaceEffort : typeof RaceEffort = RaceEffort;
-    RaceTactic : typeof RaceTactic = RaceTactic;
+    debug: boolean = Utils.devMode();
+    RaceState: typeof RaceState = RaceState;
+    RaceEffort: typeof RaceEffort = RaceEffort;
+    RaceTactic: typeof RaceTactic = RaceTactic;
     curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
     roundTrackBottomDistance: number = Race.ROUND_TRACK_BOTTOM_DISTANCE;
 
@@ -34,25 +34,25 @@ export class RaceComponent implements OnInit {
             return;
         }
         this.raceId = this.activeRoute.snapshot.params['id'];
-        let race = this.commonService.getRace( this.raceId );
-        let currLeague = this.commonService.getLeague( this.raceId );
+        const race = this.commonService.getRace( this.raceId );
+        const currLeague = this.commonService.getLeague( this.raceId );
         this.currRace = new RaceInstance( race, this.commonService, currLeague.teamsInLeague, true, false);
     }
-    
+
     startRace(): void {
         this.currRace.startRace();
     }
-    
+
     skipRace() {
         this.commonService.simulateRace(this.commonService.getLeague(this.raceId ), this.currRace.baseRace, false);
         this.commonService.updateLeagues();
-        this.router.navigate( ['league','nextWeek'] );
+        this.router.navigate( ['league', 'nextWeek'] );
     }
 
     exitRace() {
         this.commonService.updateLeagues();
         this.commonService.setAuctionHorse(this.currRace.getAuctionHorse());
-        this.router.navigate( ['league','auction'] );
+        this.router.navigate( ['league', 'auction'] );
     }
 
     ngOnDestroy() {

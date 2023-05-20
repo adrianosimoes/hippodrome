@@ -16,7 +16,7 @@ export class Trainer {
 
     constructor( id: number, name: string, trainerPrice: number, salary: number, trainerType: HorseSkills, trainerSpeed: number, trainerQuality: number, description: string ) {
         this.id = id;
-        this.name = name
+        this.name = name;
         this.price = trainerPrice;
         this.salary = salary;
         this.trainType = trainerType;
@@ -31,7 +31,7 @@ export class Trainer {
         this.upgradePrice = this.price * ( this.quality / 2 );
         this.salary += this.salary;
     }
-    
+
     setTrainingHorse(horse: Horse){
         this.trainingHorseId = horse.id;
     }

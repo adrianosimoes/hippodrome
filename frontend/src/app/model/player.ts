@@ -1,9 +1,9 @@
 import { Horse } from './horse';
 import { Trainer } from './trainer';
 import { Utils } from './utils';
-import { GameConstants } from "src/app/model/services/gameconstants";
-import { League, TeamInLeague } from "src/app/model/league";
-import { CommonService } from "src/app/model/services/common.service";
+import { GameConstants } from 'src/app/model/services/gameconstants';
+import { League, TeamInLeague } from 'src/app/model/league';
+import { CommonService } from 'src/app/model/services/common.service';
 
 
 export class Player {
@@ -20,9 +20,9 @@ export class Player {
     money: number;
     victories: number;
     totalRaces: number;
-    xpPoints : number;
-    playerLevel : number;
-    skillPoints : number;
+    xpPoints: number;
+    playerLevel: number;
+    skillPoints: number;
     trainers: Trainer[];
     lastHorseId: number;
 
@@ -52,13 +52,13 @@ export class Player {
     nextSlikType(): void {
         this.silkType = ( this.silkType + 1 ) % GameConstants.MAX_SILK_ID;
     }
-    
-    getNewHorseId() : number{
+
+    getNewHorseId(): number{
         return ++this.lastHorseId;
     }
 
     static fromJson( player: any): Player {
-        let ret = new Player( player.id, player.name, player.color, player.secColor,
+        const ret = new Player( player.id, player.name, player.color, player.secColor,
             player.silkType !== undefined ? player.silkType : 2, player.money);
         ret.victories = player.victories;
         ret.selectedHorseId = player.selectedHorseId;

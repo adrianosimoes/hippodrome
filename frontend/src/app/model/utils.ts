@@ -5,22 +5,26 @@ export class Utils {
     }
 
     static clickyPagView( url: string, name: string ) {
-       // No tracking.
+        // No tracking.
     }
 
 
     static randomizeArray( a ): void {
         let b, c, d;
-        c = a.length; while ( c ) b = Math.random() * ( --c + 1 ) | 0, d = a[c], a[c] = a[b], a[b] = d;
+        c = a.length; while ( c ) {
+            b = Math.random() * ( --c + 1 ) | 0, d = a[c], a[c] = a[b], a[b] = d;
+        }
     }
 
     static stableSort<T>( self: T[], cmp: Comparator<T> = defaultCmp ): T[] {
-        let stabilized = self.map(( el, index ) => <[T, number]>[el, index] );
-        let stableCmp: Comparator<[T, number]> = ( a, b ) => {
-            let order = cmp( a[0], b[0] );
-            if ( order != 0 ) return order;
+        const stabilized = self.map(( el, index ) => <[T, number]>[el, index] );
+        const stableCmp: Comparator<[T, number]> = ( a, b ) => {
+            const order = cmp( a[0], b[0] );
+            if ( order != 0 ) {
+                return order;
+            }
             return a[1] - b[1];
-        }
+        };
 
         stabilized.sort( stableCmp );
         for ( let i = 0; i < self.length; i++ ) {
@@ -32,12 +36,12 @@ export class Utils {
     }
 
     static precisionRound( number, precision ) {
-        var factor = Math.pow( 10, precision );
+        const factor = Math.pow( 10, precision );
         return Math.round( number * factor ) / factor;
     }
 
     static devMode() {
-        return window.location.href.startsWith( "http://127.0.0.1", 0 );
+        return window.location.href.startsWith( 'http://127.0.0.1', 0 );
     }
 
     static calculateDisplayStamina( speed: number, maxSpeed: number, baseValue: number ): number {
@@ -47,7 +51,7 @@ export class Utils {
 
     static getCssBackground( color: string, secColor: string, silkType: number ): string {
         if ( silkType == 2 ) {
-            return color; //use simple color.
+            return color; // use simple color.
         } else if ( silkType == 0 ) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
@@ -95,15 +99,17 @@ export class Utils {
 
 }
 
-interface Comparator<T> {
-    ( a: T, b: T ): number
-}
+type Comparator<T> = ( a: T, b: T ) => number;
 
-let defaultCmp: Comparator<any> = ( a, b ) => {
-    if ( a < b ) return -1;
-    if ( a > b ) return 1;
+const defaultCmp: Comparator<any> = ( a, b ) => {
+    if ( a < b ) {
+        return -1;
+    }
+    if ( a > b ) {
+        return 1;
+    }
     return 0;
-}
+};
 
 export class StaticData {
     static horseNames: string[] = ['Annabel', 'Adagio', 'Aida', 'Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby',
@@ -112,11 +118,11 @@ export class StaticData {
         'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo', 'Velvet', 'Verona', 'Vegas', 'Virgo'];
 
     static colors: string[] = [
-                            /*Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800080', '#ff6600', '#9e0000',
-                           /* Yellows */ '#d0b93d', '#FBB117', '#C58917',
-                            /*Greens */ '#00ff00', '#00dddd', '#556B2F', '#6B8E23',
-                            /* Blues */  '#2f2fc7',
-                            /* Grey and Brown */ '#000000', '#999999'];
+        /* Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800080', '#ff6600', '#9e0000',
+        /* Yellows */ '#d0b93d', '#FBB117', '#C58917',
+        /* Greens */ '#00ff00', '#00dddd', '#556B2F', '#6B8E23',
+        /* Blues */  '#2f2fc7',
+        /* Grey and Brown */ '#000000', '#999999'];
 
     static teamNames: string[] = ['Racing', 'Stables', 'Team'];
 

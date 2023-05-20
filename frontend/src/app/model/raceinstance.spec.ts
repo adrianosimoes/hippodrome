@@ -4,8 +4,8 @@ import { CommonService } from './services/common.service';
 import { Horse, HorseInRace, HorseForm } from './horse';
 import { RaceInstance, RaceState } from './raceinstance';
 import { Race } from './race';
-import { Utils } from "src/app/model/utils";
-import { TeamInLeague } from "src/app/model/league";
+import { Utils } from 'src/app/model/utils';
+import { TeamInLeague } from 'src/app/model/league';
 
 describe( 'RaceInstance', () => {
     let commonService: CommonService;
@@ -41,7 +41,7 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance creation', () => {
         setTestHorseWithSpeed( 90 );
-        let raceInstance = new RaceInstance( testRace, commonService, [], true, false);
+        const raceInstance = new RaceInstance( testRace, commonService, [], true, false);
         expect( raceInstance.state ).toBe( RaceState.PreRace );
         expect( raceInstance.horses.length ).toBe( 1 );
         expect( raceInstance.roundTrack ).toBe( false );
@@ -51,14 +51,14 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance finish first', () => {
         setTestHorseWithSpeed( 90 );
-        let teams: TeamInLeague[] = [];
+        const teams: TeamInLeague[] = [];
         teams.push(new TeamInLeague(getTestHorse( 20, 20, 20 ), null, null, false));
-        let playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true) 
+        const playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true);
         teams.push(playerTeam);
         commonService.getPlayer().team = playerTeam;
-        
-        let raceInstance = new RaceInstance( testRace, commonService, teams, true, false );
-        let startMoney: number = commonService.gameInstance.playerOne.money;
+
+        const raceInstance = new RaceInstance( testRace, commonService, teams, true, false );
+        const startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
         raceInstance.tickTime = 1;
 
@@ -81,19 +81,19 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance finish last', () => {
         setTestHorseWithSpeed( 5 );
-        let teams: TeamInLeague[] = [];
-        
+        const teams: TeamInLeague[] = [];
+
         for ( let i = 0; i < 5; i++ ) {
-            let testHorse = getTestHorse( 14, 18, 20 );
-            teams.push(new TeamInLeague(testHorse, null, null, false))
+            const testHorse = getTestHorse( 14, 18, 20 );
+            teams.push(new TeamInLeague(testHorse, null, null, false));
         }
-        let playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true) 
+        const playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true);
         teams.push(playerTeam);
         commonService.getPlayer().team = playerTeam;
-        
-        let raceInstance = new RaceInstance( testRace, commonService, teams, true, false);
-        
-        let startMoney: number = commonService.gameInstance.playerOne.money;
+
+        const raceInstance = new RaceInstance( testRace, commonService, teams, true, false);
+
+        const startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
         raceInstance.tickTime = 1;
 
@@ -110,34 +110,34 @@ describe( 'RaceInstance', () => {
 
     it( 'Test 500 races', () => {
         setTestHorse( 14, 20, 20 );
-        let currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [500, 220, 100] );
-        
+        const currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [500, 220, 100] );
+
         testHorses(currRace, getTestHorse( 14, 18, 20 ));
-        
+
         testHorses(currRace, getTestHorse( 14, 20, 20 ));
-        
+
         testHorses(currRace, getTestHorse( 14, 22, 20 ));
-        
+
         testHorses(currRace, getTestHorse( 14, 24, 20 ));
 
     } );
 
     function testHorses( race: Race, bot: Horse ) {
 
-        let numWin: number = 0, numLost: number = 0;
-        let numRaces: number = 600;
+        let numWin = 0, numLost = 0;
+        const numRaces = 600;
 
         for ( let i = 0; i < numRaces; i++ ) {
-            let teams: TeamInLeague[] = [];
-            let playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true) ;
+            const teams: TeamInLeague[] = [];
+            const playerTeam = new TeamInLeague(commonService.getPlayer().horses[0], null, null, true) ;
             teams.push(playerTeam);
             commonService.getPlayer().team = playerTeam;
-            
+
             // Reset Stamina on player horse:
             commonService.gameInstance.playerOne.horses[0].staminaSpeed = commonService.gameInstance.playerOne.horses[0].speed;
-            let raceInstance = new RaceInstance( race, commonService, [], true, false);
+            const raceInstance = new RaceInstance( race, commonService, [], true, false);
 
-            let botInRace: HorseInRace = new HorseInRace( bot, null, null, new TeamInLeague(bot, null, null, false));
+            const botInRace: HorseInRace = new HorseInRace( bot, null, null, new TeamInLeague(bot, null, null, false));
             raceInstance.addHorse( botInRace );
             raceInstance.sortedHorses.push( botInRace );
             raceInstance.numberOfHorses++;
@@ -155,8 +155,8 @@ describe( 'RaceInstance', () => {
                 numLost++;
             }
         }
-        console.log( "Win %: " + Utils.precisionRound(( numWin / numRaces ) * 100, 0 ) );
+        console.log( 'Win %: ' + Utils.precisionRound(( numWin / numRaces ) * 100, 0 ) );
         expect( numWin + numLost ).toBe( numRaces );
     }
 
-} );  
+} );

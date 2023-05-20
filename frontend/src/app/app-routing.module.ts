@@ -13,24 +13,24 @@ import { LeagueComponent } from './screens/league/league.component';
 import { LevelUpComponent } from './screens/levelup/levelup.component';
 
 const routes: Routes = [
-  { path: '', component: LoginComponent },
-  { path: 'about', component: AboutComponent },
-  { path: 'auction', component: AuctionComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'main', component: MainComponent },
-  { path: 'shop', component: ShopComponent },
-  { path: 'training', component: TrainingComponent },
-  { path: 'stables', component: StablesComponent },
-  { path: 'league/:action', component: LeagueComponent },
-  { path: 'race/:id', component: RaceComponent },
-  { path: 'levelUp', component: LevelUpComponent },
-  { path: '**', redirectTo: 'login' }
+    { path: '', component: LoginComponent },
+    { path: 'about', component: AboutComponent },
+    { path: 'auction', component: AuctionComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'main', component: MainComponent },
+    { path: 'shop', component: ShopComponent },
+    { path: 'training', component: TrainingComponent },
+    { path: 'stables', component: StablesComponent },
+    { path: 'league/:action', component: LeagueComponent },
+    { path: 'race/:id', component: RaceComponent },
+    { path: 'levelUp', component: LevelUpComponent },
+    { path: '**', redirectTo: 'login' }
 ];
 
 
 @NgModule({
-  exports: [ RouterModule ],
-  imports: [ RouterModule.forRoot(routes, {useHash: false})]
+    exports: [ RouterModule ],
+    imports: [ RouterModule.forRoot(routes, {useHash: false})]
 })
 
 export class AppRoutingModule { }

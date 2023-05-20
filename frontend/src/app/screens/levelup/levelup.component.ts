@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Horse, TrainingHorse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
@@ -31,49 +31,48 @@ export class LevelUpComponent implements OnInit {
         this.currPlayer = this.commonService.getPlayer();
         this.newLevel = this.currPlayer.playerLevel;
         this.baseSkillPoints = this.currPlayer.skillPoints;
-        
+
         this.levelUpHorses = [];
-        for(let playerHorse  of this.currPlayer.horses){
+        for (const playerHorse  of this.currPlayer.horses){
             this.levelUpHorses.push(new LevelUpHorse(playerHorse));
         }
-        
-        if(this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer)){
+
+        if (this.currPlayer.xpPoints >= this.commonService.getNextXPLevel(this.currPlayer)){
             this.currPlayer.playerLevel++;
             this.newLevel = this.currPlayer.playerLevel;
             this.baseSkillPoints += this.commonService.getSkillPoints(this.currPlayer);
-        }
-        else if(this.currPlayer.skillPoints <= 0) {
+        } else if (this.currPlayer.skillPoints <= 0) {
             this.router.navigate( ['main'] );
         }
-        
+
         this.levelSkillPoints = this.commonService.getSkillPoints(this.currPlayer);
         this.skillPoints = this.baseSkillPoints;
-        this.editLocked=false;
+        this.editLocked = false;
     }
-    
+
     confirm() {
-        for(let horse  of this.levelUpHorses){
+        for (const horse  of this.levelUpHorses){
             horse.confirmSkillUp();
         }
         this.currPlayer.skillPoints = this.skillPoints;
-        Utils.clickyPagView("levelUp?level=" + this.newLevel, "Level Up:" + " money:" +  this.commonService.gameInstance.playerOne.money
-            + " skillPoints:" +  this.currPlayer.skillPoints
-            + " prestige:" +  this.commonService.gameInstance.playerOne.xpPoints
-            + " victories:" +  this.commonService.gameInstance.playerOne.victories 
-            + " races:" +  this.commonService.gameInstance.playerOne.totalRaces
-            + " horses:" +  this.commonService.gameInstance.playerOne.horses.length);
+        Utils.clickyPagView('levelUp?level=' + this.newLevel, 'Level Up:' + ' money:' +  this.commonService.gameInstance.playerOne.money
+            + ' skillPoints:' +  this.currPlayer.skillPoints
+            + ' prestige:' +  this.commonService.gameInstance.playerOne.xpPoints
+            + ' victories:' +  this.commonService.gameInstance.playerOne.victories
+            + ' races:' +  this.commonService.gameInstance.playerOne.totalRaces
+            + ' horses:' +  this.commonService.gameInstance.playerOne.horses.length);
         this.router.navigate( ['main'] );
     }
-    
+
     reset() {
-        this.editLocked=true;
+        this.editLocked = true;
         this.skillPoints = this.baseSkillPoints;
-        for(let horse  of this.levelUpHorses){
+        for (const horse  of this.levelUpHorses){
             horse.reset();
         }
-        this.editLocked=false;
+        this.editLocked = false;
     }
-    
+
     upSkill( horse: LevelUpHorse, skill: string ) {
         this.editLocked = true;
         if ( this.skillPoints <= 0 ) {
@@ -82,16 +81,19 @@ export class LevelUpComponent implements OnInit {
         }
 
         this.skillPoints--;
-        if ( skill == 'S' )
+        if ( skill == 'S' ) {
             horse.newSpeed++;
-        else if ( skill == 'A' )
+        } else if ( skill == 'A' ) {
             horse.newAcc++;
-        else if ( skill == 'E' )
+        } else if ( skill == 'E' ) {
             horse.newEnd++;
+        }
 
-        if ( this.skillPoints <= 0 )
+        if ( this.skillPoints <= 0 ) {
             this.editLocked = true;
-        else this.editLocked = false;
+        } else {
+            this.editLocked = false;
+        }
     }
 }
 
@@ -105,7 +107,7 @@ class LevelUpHorse {
         this.baseHorse = baseHorse;
         this.reset();
     }
-    
+
     reset(){
         this.newSpeed = this.baseHorse.speed;
         this.newAcc = this.baseHorse.acceleration;

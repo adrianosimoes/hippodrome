@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Player } from '../../model/player';
 import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/services/common.service';
-import { League } from "src/app/model/league";
+import { League } from 'src/app/model/league';
 
 
 @Component( {
@@ -18,7 +18,7 @@ export class MainComponent implements OnInit {
     currGame: GameInstance;
     utils: Utils;
     xpNextLevel: number;
-    warningText: string = '';
+    warningText = '';
 
     constructor( private router: Router, public commonService: CommonService ) { }
 
@@ -38,8 +38,8 @@ export class MainComponent implements OnInit {
     }
 
     next(): void {
-        let currLeague: League = this.commonService.getCurrentLeague();
-        let index: number = this.commonService.getThisWeekRaceIndex();
+        const currLeague: League = this.commonService.getCurrentLeague();
+        const index: number = this.commonService.getThisWeekRaceIndex();
         if ( index >= 0 ) {
             this.router.navigate( ['race', currLeague.races[index].id] );
         } else {
@@ -50,11 +50,11 @@ export class MainComponent implements OnInit {
     gotoTraining(): void {
         this.router.navigate( ['training'] );
     }
-    
+
     gotoStables(): void {
         this.router.navigate( ['stables'] );
     }
-    
+
     gotoShop(): void {
         this.router.navigate( ['shop'] );
     }
