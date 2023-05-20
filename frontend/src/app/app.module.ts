@@ -1,9 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './/app-routing.module';
 import { AppComponent } from './app.component';
-import { MatRadioModule } from '@angular/material';
 
 import { FormStringPipe, RaceDifficultyPipe } from './model/pipehelpers';
 
@@ -20,6 +17,9 @@ import { LeagueComponent } from './screens/league/league.component';
 import { LevelUpComponent } from "src/app/screens/levelup/levelup.component";
 
 import { CurrencyPipe } from "@angular/common";
+import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { MatRadioModule } from '@angular/material/radio';
 
 @NgModule({
   declarations: [

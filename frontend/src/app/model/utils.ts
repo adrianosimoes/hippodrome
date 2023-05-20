@@ -1,5 +1,3 @@
-declare var clicky: any;
-
 export class Utils {
 
     static getRandomInt( initial: number, max: number ): number {
@@ -7,9 +5,7 @@ export class Utils {
     }
 
     static clickyPagView( url: string, name: string ) {
-        try {
-            clicky.log( '/' + url, name, 'pageview' );
-        } catch ( e ) { };
+       // No tracking.
     }
 
 
