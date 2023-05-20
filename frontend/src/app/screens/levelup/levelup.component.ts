@@ -6,6 +6,31 @@ import { Trainer } from '../../model/trainer';
 import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 
+class LevelUpHorse {
+    baseHorse: Horse;
+    newSpeed: number;
+    newAcc: number;
+    newEnd: number;
+
+    constructor( baseHorse: Horse) {
+        this.baseHorse = baseHorse;
+        this.reset();
+    }
+
+    reset(){
+        this.newSpeed = this.baseHorse.speed;
+        this.newAcc = this.baseHorse.acceleration;
+        this.newEnd = this.baseHorse.endurance;
+    }
+
+    confirmSkillUp(){
+        this.baseHorse.speed = this.newSpeed;
+        this.baseHorse.acceleration = this.newAcc;
+        this.baseHorse.endurance = this.newEnd;
+        this.baseHorse.recalculatePrice();
+    }
+}
+
 @Component( {
     selector: 'app-levelup',
     templateUrl: './levelup.component.html',
@@ -94,30 +119,5 @@ export class LevelUpComponent implements OnInit {
         } else {
             this.editLocked = false;
         }
-    }
-}
-
-class LevelUpHorse {
-    baseHorse: Horse;
-    newSpeed: number;
-    newAcc: number;
-    newEnd: number;
-
-    constructor( baseHorse: Horse) {
-        this.baseHorse = baseHorse;
-        this.reset();
-    }
-
-    reset(){
-        this.newSpeed = this.baseHorse.speed;
-        this.newAcc = this.baseHorse.acceleration;
-        this.newEnd = this.baseHorse.endurance;
-    }
-
-    confirmSkillUp(){
-        this.baseHorse.speed = this.newSpeed;
-        this.baseHorse.acceleration = this.newAcc;
-        this.baseHorse.endurance = this.newEnd;
-        this.baseHorse.recalculatePrice();
     }
 }

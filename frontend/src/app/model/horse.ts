@@ -34,6 +34,20 @@ export class Horse {
     form: number;
     staminaSpeed: number;
     staminaDisplay: number;
+
+    constructor( id: number, name: string, speed: number, endurance: number, acceleration: number, form: number ) {
+        this.id = id;
+        this.name = name;
+        this.speed = speed;
+        this.staminaSpeed = speed;
+        this.endurance = endurance;
+        this.acceleration = acceleration;
+        this.calculateStaminaDisplay();
+        this.recalculatePrice();
+        this.form = form;
+        this.owned = false;
+    }
+
     calculateForm(): void {
         this.form = Utils.getRandomInt( HorseForm.BAD, HorseForm.GOOD );
     };
@@ -59,19 +73,6 @@ export class Horse {
                 + ( ACCELERATION_SKILL_PRICE * ( this.acceleration * ( this.acceleration / 10 ) ) ) ) /
                 TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
 
-    }
-
-    constructor( id: number, name: string, speed: number, endurance: number, acceleration: number, form: number ) {
-        this.id = id;
-        this.name = name;
-        this.speed = speed;
-        this.staminaSpeed = speed;
-        this.endurance = endurance;
-        this.acceleration = acceleration;
-        this.calculateStaminaDisplay();
-        this.recalculatePrice();
-        this.form = form;
-        this.owned = false;
     }
 }
 
@@ -137,6 +138,19 @@ export class HorseInRace {
     }
 }
 
+
+function getSpeedPrice( speed: number ) {
+    return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getAccelerationPrice( acceleration: number ) {
+    return Math.round( ACCELERATION_SKILL_PRICE * ( acceleration * ( acceleration / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getEndurancePrice( endurance: number ) {
+    return Math.round( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
 export class TrainingHorse {
     baseHorse: Horse;
     trainSpeedPrice: number;
@@ -149,16 +163,4 @@ export class TrainingHorse {
         this.trainEndurancePrice = getEndurancePrice( horse.endurance ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
         this.trainAccelerationPrice = getAccelerationPrice( horse.acceleration ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
     }
-}
-
-function getSpeedPrice( speed: number ) {
-    return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
-}
-
-function getAccelerationPrice( acceleration: number ) {
-    return Math.round( ACCELERATION_SKILL_PRICE * ( acceleration * ( acceleration / 10 ) ) / TOTAL_SKILL_PRICE );
-}
-
-function getEndurancePrice( endurance: number ) {
-    return Math.round( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) / TOTAL_SKILL_PRICE );
 }

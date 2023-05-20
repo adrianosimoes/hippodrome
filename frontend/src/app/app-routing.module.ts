@@ -1,11 +1,11 @@
-import { NgModule }             from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 import { AboutComponent } from './screens/about/about.component';
 import { AuctionComponent } from './screens/auction/auction.component';
-import { MainComponent }      from './screens/main/main.component';
-import { LoginComponent }      from './screens/login/login.component';
-import { ShopComponent }      from './screens/shop/shop.component';
+import { MainComponent } from './screens/main/main.component';
+import { LoginComponent } from './screens/login/login.component';
+import { ShopComponent } from './screens/shop/shop.component';
 import { RaceComponent } from './screens/race/race.component';
 import { TrainingComponent } from './screens/training/training.component';
 import { StablesComponent } from './screens/stables/stables.component';

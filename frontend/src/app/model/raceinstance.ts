@@ -25,6 +25,16 @@ export enum RaceState {
     RaceFinished = 5
 }
 
+export class Comment {
+    message: string;
+    color: string;
+
+    constructor( message: string, color: string ) {
+        this.message = message;
+        this.color = color;
+    }
+}
+
 export class RaceInstance {
     commonService: CommonService;
     baseRace: Race;
@@ -505,15 +515,5 @@ export class RaceInstance {
 
     cancel(): void {
         this.canceled = true;
-    }
-}
-
-export class Comment {
-    message: string;
-    color: string;
-
-    constructor( message: string, color: string ) {
-        this.message = message;
-        this.color = color;
     }
 }

@@ -26,7 +26,6 @@ export class Player {
     trainers: Trainer[];
     lastHorseId: number;
 
-
     constructor( id: number, name: string, color: string, secColor: string, silkType: number, money: number) {
         this.id = id;
         this.name = name;
@@ -45,18 +44,6 @@ export class Player {
         this.recalculateBackground();
     }
 
-    recalculateBackground() {
-        this.calculateBackground = Utils.getCssBackground( this.color, this.secColor, this.silkType );
-    }
-
-    nextSlikType(): void {
-        this.silkType = ( this.silkType + 1 ) % GameConstants.MAX_SILK_ID;
-    }
-
-    getNewHorseId(): number{
-        return ++this.lastHorseId;
-    }
-
     static fromJson( player: any): Player {
         const ret = new Player( player.id, player.name, player.color, player.secColor,
             player.silkType !== undefined ? player.silkType : 2, player.money);
@@ -73,6 +60,18 @@ export class Player {
         ret.recalculateBackground();
 
         return ret;
+    }
+
+    recalculateBackground() {
+        this.calculateBackground = Utils.getCssBackground( this.color, this.secColor, this.silkType );
+    }
+
+    nextSlikType(): void {
+        this.silkType = ( this.silkType + 1 ) % GameConstants.MAX_SILK_ID;
+    }
+
+    getNewHorseId(): number{
+        return ++this.lastHorseId;
     }
 }
 

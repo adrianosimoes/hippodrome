@@ -62,9 +62,9 @@ export class GameInstance {
             this.leagues.push( league );
 
             if ( league.id == this.playerOne.leagueId ) {
-                for ( let i = 0; i < league.teamsInLeague.length; i++ ) {
-                    if ( league.teamsInLeague[i].isPlayer ) {
-                        this.playerOne.team = league.teamsInLeague[i];
+                for ( let j = 0; j < league.teamsInLeague.length; j++ ) {
+                    if ( league.teamsInLeague[j].isPlayer ) {
+                        this.playerOne.team = league.teamsInLeague[j];
                         break;
                     }
                 }

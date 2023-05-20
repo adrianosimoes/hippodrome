@@ -108,20 +108,6 @@ describe( 'RaceInstance', () => {
         expect( commonService.gameInstance.playerOne.money ).toBe( startMoney);
     } );
 
-    it( 'Test 500 races', () => {
-        setTestHorse( 14, 20, 20 );
-        const currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [500, 220, 100] );
-
-        testHorses(currRace, getTestHorse( 14, 18, 20 ));
-
-        testHorses(currRace, getTestHorse( 14, 20, 20 ));
-
-        testHorses(currRace, getTestHorse( 14, 22, 20 ));
-
-        testHorses(currRace, getTestHorse( 14, 24, 20 ));
-
-    } );
-
     function testHorses( race: Race, bot: Horse ) {
 
         let numWin = 0, numLost = 0;
@@ -159,4 +145,17 @@ describe( 'RaceInstance', () => {
         expect( numWin + numLost ).toBe( numRaces );
     }
 
+    it( 'Test 500 races', () => {
+        setTestHorse( 14, 20, 20 );
+        const currRace = new Race( 1, 2, 'Test Race', 500, '#338833', 0, 1, [500, 220, 100] );
+
+        testHorses(currRace, getTestHorse( 14, 18, 20 ));
+
+        testHorses(currRace, getTestHorse( 14, 20, 20 ));
+
+        testHorses(currRace, getTestHorse( 14, 22, 20 ));
+
+        testHorses(currRace, getTestHorse( 14, 24, 20 ));
+
+    } );
 } );
