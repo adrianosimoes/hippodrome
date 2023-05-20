@@ -1,9 +1,9 @@
 export class Race {
-    static CURVE_RACE_MIN_DISTANCE: number = 700;
-    static RACETRACK_HEIGHT: number = 16;
-    static ROUND_TRACK_BOTTOM_DISTANCE: number = 440;
-    static ROUND_TRACK_HORSE_CURVE: number = 38;
-    static AFTER_END_RACE_PIXELS: number = 35;
+    static CURVE_RACE_MIN_DISTANCE = 700;
+    static RACETRACK_HEIGHT = 16;
+    static ROUND_TRACK_BOTTOM_DISTANCE = 440;
+    static ROUND_TRACK_HORSE_CURVE = 38;
+    static AFTER_END_RACE_PIXELS = 35;
 
 
     id: number;

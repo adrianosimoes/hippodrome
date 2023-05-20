@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router";
+import { Router, ActivatedRoute } from '@angular/router';
 import { CommonService } from '../../model/services/common.service';
 import { Utils } from '../../model/utils';
 import { Race } from '../../model/race';
-import { Player } from "src/app/model/player";
-import { League } from "src/app/model/league";
+import { Player } from 'src/app/model/player';
+import { League } from 'src/app/model/league';
 
 
 
@@ -30,11 +30,11 @@ export class LeagueComponent implements OnInit {
         this.leagues = this.commonService.gameInstance.leagues;
         this.nextAction = this.activeRoute.snapshot.params['action'];
     }
-    
+
     next(){
-        if(this.nextAction=='nextWeek'){
+        if (this.nextAction == 'nextWeek'){
             this.commonService.nextWeek(null);
-            this.nextAction="main";
+            this.nextAction = 'main';
         }
         this.router.navigate( [this.nextAction] );
     }

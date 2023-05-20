@@ -4,31 +4,31 @@ import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
 
 import { TrainingComponent } from './training.component';
 import { CommonService } from '../../model/services/common.service';
-import { FormsModule } from "@angular/forms";
-import { CurrencyPipe } from "@angular/common";
+import { FormsModule } from '@angular/forms';
+import { CurrencyPipe } from '@angular/common';
 
 
 describe('TrainingComponent', () => {
-  let component: TrainingComponent;
-  let fixture: ComponentFixture<TrainingComponent>;
+    let component: TrainingComponent;
+    let fixture: ComponentFixture<TrainingComponent>;
 
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      imports: [RouterTestingModule, FormsModule],
-      declarations: [ TrainingComponent, FormStringPipe],
-      providers: [CurrencyPipe]
-    })
-    .compileComponents();
-  }));
+    beforeEach(async(() => {
+        TestBed.configureTestingModule({
+            imports: [RouterTestingModule, FormsModule],
+            declarations: [ TrainingComponent, FormStringPipe],
+            providers: [CurrencyPipe]
+        })
+            .compileComponents();
+    }));
 
-  beforeEach(() => {
-    fixture = TestBed.createComponent(TrainingComponent);
-    component = fixture.componentInstance;
-    component.commonService.setInitialized();
-    fixture.detectChanges();
-  });
+    beforeEach(() => {
+        fixture = TestBed.createComponent(TrainingComponent);
+        component = fixture.componentInstance;
+        component.commonService.setInitialized();
+        fixture.detectChanges();
+    });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

@@ -1,9 +1,9 @@
 import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
 import { Race } from '../race';
 import { Trainer } from '../trainer';
-import { Utils } from "src/app/model/utils";
-import { GameConstants } from "src/app/model/services/gameconstants";
-import { League, LeagueDay } from "src/app/model/league";
+import { Utils } from 'src/app/model/utils';
+import { GameConstants } from 'src/app/model/services/gameconstants';
+import { League, LeagueDay } from 'src/app/model/league';
 
 
 export class InitService {
@@ -11,10 +11,10 @@ export class InitService {
 
     static initHorsesInShop( horsesInShop: Horse[] ) {
 
-        //Initialize Horses in Shop:
+        // Initialize Horses in Shop:
         let horse = new Horse( 101, 'Bruce Steel', 13, 17, 12, HorseForm.AVERAGE );
         horsesInShop.push( horse );
-        
+
         horse = new Horse( 102, 'Tom Bolt', 13, 13, 17, HorseForm.AVERAGE );
         horsesInShop.push( horse );
 
@@ -35,7 +35,7 @@ export class InitService {
     }
 
     static initRaces( leagues: League[] ) {
-        let league = new League( 1, 2, "Ungraded", 0, 6 );
+        let league = new League( 1, 2, 'Ungraded', 0, 6 );
         leagues.push( league );
 
         let id = 1;
@@ -46,7 +46,7 @@ export class InitService {
         league.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [500, 220, 100] ) );
 
 
-        league = new League( 2, 3, "Group 3", 5, 8 );
+        league = new League( 2, 3, 'Group 3', 5, 8 );
         leagues.push( league );
 
         league.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [1300, 600, 270] ) );
@@ -54,7 +54,7 @@ export class InitService {
         league.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [1300, 600, 270] ) );
         league.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [1300, 600, 270] ) );
 
-        league = new League( 3, 5, "Group 2", 10, 8 );
+        league = new League( 3, 5, 'Group 2', 10, 8 );
         leagues.push( league );
 
         league.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [2600, 1200, 555] ) );
@@ -62,7 +62,7 @@ export class InitService {
         league.addRace( new Race( id++, 5, 'Brecknock', 800, '#cca714', 400, 8, [2600, 1200, 555] ) );
         league.addRace( new Race( id++, 5, 'Chantilly Racecourse', 850, '#abd016', 400, 8, [2600, 1200, 555] ) );
 
-        league = new League( 4, 9, "World Championship", 15, 8 );
+        league = new League( 4, 9, 'World Championship', 15, 8 );
         leagues.push( league );
 
         league.addRace( new Race( id++, 9, 'Hippodrome d\'Auteuil', 550, '#145114', 1000, 8, [6500, 3000, 1400] ) );
@@ -73,11 +73,11 @@ export class InitService {
     }
 
     static initTrainers( trainersToSell: Trainer[] ) {
-        trainersToSell.push( new Trainer( 1, "Acceleration Trainer", 2500, 12, HorseSkills.ACCELERATION, 10, 3,
-            "Trains the acceleration every day for the active horse. 1 speed up every 12 days." ) );
+        trainersToSell.push( new Trainer( 1, 'Acceleration Trainer', 2500, 12, HorseSkills.ACCELERATION, 10, 3,
+            'Trains the acceleration every day for the active horse. 1 speed up every 12 days.' ) );
 
-        trainersToSell.push( new Trainer( 3, "Endurance Trainer", 3000, 15, HorseSkills.ENDURANCE, 10, 3,
-            "Trains the endurance every day for the active horse. 1 endurance up every 10 days." ) );
+        trainersToSell.push( new Trainer( 3, 'Endurance Trainer', 3000, 15, HorseSkills.ENDURANCE, 10, 3,
+            'Trains the endurance every day for the active horse. 1 endurance up every 10 days.' ) );
     }
 
     static initXPPerLevel( xpPerLevel: number[] ) {
@@ -85,17 +85,19 @@ export class InitService {
             GameConstants.BASE_XP = 20;
         }
 
-        var sum = 0;
-        for ( var i = 0; i < 200; i++ ) {
-            if ( i == 1 )
+        let sum = 0;
+        for ( let i = 0; i < 200; i++ ) {
+            if ( i == 1 ) {
                 sum = GameConstants.BASE_XP;
-            else sum += GameConstants.BASE_XP * i * 1.25;
+            } else {
+                sum += GameConstants.BASE_XP * i * 1.25;
+            }
             xpPerLevel[i] = sum;
         }
     }
 
     static initSkillPointsPerLevel( skillPointsPerLevel: number[] ) {
-        for ( var i = 0; i < 200; i++ ) {
+        for ( let i = 0; i < 200; i++ ) {
             skillPointsPerLevel[i] = Utils.precisionRound( 1 + ( i / 7 ), 0 );
         }
     }

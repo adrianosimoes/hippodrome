@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from "@angular/router";
+import { Router } from '@angular/router';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { CommonService } from '../../model/services/common.service';
@@ -15,7 +15,7 @@ export class AuctionComponent implements OnInit {
     auctionHorse: Horse;
     bidValue: number;
     auctionResult: string;
-    auctionEnded : boolean;
+    auctionEnded: boolean;
 
     debug: boolean = Utils.devMode();
 
@@ -29,37 +29,40 @@ export class AuctionComponent implements OnInit {
         this.currPlayer = this.commonService.getPlayer();
         this.auctionHorse = this.commonService.getAuctionHorse();
         this.bidValue = 0;
-        if(this.auctionHorse && this.auctionHorse.owned){
-            this.auctionResult =  "Doing Auction...";
-            setTimeout(() => {this.doAuction()}, 1000);
+        if (this.auctionHorse && this.auctionHorse.owned){
+            this.auctionResult =  'Doing Auction...';
+            setTimeout(() => {
+                this.doAuction();
+            }, 1000);
         };
     }
-    
+
     bid(){
-        this.auctionResult = "";
-        if(this.bidValue > 0 && this.bidValue>this.currPlayer.money){
-            alert("You don't have enough money to bid " +  this.commonService.priceFormat(this.bidValue));
+        this.auctionResult = '';
+        if (this.bidValue > 0 && this.bidValue > this.currPlayer.money){
+            alert('You don\'t have enough money to bid ' +  this.commonService.priceFormat(this.bidValue));
             return;
         }
-        var result : [boolean, number] = this.commonService.bidAuction(this.bidValue, this.auctionHorse);
-        if(result[0]){
-            this.auctionResult = "Congratulations! You won the auction and bought " + this.auctionHorse.name  + ".";
+        const result: [boolean, number] = this.commonService.bidAuction(this.bidValue, this.auctionHorse);
+        if (result[0]){
+            this.auctionResult = 'Congratulations! You won the auction and bought ' + this.auctionHorse.name  + '.';
         }else{
-            if(result[1]>=0){
-                if(this.bidValue > 0)
-                    this.auctionResult = "You didn't won the auction. "
-                this.auctionResult += "The final price was " + this.commonService.priceFormat(result[1]) + "."; 
+            if (result[1] >= 0){
+                if (this.bidValue > 0) {
+                    this.auctionResult = 'You didn\'t won the auction. ';
+                }
+                this.auctionResult += 'The final price was ' + this.commonService.priceFormat(result[1]) + '.';
             }
         }
         this.auctionEnded = true;
     }
-    
+
     doAuction(){
-        var price: number = this.commonService.ownHorseAuction(this.auctionHorse);
-        this.auctionResult = this.auctionHorse.name + " was sold for " +  this.commonService.priceFormat(price) + "." ;
+        const price: number = this.commonService.ownHorseAuction(this.auctionHorse);
+        this.auctionResult = this.auctionHorse.name + ' was sold for ' +  this.commonService.priceFormat(price) + '.' ;
         this.auctionEnded = true;
     }
-    
+
     mainScreen() {
         this.commonService.nextWeek(null);
         this.router.navigate( ['main'] );

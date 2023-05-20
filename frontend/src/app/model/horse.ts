@@ -1,14 +1,14 @@
 import { Utils } from './utils';
-import { Race } from "src/app/model/race";
-import { GameConstants } from "src/app/model/services/gameconstants";
-import { TeamInLeague } from "src/app/model/league";
+import { Race } from 'src/app/model/race';
+import { GameConstants } from 'src/app/model/services/gameconstants';
+import { TeamInLeague } from 'src/app/model/league';
 
-const TRAINING_PRICE: number = 1.5;
-const SPEED_SKILL_PRICE: number = 7.5;
-const ENDURANCE_SKILL_PRICE: number = 2.2;
-const ACCELERATION_SKILL_PRICE: number = 1.7;
-const TOTAL_SKILL_PRICE: number = 8.2;
-const SKILL_TO_PRICE_MULTIPLIER: number = 100;
+const TRAINING_PRICE = 1.5;
+const SPEED_SKILL_PRICE = 7.5;
+const ENDURANCE_SKILL_PRICE = 2.2;
+const ACCELERATION_SKILL_PRICE = 1.7;
+const TOTAL_SKILL_PRICE = 8.2;
+const SKILL_TO_PRICE_MULTIPLIER = 100;
 
 export enum HorseSkills {
     SPEED = 1,
@@ -23,7 +23,7 @@ export enum HorseForm {
 }
 
 export class Horse {
-    
+
     id: number;
     name: string;
     speed: number;
@@ -34,32 +34,6 @@ export class Horse {
     form: number;
     staminaSpeed: number;
     staminaDisplay: number;
-    calculateForm(): void {
-        this.form = Utils.getRandomInt( HorseForm.BAD, HorseForm.GOOD );
-    };
-    
-    calculateStaminaDisplay(): void{
-         this.staminaDisplay = Utils.calculateDisplayStamina(this.staminaSpeed, this.speed, 65);
-    }
-    
-    updateDaillyFitness(): void {
-        if(this.staminaSpeed < this.speed){
-            this.staminaSpeed = Utils.precisionRound(this.staminaSpeed + 
-                    (this.staminaSpeed * 0.08 * (this.endurance/20)), 2);
-            if(this.staminaSpeed > this.speed){
-                this.staminaSpeed = this.speed;
-            } 
-        }
-        this.calculateStaminaDisplay();
-    }
-    
-    recalculatePrice(){
-        this.price = Math.round(( ( SPEED_SKILL_PRICE * ( this.speed * ( this.speed / 10 ) ) )
-                + ( ENDURANCE_SKILL_PRICE * ( this.endurance * ( this.endurance / 10 ) ) )
-                + ( ACCELERATION_SKILL_PRICE * ( this.acceleration * ( this.acceleration / 10 ) ) ) ) /
-                TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
-         
-    }
 
     constructor( id: number, name: string, speed: number, endurance: number, acceleration: number, form: number ) {
         this.id = id;
@@ -73,6 +47,33 @@ export class Horse {
         this.form = form;
         this.owned = false;
     }
+
+    calculateForm(): void {
+        this.form = Utils.getRandomInt( HorseForm.BAD, HorseForm.GOOD );
+    };
+
+    calculateStaminaDisplay(): void{
+        this.staminaDisplay = Utils.calculateDisplayStamina(this.staminaSpeed, this.speed, 65);
+    }
+
+    updateDaillyFitness(): void {
+        if (this.staminaSpeed < this.speed){
+            this.staminaSpeed = Utils.precisionRound(this.staminaSpeed +
+                    (this.staminaSpeed * 0.08 * (this.endurance / 20)), 2);
+            if (this.staminaSpeed > this.speed){
+                this.staminaSpeed = this.speed;
+            }
+        }
+        this.calculateStaminaDisplay();
+    }
+
+    recalculatePrice(){
+        this.price = Math.round(( ( SPEED_SKILL_PRICE * ( this.speed * ( this.speed / 10 ) ) )
+                + ( ENDURANCE_SKILL_PRICE * ( this.endurance * ( this.endurance / 10 ) ) )
+                + ( ACCELERATION_SKILL_PRICE * ( this.acceleration * ( this.acceleration / 10 ) ) ) ) /
+                TOTAL_SKILL_PRICE ) * SKILL_TO_PRICE_MULTIPLIER;
+
+    }
 }
 
 export enum RaceEffort {
@@ -82,10 +83,10 @@ export enum RaceEffort {
 }
 
 export enum RaceTactic {
-    None = "None",
-    Lead = "Lead Race",
-    Pursuit = "Pursuit the Lead",
-    InThePack = "Stay in the Back"
+    None = 'None',
+    Lead = 'Lead Race',
+    Pursuit = 'Pursuit the Lead',
+    InThePack = 'Stay in the Back'
 }
 
 export class HorseInRace {
@@ -113,28 +114,41 @@ export class HorseInRace {
         this.speed = horse.staminaSpeed;
         this.fullStamina = Math.round(( horse.endurance * 1.7 ) - 11 );
         this.currentStamina = this.fullStamina;
-       
-        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration-5)/1.8, 2);
+
+        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration - 5) / 1.8, 2);
         this.color = color;
         this.cssBackground = cssBackground;
         this.distanceDone = 0;
         this.cssLeft = 12;
-      
+
         this.raceEffort = RaceEffort.Everything;
         this.tactic = RaceTactic.InThePack;
         this.staminaDisplay = 100;
         this.sinceLastLaneChange = 0;
     }
-    
+
     setTrack(track: number){
         this.track = track;
         this.cssBaseTop = GameConstants.BORDER_HEIGHT + (this.track - 1) * Race.RACETRACK_HEIGHT;
         this.cssTop =  this.cssBaseTop;
     }
-    
+
     updateAcc(){
-        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration-5)/1.8, 2);
+        this.currentAcceleration = Utils.precisionRound(Math.log10(this.baseHorse.acceleration - 5) / 1.8, 2);
     }
+}
+
+
+function getSpeedPrice( speed: number ) {
+    return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getAccelerationPrice( acceleration: number ) {
+    return Math.round( ACCELERATION_SKILL_PRICE * ( acceleration * ( acceleration / 10 ) ) / TOTAL_SKILL_PRICE );
+}
+
+function getEndurancePrice( endurance: number ) {
+    return Math.round( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) / TOTAL_SKILL_PRICE );
 }
 
 export class TrainingHorse {
@@ -149,16 +163,4 @@ export class TrainingHorse {
         this.trainEndurancePrice = getEndurancePrice( horse.endurance ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
         this.trainAccelerationPrice = getAccelerationPrice( horse.acceleration ) * SKILL_TO_PRICE_MULTIPLIER * TRAINING_PRICE;
     }
-}
-
-function getSpeedPrice( speed: number ) {
-    return Math.round( SPEED_SKILL_PRICE * ( speed * ( speed / 10 ) ) / TOTAL_SKILL_PRICE );
-}
-
-function getAccelerationPrice( acceleration: number ) {
-    return Math.round( ACCELERATION_SKILL_PRICE * ( acceleration * ( acceleration / 10 ) ) / TOTAL_SKILL_PRICE ); 
-}
-
-function getEndurancePrice( endurance: number ) {
-    return Math.round( ENDURANCE_SKILL_PRICE * ( endurance * ( endurance / 10 ) ) / TOTAL_SKILL_PRICE ); 
 }
