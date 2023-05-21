@@ -4,17 +4,19 @@ import { CommonService } from './services/common.service';
 import { Horse, HorseInRace, HorseForm } from './horse';
 import { RaceInstance, RaceState } from './raceinstance';
 import { Race } from './race';
-import { Utils } from 'src/app/model/utils';
+import { TrackingUtils, Utils } from 'src/app/model/utils';
 import { TeamInLeague } from 'src/app/model/league';
 
 describe( 'RaceInstance', () => {
     let commonService: CommonService;
+    let utils: TrackingUtils;
     let testRace: Race;
 
     beforeEach(() => {
         jasmine.clock().install();
         jasmine.clock().mockDate();
         commonService = new CommonService( null, null );
+        utils = new TrackingUtils(null);
 
         testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [500, 220, 100] );
     } );
@@ -41,7 +43,7 @@ describe( 'RaceInstance', () => {
 
     it( 'Test race instance creation', () => {
         setTestHorseWithSpeed( 90 );
-        const raceInstance = new RaceInstance( testRace, commonService, [], true, false);
+        const raceInstance = new RaceInstance( testRace, commonService, utils, [], true, false);
         expect( raceInstance.state ).toBe( RaceState.PreRace );
         expect( raceInstance.horses.length ).toBe( 1 );
         expect( raceInstance.roundTrack ).toBe( false );
@@ -57,7 +59,7 @@ describe( 'RaceInstance', () => {
         teams.push(playerTeam);
         commonService.getPlayer().team = playerTeam;
 
-        const raceInstance = new RaceInstance( testRace, commonService, teams, true, false );
+        const raceInstance = new RaceInstance( testRace, commonService, utils, teams, true, false );
         const startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
         raceInstance.tickTime = 1;
@@ -91,7 +93,7 @@ describe( 'RaceInstance', () => {
         teams.push(playerTeam);
         commonService.getPlayer().team = playerTeam;
 
-        const raceInstance = new RaceInstance( testRace, commonService, teams, true, false);
+        const raceInstance = new RaceInstance( testRace, commonService, utils, teams, true, false);
 
         const startMoney: number = commonService.gameInstance.playerOne.money;
         raceInstance.startTimeout = 0;
@@ -121,7 +123,7 @@ describe( 'RaceInstance', () => {
 
             // Reset Stamina on player horse:
             commonService.gameInstance.playerOne.horses[0].staminaSpeed = commonService.gameInstance.playerOne.horses[0].speed;
-            const raceInstance = new RaceInstance( race, commonService, [], true, false);
+            const raceInstance = new RaceInstance( race, commonService, utils, [], true, false);
 
             const botInRace: HorseInRace = new HorseInRace( bot, null, null, new TeamInLeague(bot, null, null, false));
             raceInstance.addHorse( botInRace );

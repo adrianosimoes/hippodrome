@@ -4,7 +4,7 @@ import { Horse, TrainingHorse } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
 import { CommonService } from '../../model/services/common.service';
-import { Utils } from '../../model/utils';
+import { TrackingUtils, Utils } from '../../model/utils';
 
 class LevelUpHorse {
     baseHorse: Horse;
@@ -46,7 +46,7 @@ export class LevelUpComponent implements OnInit {
     levelSkillPoints: number;
     skillPoints: number;
 
-    constructor( private router: Router, public commonService: CommonService ) { }
+    constructor( private router: Router, private trackingUtils: TrackingUtils, public commonService: CommonService ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
@@ -80,7 +80,7 @@ export class LevelUpComponent implements OnInit {
             horse.confirmSkillUp();
         }
         this.currPlayer.skillPoints = this.skillPoints;
-        Utils.clickyPagView('levelUp?level=' + this.newLevel, 'Level Up:' + ' money:' +  this.commonService.gameInstance.playerOne.money
+        this.trackingUtils.trackEvent('levelUp', '?level=' + this.newLevel , ' Level Up:' + ' money:' +  this.commonService.gameInstance.playerOne.money
             + ' skillPoints:' +  this.currPlayer.skillPoints
             + ' prestige:' +  this.commonService.gameInstance.playerOne.xpPoints
             + ' victories:' +  this.commonService.gameInstance.playerOne.victories

@@ -1,33 +1,45 @@
+import { Injectable } from "@angular/core";
+import { CustomEventsService } from "@piwikpro/ngx-piwik-pro";
+
+@Injectable({
+    providedIn: 'root'
+})
+export class TrackingUtils {
+    constructor(private customEventsService: CustomEventsService) { }
+
+    trackEvent(type: string, firstValue: string, secondValue?: string) {
+        try {
+            this.customEventsService.trackEvent(type, firstValue, secondValue);
+        } catch (e) {
+            // Analytics not available
+        }
+    }
+}
+
 export class Utils {
-
-    static getRandomInt( initial: number, max: number ): number {
-        return Math.floor(( Math.random() * ( max - initial + 1 ) ) + initial );
+    static getRandomInt(initial: number, max: number): number {
+        return Math.floor((Math.random() * (max - initial + 1)) + initial);
     }
 
-    static clickyPagView( url: string, name: string ) {
-        // No tracking.
-    }
-
-
-    static randomizeArray( a ): void {
+    static randomizeArray(a): void {
         let b, c, d;
-        c = a.length; while ( c ) {
-            b = Math.random() * ( --c + 1 ) | 0, d = a[c], a[c] = a[b], a[b] = d;
+        c = a.length; while (c) {
+            b = Math.random() * (--c + 1) | 0, d = a[c], a[c] = a[b], a[b] = d;
         }
     }
 
-    static stableSort<T>( self: T[], cmp: Comparator<T> = defaultCmp ): T[] {
-        const stabilized = self.map(( el, index ) => <[T, number]>[el, index] );
-        const stableCmp: Comparator<[T, number]> = ( a, b ) => {
-            const order = cmp( a[0], b[0] );
-            if ( order != 0 ) {
+    static stableSort<T>(self: T[], cmp: Comparator<T> = defaultCmp): T[] {
+        const stabilized = self.map((el, index) => <[T, number]>[el, index]);
+        const stableCmp: Comparator<[T, number]> = (a, b) => {
+            const order = cmp(a[0], b[0]);
+            if (order != 0) {
                 return order;
             }
             return a[1] - b[1];
         };
 
-        stabilized.sort( stableCmp );
-        for ( let i = 0; i < self.length; i++ ) {
+        stabilized.sort(stableCmp);
+        for (let i = 0; i < self.length; i++) {
             self[i] = stabilized[i][0];
         }
 
@@ -35,63 +47,63 @@ export class Utils {
 
     }
 
-    static precisionRound( number, precision ) {
-        const factor = Math.pow( 10, precision );
-        return Math.round( number * factor ) / factor;
+    static precisionRound(number, precision) {
+        const factor = Math.pow(10, precision);
+        return Math.round(number * factor) / factor;
     }
 
     static devMode() {
-        return window.location.href.startsWith( 'http://127.0.0.1', 0 );
+        return window.location.href.startsWith('http://127.0.0.1', 0);
     }
 
-    static calculateDisplayStamina( speed: number, maxSpeed: number, baseValue: number ): number {
-        return baseValue - ( speed - ( maxSpeed / 2 ) ) /
-            ( maxSpeed - ( maxSpeed / 2 ) ) * baseValue;
+    static calculateDisplayStamina(speed: number, maxSpeed: number, baseValue: number): number {
+        return baseValue - (speed - (maxSpeed / 2)) /
+            (maxSpeed - (maxSpeed / 2)) * baseValue;
     }
 
-    static getCssBackground( color: string, secColor: string, silkType: number ): string {
-        if ( silkType == 2 ) {
+    static getCssBackground(color: string, secColor: string, silkType: number): string {
+        if (silkType == 2) {
             return color; // use simple color.
-        } else if ( silkType == 0 ) {
+        } else if (silkType == 0) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if ( silkType == 1 ) {
+        } else if (silkType == 1) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 38px, ' + secColor + ' 38px , ' + secColor + ' 80px )';
-        } else if ( silkType == 3 ) {
+        } else if (silkType == 3) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if ( silkType == 4 ) {
+        } else if (silkType == 4) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if ( silkType == 5 ) {
+        } else if (silkType == 5) {
             return 'repeating-radial-gradient( circle, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 120px )';
-        } else if ( silkType == 6 ) {
+        } else if (silkType == 6) {
             return 'repeating-radial-gradient( circle, ' +
                 color + ' , ' + color + ' 45px, ' + secColor + ' 45px , ' + secColor + ' 120px )';
-        } else if ( silkType == 7 ) {
+        } else if (silkType == 7) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if ( silkType == 8 ) {
+        } else if (silkType == 8) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if ( silkType == 9 ) {
+        } else if (silkType == 9) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if ( silkType == 10 ) {
+        } else if (silkType == 10) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if ( silkType == 11 ) {
+        } else if (silkType == 11) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if ( silkType == 12 ) {
+        } else if (silkType == 12) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if ( silkType == 13 ) {
+        } else if (silkType == 13) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if ( silkType == 12 ) {
+        } else if (silkType == 12) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
         }
@@ -99,13 +111,13 @@ export class Utils {
 
 }
 
-type Comparator<T> = ( a: T, b: T ) => number;
+type Comparator<T> = (a: T, b: T) => number;
 
-const defaultCmp: Comparator<any> = ( a, b ) => {
-    if ( a < b ) {
+const defaultCmp: Comparator<any> = (a, b) => {
+    if (a < b) {
         return -1;
     }
-    if ( a > b ) {
+    if (a > b) {
         return 1;
     }
     return 0;

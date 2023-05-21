@@ -4,7 +4,7 @@ import { Horse, TrainingHorse, HorseSkills } from '../../model/horse';
 import { Player } from '../../model/player';
 import { Trainer } from '../../model/trainer';
 import { CommonService } from '../../model/services/common.service';
-import { Utils } from '../../model/utils';
+import { TrackingUtils, Utils } from '../../model/utils';
 
 @Component( {
     selector: 'app-training',
@@ -16,7 +16,7 @@ export class TrainingComponent implements OnInit {
     currPlayer: Player;
     debug: boolean = Utils.devMode();
 
-    constructor( private router: Router, public commonService: CommonService ) { }
+    constructor( private router: Router, private utils: TrackingUtils, public commonService: CommonService ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
@@ -56,7 +56,7 @@ export class TrainingComponent implements OnInit {
     buyTrainer( trainer: Trainer ): void {
         const success = this.commonService.buyTrainer( this.currPlayer, trainer );
         if ( success ) {
-            Utils.clickyPagView('buyTrainer' , 'Buy Trainer: ' + trainer.name);
+            this.utils.trackEvent('buyTrainer' , 'Buy Trainer: ' + trainer.name);
             this.reload();
         } else {
             alert( 'Not enough money' );
@@ -66,7 +66,7 @@ export class TrainingComponent implements OnInit {
     upgradeTrainer( trainer: Trainer ): void {
         const success = this.commonService.upgradeTrainer( this.currPlayer, trainer );
         if ( success ) {
-            Utils.clickyPagView('upgradeTrainer', 'Upgrade Trainer: ' +  + trainer.name + ' q:' + trainer.quality);
+            this.utils.trackEvent('upgradeTrainer', 'Upgrade Trainer: ' +  + trainer.name + ' q:' + trainer.quality);
             this.reload();
         } else {
             alert( 'Not enough money' );

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { CommonService } from '../../model/services/common.service';
 import { Horse } from '../../model/horse';
 import { Player } from '../../model/player';
-import { Utils } from 'src/app/model/utils';
+import { TrackingUtils, Utils } from 'src/app/model/utils';
 import { RaceInstance } from 'src/app/model/raceinstance';
 
 
@@ -21,7 +21,7 @@ export class HorseComponent implements OnInit {
 
     public commonService: CommonService;
 
-    constructor( private router: Router, private commService: CommonService ) { }
+    constructor( private router: Router, private commService: CommonService, private trackingUtils:TrackingUtils) { }
 
     ngOnInit() {
         this.commonService = this.commService;
@@ -30,7 +30,7 @@ export class HorseComponent implements OnInit {
     buyHorse(): void {
         const success = this.commonService.addHorseToPlayer( this.horse );
         if ( success ) {
-            Utils.clickyPagView('buyHorse', 'BuyHorse: ' + this.horse.id + ' name:' + this.horse.name);
+            this.trackingUtils.trackEvent('buyHorse', 'BuyHorse: ' + this.horse.id + ' name:' + this.horse.name);
             this.router.navigate( ['main']);
         } else {
             alert( 'Not enough money' );

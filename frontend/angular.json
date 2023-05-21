@@ -47,6 +47,10 @@
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true
+            },
+            "development": {
+              "optimization": false,
+              "sourceMap": true
             }
           }
         },

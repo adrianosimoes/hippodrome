@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { Player } from '../../model/player';
 import { CommonService } from '../../model/services/common.service';
 import { GameInstance } from '../../model/gameinstance';
-import { Utils } from 'src/app/model/utils';
+import { TrackingUtils, Utils } from 'src/app/model/utils';
 
 
 
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     savedGame: GameInstance;
 
 
-    constructor( private router: Router, private commonService: CommonService ) { }
+    constructor( private router: Router, private commonService: CommonService, private utils: TrackingUtils) { }
 
     ngOnInit() {
         this.player = this.commonService.getPlayer();
@@ -28,14 +28,14 @@ export class LoginComponent implements OnInit {
         if (this.player.name == ''){
             this.player.name = 'The McCoys';
         }
-        Utils.clickyPagView( 'startGame', 'Start Game: ' + this.player.name + ' silk:' + this.player.calculateBackground);
+        this.utils.trackEvent( 'startGame', 'Start Game: ' + this.player.name + ' silk:' + this.player.calculateBackground);
         this.router.navigate( ['shop'] );
         this.commonService.setInitialized();
     }
 
     loadGame(): void {
         this.commonService.loadSavedGame();
-        Utils.clickyPagView('loadGame', 'Load Game: ' + 'money=' +  this.commonService.gameInstance.playerOne.money
+        this.utils.trackEvent('loadGame', 'Load Game: ' + 'money=' +  this.commonService.gameInstance.playerOne.money
                 + ' prestige:' +  this.commonService.gameInstance.playerOne.xpPoints
                 + ' victories:' +  this.commonService.gameInstance.playerOne.victories
                 + ' races:' +  this.commonService.gameInstance.playerOne.totalRaces
