@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { InitService } from './init.service';
 import { GameInstance } from '../gameinstance';
-import { Utils, StaticData } from '../utils';
+import { Utils, StaticData, TrackingUtils } from '../utils';
 import { Player } from '../player';
 import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
 import { Race, } from '../race';
@@ -36,7 +36,7 @@ export class CommonService {
     public loading: boolean;
     public loadingText: string;
 
-    constructor( private router: Router, private currencyPipe: CurrencyPipe ) {
+    constructor(private currencyPipe: CurrencyPipe, private utils: TrackingUtils) {
         this.horsesInShop = [];
         this.trainersToSell = [];
         this.xpPerLevel = [];
@@ -113,7 +113,7 @@ export class CommonService {
 
     exhibition(): void {
         this.loading = true;
-        Utils.clickyPagView( 'exhibition', 'Exhibition:' + this.gameInstance.playerOne.money );
+        this.utils.trackEvent( 'exhibition', 'Exhibition:' + this.gameInstance.playerOne.money );
         this.gameInstance.playerOne.money += 100;
         this.nextWeek( null );
         this.loadingText = 'You participated in a exhibition and earned 100 €. \n Waiting 5 seconds.';
@@ -161,7 +161,7 @@ export class CommonService {
     }
 
     simulateRace( league: League, race: Race, isOwnRace: boolean ) {
-        const currRaceInstance = new RaceInstance( race, this, league.teamsInLeague, isOwnRace, true );
+        const currRaceInstance = new RaceInstance( race, this, this.utils, league.teamsInLeague, isOwnRace, true );
         currRaceInstance.startRace();
     }
 

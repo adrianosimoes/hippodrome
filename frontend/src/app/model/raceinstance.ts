@@ -3,7 +3,7 @@ import { RaceComponent } from '../screens/race/race.component';
 import { Race } from './race';
 import { CommonService } from './services/common.service';
 import { Player } from './player';
-import { Utils } from './utils';
+import { TrackingUtils, Utils } from './utils';
 import { GameConstants } from 'src/app/model/services/gameconstants';
 import { TeamInLeague } from 'src/app/model/league';
 
@@ -66,7 +66,7 @@ export class RaceInstance {
     tickTime: number = TICK_MILLISECONDS;
     bonusText: string;
 
-    constructor( race: Race, commonService: CommonService, teamsInLeague: TeamInLeague[], isOwnRace: boolean, simulate: boolean ) {
+    constructor( race: Race, commonService: CommonService, private utils: TrackingUtils, teamsInLeague: TeamInLeague[], isOwnRace: boolean, simulate: boolean ) {
         this.baseRace = race;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
@@ -471,7 +471,7 @@ export class RaceInstance {
                     }
                 }
             }
-            Utils.clickyPagView( 'finishRace?race=' +  this.baseRace.id + '&place=' + this.place, 'Finished Race:' + this.baseRace.id + ' place:' + this.place
+            this.utils.trackEvent( 'finishRace', '?race=' +  this.baseRace.id + '&place=' + this.place, 'Finished Race:' + this.baseRace.id + ' place:' + this.place
                 + ' form' + this.playerHorse.baseHorse.form + ' tactic:' + this.playerHorse.tactic + ' strategy:' + this.playerHorse.raceEffort
                 + ' points:' + this.player.xpPoints );
         }

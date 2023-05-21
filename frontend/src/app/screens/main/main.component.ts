@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Player } from '../../model/player';
-import { Utils } from '../../model/utils';
 
 import { GameInstance } from '../../model/gameinstance';
 import { CommonService } from '../../model/services/common.service';
 import { League } from 'src/app/model/league';
+import { Utils } from 'src/app/model/utils';
 
 
 @Component( {
@@ -20,7 +20,7 @@ export class MainComponent implements OnInit {
     xpNextLevel: number;
     warningText = '';
 
-    constructor( private router: Router, public commonService: CommonService ) { }
+    constructor(private router: Router, public commonService: CommonService ) { }
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {

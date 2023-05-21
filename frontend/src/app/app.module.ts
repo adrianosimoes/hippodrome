@@ -20,6 +20,7 @@ import { CurrencyPipe } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatRadioModule } from '@angular/material/radio';
+import { NgxPiwikProModule } from '@piwikpro/ngx-piwik-pro';
 
 @NgModule({
     declarations: [
@@ -42,7 +43,8 @@ import { MatRadioModule } from '@angular/material/radio';
         BrowserModule,
         FormsModule,
         MatRadioModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgxPiwikProModule.forRoot('12f86b6c-60d8-4cc1-a9a5-927a041f84d7', 'https://thehippodrome.containers.piwik.pro')
     ],
     providers: [CurrencyPipe],
     bootstrap: [AppComponent]

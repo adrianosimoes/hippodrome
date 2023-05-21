@@ -3,12 +3,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 
 import { MainComponent } from './main.component';
 import { HorseComponent } from '../../widget//horse/horse.component';
-import { FormStringPipe, RaceDifficultyPipe } from '../../model/pipehelpers';
-import { CommonService } from '../../model/services/common.service';
+import { FormStringPipe, } from '../../model/pipehelpers';
 import { CurrencyPipe } from '@angular/common';
-
-
-
 
 describe('MainComponent', () => {
     let component: MainComponent;
@@ -17,7 +13,7 @@ describe('MainComponent', () => {
     beforeEach(async(() => {
         TestBed.configureTestingModule({
             imports: [RouterTestingModule],
-            declarations: [ MainComponent, HorseComponent, FormStringPipe ],
+            declarations: [ MainComponent, HorseComponent, FormStringPipe],
             providers: [CurrencyPipe]
         })
             .compileComponents();
