@@ -29,11 +29,6 @@ h3{
 		3px 3px #444;
 }
 
-button.reset{
-	padding: 0px 3px 0px 3px;
-	margin-left: 20px;
-}
-
 .skillHelpText{
 	padding-top: 5px;
 }
@@ -43,8 +38,12 @@ button.reset{
 	vertical-align: center;
 }
 
-.skillButton{
-	padding: 0px 3px 0px 3px;
+button.secondary{
+	padding: 0px 6px;
+}
+
+button.reset{
+	margin-left: 20px;
 }
 
 .space {

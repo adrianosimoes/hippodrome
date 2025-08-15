@@ -19,7 +19,7 @@
 		{{savedGame.playerOne.money | currency: 'EUR' : 'symbol':'1.0-0' }} <br /> Date:
 		{{savedGame.date | date: "fullDate"}}
 		<div class="formButtonArea">
-			<button (click)="loadGame()">Load Game</button>
+			<button class="primary" (click)="loadGame()">Load Game</button>
 		</div>
 	</div>
 	<div class="newGame border">
@@ -43,7 +43,7 @@
 			</div>
 			<div class="label">
 				<label>Silk Shape:
-					<button (click)="nextSilkType()">Next</button>
+					<button class="secondary" (click)="nextSilkType()">Next</button>
 				</label>
 			</div>
 		</div>
@@ -57,7 +57,7 @@
 		</div>
 
 		<div class="formButtonArea">
-			<button (click)="saveForm()">Continue</button>
+			<button class="primary" (click)="saveForm()">Continue</button>
 		</div>
 	</div>
 	<div class="clear"></div>

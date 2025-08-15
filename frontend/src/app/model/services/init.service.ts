@@ -81,10 +81,6 @@ export class InitService {
     }
 
     static initXPPerLevel( xpPerLevel: number[] ) {
-        if ( Utils.devMode() ) {
-            GameConstants.BASE_XP = 20;
-        }
-
         let sum = 0;
         for ( let i = 0; i < 200; i++ ) {
             if ( i == 1 ) {

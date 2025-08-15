@@ -18,6 +18,8 @@ export class HorseComponent implements OnInit {
     @Input() auction: boolean;
     @Input() selectable: boolean;
     @Input() editable: boolean;
+    
+    playerMoney: number;
 
     public commonService: CommonService;
 
@@ -25,6 +27,7 @@ export class HorseComponent implements OnInit {
 
     ngOnInit() {
         this.commonService = this.commService;
+        this.playerMoney = this.commService.getPlayer().money;
     }
 
     buyHorse(): void {

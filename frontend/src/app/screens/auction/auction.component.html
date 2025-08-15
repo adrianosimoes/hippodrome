@@ -6,11 +6,10 @@
 		<div class="auctionForm">
 			<div *ngIf="!auctionHorse.owned">
 				<input class="inputPrice" min="0" type="number" step="100" [(ngModel)]="bidValue" placeholder="0 &euro;"/>
-				<button (click)="bid()" [disabled]="auctionResult"><span *ngIf="bidValue>0">Bid {{bidValue | currency: 'EUR' : 'symbol':'1.0-0'}}</span><span *ngIf="bidValue<=0">No Bid</span></button>
+				<button class="secondary" (click)="bid()" [disabled]="auctionResult"><span *ngIf="bidValue>0">Bid {{bidValue | currency: 'EUR' : 'symbol':'1.0-0'}}</span><span *ngIf="bidValue<=0">No Bid</span></button>
 			</div>
 			<div *ngIf="auctionResult" class="auctionResult">
 				<div>{{auctionResult}}</div>
-				<button *ngIf="auctionEnded" (click)="mainScreen()">Continue</button>
 				<div class="clear"></div>
 			</div>
 		</div>
@@ -18,6 +17,6 @@
 	</div>
 	<div class="clear"></div>
 	<div class="formButtonArea">
-		<button *ngIf="auctionHorse && !auctionHorse.owned" (click)="mainScreen()">Skip Auction</button>
+		<button [disabled]="auctionHorse.owned && !auctionEnded" *ngIf="auctionHorse" class="primary" (click)="mainScreen()">{{auctionEnded ? "Continue" : "Skip Auction"}}</button>
 	</div>	
 </div>

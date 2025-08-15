@@ -3,6 +3,6 @@
 	Money: {{currPlayer.money | currency: 'EUR' : 'symbol':'1.0-0'}}
   	<div  class="horsesContainer" *ngFor="let currHorse of horses"><horse [horse]="currHorse"></horse></div> 
 <div class="formButtonArea">
-	<button (click)="mainScreen()">Continue</button>
+	<button class="primary" (click)="mainScreen()">Continue</button>
 </div>	
 </div>

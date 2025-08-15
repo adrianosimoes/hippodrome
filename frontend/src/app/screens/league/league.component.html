@@ -1,6 +1,6 @@
 <div id="pickRace"  class="screen">
 	<h3>Leagues</h3>
-	<div><button (click)="next()">Continue</button></div>	  	
+	<div><button class="primary"  (click)="next()">Continue</button></div>	  	
   	<div  class="raceLeague level{{currLeague.difficulty}}" *ngFor="let currLeague of leagues">
 	  	<h4>{{currLeague.name}}</h4>
 	  	<div>Difficulty: {{currLeague.difficulty | racedifficulty}}</div>

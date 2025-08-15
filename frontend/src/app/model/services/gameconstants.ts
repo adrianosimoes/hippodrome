@@ -6,7 +6,7 @@ export class GameConstants {
 
     static SEASON_DEFINITION: number[] = [0, 1, LeagueDay.NO_RACE, 2, 3, LeagueDay.END_OF_SEASON_DAY_1, LeagueDay.END_OF_SEASON_DAY_2];
 
-    static BASE_XP = 60;
+    static BASE_XP = 20;
 
     static MAX_SILK_ID = 13;
 

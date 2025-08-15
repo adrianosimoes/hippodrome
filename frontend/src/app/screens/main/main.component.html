@@ -16,9 +16,9 @@
 			Races: {{currPlayer.totalRaces}}<br/>
 			<div class="horizontalDivision"></div>
 			<div class="mainButtonArea">
-					<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoTraining()">TRAINERS</button>
-					<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="gotoArea" (click)="gotoStables()">STABLES</button>
-					<button [disabled]="commonService.loading" class="gotoArea" (click)="gotoShop()">SHOP</button>
+					<button [disabled]="commonService.loading" class="secondary" (click)="gotoTraining()">TRAINERS</button>
+					<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="gotoArea secondary" (click)="gotoStables()">STABLES</button>
+					<button [disabled]="commonService.loading" class="secondary" (click)="gotoShop()">SHOP</button>
 			</div>
 		</div>
 		<div class="verticalDivision"></div>
@@ -30,11 +30,11 @@
 			<h4>{{commonService.getCurrentLeague().name}}<br/>
 			{{commonService.getWeekDescription()}}</h4>
 			<div class="mainButtonArea">
-				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race" (click)="next()"><span *ngIf="this.commonService.getThisWeekRaceIndex()>=0">RACE</span><span *ngIf="this.commonService.getThisWeekRaceIndex()<0">Next Week</span></button>
+				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race primary" (click)="next()"><span *ngIf="this.commonService.getThisWeekRaceIndex()>=0">RACE</span><span *ngIf="this.commonService.getThisWeekRaceIndex()<0">Next Week</span></button>
 				<!-- <button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>  -->
 				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race or exhibit.</div> 
 				<button class="skip" *ngIf="utils.devMode()" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
-				<button class="exhibition" (click)="gotoLeague()">League</button>
+				<button class="secondary" (click)="gotoLeague()">League</button>
 			</div>
 		</div>
 	</div>

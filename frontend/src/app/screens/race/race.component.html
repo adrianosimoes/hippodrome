@@ -39,7 +39,7 @@
 	    		</div>
 	    	</div>
 		</div>
-		<div class="buttonArea"><button [disabled]="!(currRace.player.money >= currRace.baseRace.entranceFee)" class="race" (click)="startRace()">Start Race</button>
+		<div class="buttonArea"><button [disabled]="!(currRace.player.money >= currRace.baseRace.entranceFee)" class="race primary" (click)="startRace()">Start Race</button>
 		<span *ngIf="!(currRace.player.money >= currRace.baseRace.entranceFee)">Not enough money to pay entrance fee.</span>
 		<button (click)="skipRace()" class="skip">Skip Race</button>
 		</div> 		

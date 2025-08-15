@@ -6,7 +6,7 @@
 		<span *ngIf="horse.owned && !auction">	Form: {{horse.form | formstring}}<br/></span>
 		<span *ngIf="horse.owned && !auction"><span class="left">Stamina:</span><div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="horse.staminaDisplay" [ngClass]="{'noBorder': horse.staminaDisplay==0}"  ></div></div><br /></span> 
 		<span class="price" *ngIf="!horse.owned || auction || editable"><span *ngIf="!(auction || editable)">Price: </span><span *ngIf="auction || editable">Value: </span> {{horse.price | currency: 'EUR' : 'symbol':'1.0-0'}}<br /></span> 
-		<div class="buttonArea" *ngIf="!auction && !horse.owned"><button (click)="buyHorse()" >Buy</button></div>
-		<div class="buttonArea" *ngIf="editable"><button (click)="sellHorse()" >Sell at Auction</button></div>
-		<div class="buttonArea" *ngIf="(selectable) && commonService.gameInstance.playerOne.horses.length > 1"><button class="select"  *ngIf="(selectable) && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()">Select</button></div>
+		<div class="buttonArea" *ngIf="!auction && !horse.owned"><button [disabled]="horse.price>playerMoney" class="secondary" (click)="buyHorse()" >Buy</button></div>
+		<div class="buttonArea" *ngIf="editable"><button class="secondary" (click)="sellHorse()" >Sell at Auction</button></div>
+		<div class="buttonArea" *ngIf="(selectable) && commonService.gameInstance.playerOne.horses.length > 1"><button class="select secondary" *ngIf="(selectable) && horse.id != commonService.gameInstance.playerOne.selectedHorseId" (click)="selectHorse()">Select</button></div>
 </div>

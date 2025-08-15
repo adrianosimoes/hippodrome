@@ -2,9 +2,6 @@
 	display: flex;
 }
 
-.title{
-}
-
 .horseView {
 	width: 369px;
 	float: left;
@@ -60,37 +57,18 @@ horse {
 
 .playerView .mainButtonArea button{
 	margin-right: 10px;
-	background: #fff;
 	width: 95px;
 	padding: 5px 5px 5px 5px;
 }
 
 button{
 	padding: 5px 20px 5px 20px;
-	color: #ddd;
-}
-
-button.race{
-	background-color: #00ca00;
-	color: #222;	
-}
-
-button.gotoArea{
-	background-color: #bbb;
-	color: #000;
-}
-
-button.exhibition{
-	background-color: #006df2;
-	color: #ddd;
-	
 }
 
 button.skip{
 	background-color: #000 !important;
 	color: #ddd;
 }
-
 
 .buttonWarning{
 	margin-bottom: 20px;

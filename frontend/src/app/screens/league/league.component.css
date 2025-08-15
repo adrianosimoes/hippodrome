@@ -4,8 +4,8 @@
 	float: left;
 	border: 5px solid #ffffff;
 	width: 320px;
-	box-shadow:
-		3px 3px #666;
+	box-shadow: 3px 3px #666;
+	font-size: 22px;
 }
 
 .raceLeague  >div {
