@@ -38,6 +38,8 @@ export class RaceComponent implements OnInit {
     }
 
     startRace(): void {
+        // Pay entrace fee:
+        this.commonService.getPlayer().money -= this.currRace.baseRace.entranceFee;
         this.currRace.startRace();
     }
 
@@ -49,8 +51,7 @@ export class RaceComponent implements OnInit {
 
     exitRace() {
         this.commonService.updateLeagues();
-        this.commonService.setAuctionHorse(this.currRace.getAuctionHorse());
-        this.router.navigate( ['league', 'auction'] );
+        this.router.navigate( ['league', 'nextWeek'] );
     }
 
     ngOnDestroy() {

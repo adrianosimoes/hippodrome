@@ -26,14 +26,14 @@
 			<horse *ngFor="let currHorse of currPlayer.horses"  [horse]="currHorse" [selectable]="true"></horse>
 		</div>
 		<div class="verticalDivision"></div>
-		<div class="nextArea">
-			<h4>{{commonService.getCurrentLeague().name}}<br/>
-			{{commonService.getWeekDescription()}}</h4>
+		<div class="rightArea">
+			<h4>{{commonService.getCurrentLeague().name}}</h4>
 			<div class="mainButtonArea">
-				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race primary" (click)="next()"><span *ngIf="this.commonService.getThisWeekRaceIndex()>=0">RACE</span><span *ngIf="this.commonService.getThisWeekRaceIndex()<0">Next Week</span></button>
+				<button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="race primary" (click)="next()"><span *ngIf="this.commonService.getThisWeekRaceIndex()>=0">RACE</span><span *ngIf="this.commonService.getThisWeekRaceIndex()<0">Next (Auction)</span></button>
 				<!-- <button [disabled]="commonService.loading || !(this.currPlayer.horses.length >= 1)" class="exhibition" (click)="gotoExhibition()">EXHIBITION</button>  -->
 				<div *ngIf="!(this.currPlayer.horses.length >= 1)" class="buttonWarning"> You need at least 1 horse to race or exhibit.</div> 
-				<button class="skip" *ngIf="utils.devMode()" [disabled]="commonService.loading" (click)="skipDay()">Skip Day</button>
+				{{commonService.getWeekDescription()}}<br/>
+				{{commonService.getRacedDaysDescription()}}<br/>
 				<button class="secondary" (click)="gotoLeague()">League</button>
 			</div>
 		</div>

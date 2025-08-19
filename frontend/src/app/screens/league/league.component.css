@@ -36,8 +36,7 @@ button {
 }
 
 .leagueTable {
-	margin: 15px;
-	background-color: #fff;
+	margin: 15px 0px;
 }
 
 .leagueHeader div{
@@ -48,6 +47,7 @@ button {
 
 .leagueRow{
 	display: table-row;
+	background-color: #fff;
 }
 
 .leagueRow div {

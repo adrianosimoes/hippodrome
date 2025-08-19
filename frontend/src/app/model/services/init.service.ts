@@ -35,7 +35,7 @@ export class InitService {
     }
 
     static initRaces( leagues: League[] ) {
-        let league = new League( 1, 2, 'Ungraded', 0, 6 );
+        let league = new League( 1, 2, 'Division 4', 0, 6 );
         leagues.push( league );
 
         let id = 1;
@@ -46,7 +46,7 @@ export class InitService {
         league.addRace( new Race( id++, 2, 'Haverfordwest', 750, '#dce2a5', 100, 6, [500, 220, 100] ) );
 
 
-        league = new League( 2, 3, 'Group 3', 5, 8 );
+        league = new League( 2, 3, 'Division 3', 5, 8 );
         leagues.push( league );
 
         league.addRace( new Race( id++, 3, 'Aberystwyth', 450, '#1fba1f', 200, 8, [1300, 600, 270] ) );
@@ -54,7 +54,7 @@ export class InitService {
         league.addRace( new Race( id++, 3, 'Hurst Park', 700, '#9ec629', 200, 8, [1300, 600, 270] ) );
         league.addRace( new Race( id++, 3, 'Seaton Delaval Stakes', 800, '#d7e091', 200, 8, [1300, 600, 270] ) );
 
-        league = new League( 3, 5, 'Group 2', 10, 8 );
+        league = new League( 3, 5, 'Division 2', 10, 8 );
         leagues.push( league );
 
         league.addRace( new Race( id++, 5, 'Green Grass Stakes', 550, '#2b682b', 400, 8, [2600, 1200, 555] ) );
@@ -86,7 +86,7 @@ export class InitService {
             if ( i == 1 ) {
                 sum = GameConstants.BASE_XP;
             } else {
-                sum += GameConstants.BASE_XP * i * 1.25;
+                sum += GameConstants.BASE_XP * i * 1.20;
             }
             xpPerLevel[i] = sum;
         }

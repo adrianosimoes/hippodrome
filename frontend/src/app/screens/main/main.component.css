@@ -39,9 +39,9 @@ horse {
 	margin-left: -5px;
 }
 
-.nextArea {
+.rightArea {
 	float: left;
-	width: 175px;
+	width: 185px;
 	margin-left: 10px;
 }
 
@@ -51,8 +51,13 @@ horse {
 }
 
 .mainButtonArea button{
+	margin-top: 10px;
 	margin-bottom: 15px;
-	width: 130px;
+	width: 160px;
+}
+
+h4 {
+	margin-bottom: 10px;
 }
 
 .playerView .mainButtonArea button{

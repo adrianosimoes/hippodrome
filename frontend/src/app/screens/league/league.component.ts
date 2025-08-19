@@ -15,9 +15,10 @@ import { League } from 'src/app/model/league';
 } )
 export class LeagueComponent implements OnInit {
     currPlayer: Player;
-    leagues: League[];
+    currLeague: League;
     nextAction: string;
     debug: boolean = Utils.devMode();
+    racedToday: boolean = false;
 
     constructor( private router: Router, public commonService: CommonService, public activeRoute: ActivatedRoute ) { }
 
@@ -27,8 +28,9 @@ export class LeagueComponent implements OnInit {
             return;
         }
         this.currPlayer = this.commonService.getPlayer();
-        this.leagues = this.commonService.gameInstance.leagues;
+        this.currLeague = this.commonService.getCurrentLeague();
         this.nextAction = this.activeRoute.snapshot.params['action'];
+        this.racedToday = this.nextAction == 'nextWeek';
     }
 
     next(){
