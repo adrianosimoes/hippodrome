@@ -58,7 +58,7 @@ export class CommonService {
         const playerOne = new Player(1, '', '#1281f1', '#feda10',
             0, Utils.devMode() ? 100000 + GameConstants.INITIAL_MONEY : GameConstants.INITIAL_MONEY);
         this.gameInstance = new GameInstance();
-        this.gameInstance.init(playerOne, new Date('2019-01-06'), false);
+        this.gameInstance.init(playerOne, new Date(), false);
         this.generateBgImage();
 
         this.gameInstance.leagues = [];
