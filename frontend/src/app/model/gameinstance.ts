@@ -61,7 +61,7 @@ export class GameInstance {
             league.teamsInLeague = leaguesJson[i].teamsInLeague;
             this.leagues.push( league );
 
-            if ( league.id == this.playerOne.leagueId ) {
+            if ( league.id === this.playerOne.leagueId ) {
                 for ( let j = 0; j < league.teamsInLeague.length; j++ ) {
                     if ( league.teamsInLeague[j].isPlayer ) {
                         this.playerOne.team = league.teamsInLeague[j];

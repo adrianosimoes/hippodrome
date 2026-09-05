@@ -6,7 +6,7 @@ import { HorseForm} from './horse';
 })
 export class FormStringPipe implements PipeTransform {
     transform(val: number): string {
-        return val == HorseForm.BAD ? 'Bad' : val == HorseForm.AVERAGE ? 'Average' : 'Good';
+        return val === HorseForm.BAD ? 'Bad' : val === HorseForm.AVERAGE ? 'Average' : 'Good';
     }
 }
 
@@ -15,6 +15,6 @@ export class FormStringPipe implements PipeTransform {
 })
 export class RaceDifficultyPipe implements PipeTransform {
     transform(val: number): string {
-        return val == 9 ? 'World Class' : val == 5 ? 'Top' : val == 3 ? 'Medium' : 'Easy' ;
+        return val === 9 ? 'World Class' : val === 5 ? 'Top' : val === 3 ? 'Medium' : 'Easy' ;
     }
 }

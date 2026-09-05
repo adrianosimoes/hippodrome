@@ -10,18 +10,18 @@ export enum LeagueDay {
 }
 
 export class TeamInLeague {
-    name: string;
-    horse: Horse;
+    name: string | null;
+    horse: Horse | null;
     color: string;
     points: number;
     isPlayer: boolean;
 
-    constructor( horse: Horse, name: string, color: string, isPlayer: boolean ) {
+    constructor(horse: Horse | null, name: string | null, color: string, isPlayer: boolean) {
         this.points = 0;
-        if ( name != null ) {
+        if (name != null) {
             this.name = name;
-        } else {
-            this.name = horse.name + ' ' + StaticData.teamNames[Utils.getRandomInt( 0, StaticData.teamNames.length - 1 )];
+        } else if (horse != null) {
+            this.name = horse.name + ' ' + StaticData.teamNames[Utils.getRandomInt(0, StaticData.teamNames.length - 1)];
         }
         this.horse = horse;
         this.color = color;
@@ -38,7 +38,7 @@ export class League {
     numberOfWins: number;
     numberOfHorses: number;
 
-    constructor( id: number, difficulty: number, name: string, numberOfWins: number, numberOfHorses: number ) {
+    constructor(id: number, difficulty: number, name: string, numberOfWins: number, numberOfHorses: number) {
         this.id = id;
         this.difficulty = difficulty;
         this.name = name;
@@ -48,28 +48,28 @@ export class League {
         this.numberOfHorses = numberOfHorses;
     }
 
-    addRace( race: Race ): void {
-        this.races.push( race );
+    addRace(race: Race): void {
+        this.races.push(race);
     }
 
     isInitialized() {
         return this.teamsInLeague.length > 0;
     }
 
-    restartLeague( commonService: CommonService ) {
+    restartLeague(commonService: CommonService) {
         this.teamsInLeague = [];
-        const numberOfHorses = this.numberOfHorses - (commonService.getPlayer().leagueId == this.id ? 1 : 0);
+        const numberOfHorses = this.numberOfHorses - (commonService.getPlayer().leagueId === this.id ? 1 : 0);
         const randomColors: string[] = commonService.getRandomDifferentItems(numberOfHorses, StaticData.colors);
         const randomNames: string[] = commonService.getRandomDifferentItems(numberOfHorses, StaticData.horseNames);
 
-        for ( let i = 0; i < numberOfHorses; i++ ) {
-            const horse = commonService.createRandomHorse(randomNames[i], i, this.difficulty, this.numberOfHorses );
-            const team: TeamInLeague = new TeamInLeague( horse, null, randomColors[i], false );
-            this.teamsInLeague.push( team );
+        for (let i = 0; i < numberOfHorses; i++) {
+            const horse = commonService.createRandomHorse(randomNames[i], i, this.difficulty, this.numberOfHorses);
+            const team: TeamInLeague = new TeamInLeague(horse, null, randomColors[i], false);
+            this.teamsInLeague.push(team);
         }
-        if ( commonService.getPlayer().leagueId == this.id ) {
-            const team: TeamInLeague = new TeamInLeague( null, commonService.getPlayer().name, commonService.getPlayer().color, true );
-            this.teamsInLeague.push( team );
+        if (commonService.getPlayer().leagueId === this.id) {
+            const team: TeamInLeague = new TeamInLeague(null, commonService.getPlayer().name, commonService.getPlayer().color, true);
+            this.teamsInLeague.push(team);
             commonService.getPlayer().team = team;
         }
         Utils.randomizeArray(this.teamsInLeague);

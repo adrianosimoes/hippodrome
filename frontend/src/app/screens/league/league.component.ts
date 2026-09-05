@@ -29,11 +29,11 @@ export class LeagueComponent implements OnInit {
         this.currPlayer = this.commonService.getPlayer();
         this.currLeague = this.commonService.getCurrentLeague();
         this.nextAction = this.activeRoute.snapshot.params['action'];
-        this.racedToday = this.nextAction == 'nextWeek';
+        this.racedToday = this.nextAction === 'nextWeek';
     }
 
     next(){
-        if (this.nextAction == 'nextWeek'){
+        if (this.nextAction === 'nextWeek'){
             this.commonService.nextWeek(null);
             this.nextAction = 'main';
         }

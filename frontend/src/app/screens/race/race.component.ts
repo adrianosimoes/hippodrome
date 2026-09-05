@@ -22,7 +22,8 @@ export class RaceComponent implements OnInit {
     curveRaceMinDistance: number = Race.CURVE_RACE_MIN_DISTANCE;
     roundTrackBottomDistance: number = Race.ROUND_TRACK_BOTTOM_DISTANCE;
 
-    constructor( private router: Router, private trackingUtils: TrackingUtils, public activeRoute: ActivatedRoute, public commonService: CommonService ) {}
+    constructor( private router: Router, private trackingUtils: TrackingUtils, public activeRoute: ActivatedRoute,
+        public commonService: CommonService ) {}
 
     ngOnInit() {
         if ( !this.commonService.isInitialized() ) {
@@ -31,7 +32,7 @@ export class RaceComponent implements OnInit {
         if ( this.commonService.getPlayer().horses.length <= 0 ) {
             return;
         }
-        this.raceId = this.activeRoute.snapshot.params['id'];
+        this.raceId = +this.activeRoute.snapshot.params['id'];
         const race = this.commonService.getRace( this.raceId );
         const currLeague = this.commonService.getLeague( this.raceId );
         this.currRace = new RaceInstance( race, this.commonService, this.trackingUtils, currLeague.teamsInLeague, true, false);

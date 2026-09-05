@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
-import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { SafeStyle } from '@angular/platform-browser';
 import { InitService } from './init.service';
 import { GameInstance } from '../gameinstance';
-import { Utils, StaticData, TrackingUtils } from '../utils';
+import { Utils, TrackingUtils } from '../utils';
 import { Player } from '../player';
 import { Horse, TrainingHorse, HorseSkills, HorseForm } from '../horse';
 import { Race, } from '../race';
@@ -13,8 +12,6 @@ import { CurrencyPipe } from '@angular/common';
 import { League, LeagueDay } from 'src/app/model/league';
 import { RaceInstance } from 'src/app/model/raceinstance';
 
-
-declare let Cookies: any;
 declare let JSON: any;
 
 @Injectable({
@@ -50,7 +47,7 @@ export class CommonService {
 
         this.loading = false;
 
-        const savedGameString: string = localStorage.getItem(GameConstants.saveGameName);
+        const savedGameString: string | null = localStorage.getItem(GameConstants.saveGameName);
         if (savedGameString) {
             this.loadToSavedSlot(savedGameString);
         }
@@ -88,16 +85,17 @@ export class CommonService {
         const weekValue = this.seasonDefinition[this.gameInstance.weekNumber % this.seasonDefinition.length];
         if (weekValue >= 0) {
             return 'Race week';
-        } else if (weekValue == LeagueDay.NO_RACE) {
+        } else if (weekValue === LeagueDay.NO_RACE) {
             return 'Rest week';
-        } else if (weekValue == LeagueDay.END_OF_SEASON_DAY_1 || weekValue == LeagueDay.END_OF_SEASON_DAY_2) {
+        } else if (weekValue === LeagueDay.END_OF_SEASON_DAY_1 || weekValue === LeagueDay.END_OF_SEASON_DAY_2) {
             return 'End of season week ' + (-weekValue);
         }
+        throw new Error('Invalid weekValue: ' + weekValue);
     }
 
     getRacedDaysDescription(racedToday?: boolean ): string {
         const totalRaces = Math.max(...this.seasonDefinition.map(week => week), 0) + 1;
-        let racedLast = racedToday ? 1: 0;
+        let racedLast = racedToday ? 1 : 0;
         for (let i = this.gameInstance.weekNumber % this.seasonDefinition.length; i >= 0; i--) {
             const raceDay = this.seasonDefinition[i];
             if (raceDay >= 0) {
@@ -106,6 +104,7 @@ export class CommonService {
                 racedLast = 1;
             }
         }
+        throw new Error('Invalid racedDays description');
     }
 
     getNextXPLevel(player: Player): number {
@@ -148,17 +147,20 @@ export class CommonService {
     }
 
     checkInitLeagues() {
-        const shouldRestart = (this.gameInstance.weekNumber % this.seasonDefinition.length) == 0;
+        const shouldRestart = (this.gameInstance.weekNumber % this.seasonDefinition.length) === 0;
 
         // Apply promotions / demotions:
         for (let i = 0; i < this.gameInstance.leagues.length; i++) {
-            if (shouldRestart && this.gameInstance.leagues[i].teamsInLeague.length > 0 && this.getPlayer().leagueId == this.gameInstance.leagues[i].id) {
+            if (shouldRestart && this.gameInstance.leagues[i].teamsInLeague.length >
+                0 && this.getPlayer().leagueId === this.gameInstance.leagues[i].id) {
                 // Check promotion on all leagues except World Championship (last):
-                if (i < this.gameInstance.leagues.length - 1 && (this.gameInstance.leagues[i].teamsInLeague[0].isPlayer || this.gameInstance.leagues[i].teamsInLeague[1].isPlayer)) {
+                if (i < this.gameInstance.leagues.length - 1 && (this.gameInstance.leagues[i].teamsInLeague[0].isPlayer
+                    || this.gameInstance.leagues[i].teamsInLeague[1].isPlayer)) {
                     this.getPlayer().leagueId = this.gameInstance.leagues[i + 1].id;
                     break;
-                } // Check demotion on all leagues, excepct first (lower level)
-                else if (i > 0 && (this.gameInstance.leagues[i].teamsInLeague[6].isPlayer || this.gameInstance.leagues[i].teamsInLeague[7].isPlayer)) {
+                // Check demotion on all leagues, excepct first (lower level)
+                } else if (i > 0 && (this.gameInstance.leagues[i].teamsInLeague[6].isPlayer
+                    || this.gameInstance.leagues[i].teamsInLeague[7].isPlayer)) {
                     this.getPlayer().leagueId = this.gameInstance.leagues[i - 1].id;
                     break;
                 }
@@ -179,7 +181,7 @@ export class CommonService {
     }
 
 
-    nextWeek(delay: number): void {
+    nextWeek(delay: number | null): void {
         this.gameInstance.date.setDate(this.gameInstance.date.getDate() + 7);
         this.gameInstance.weekNumber++;
         this.generateBgImage();
@@ -213,11 +215,11 @@ export class CommonService {
                 continue;
             }
 
-            if (currTrainer.trainType == HorseSkills.SPEED) {
+            if (currTrainer.trainType === HorseSkills.SPEED) {
                 trainHorse.speed += this.calculateTrainSpeed(trainHorse.speed, currTrainer);
-            } else if (currTrainer.trainType == HorseSkills.ENDURANCE) {
+            } else if (currTrainer.trainType === HorseSkills.ENDURANCE) {
                 trainHorse.endurance += this.calculateTrainSpeed(trainHorse.endurance, currTrainer);
-            } else if (currTrainer.trainType == HorseSkills.ACCELERATION) {
+            } else if (currTrainer.trainType === HorseSkills.ACCELERATION) {
                 trainHorse.acceleration += this.calculateTrainSpeed(trainHorse.acceleration, currTrainer);
             }
             trainHorse.recalculatePrice();
@@ -250,7 +252,7 @@ export class CommonService {
             newHorse.owned = true;
             newHorse.calculateForm();
             this.gameInstance.playerOne.horses.push(newHorse);
-            if (this.gameInstance.playerOne.horses.length == 1) {
+            if (this.gameInstance.playerOne.horses.length === 1) {
                 this.gameInstance.playerOne.selectedHorseId = newHorse.id;
             }
             return true;
@@ -268,7 +270,7 @@ export class CommonService {
                 return currHorse;
             }
         }
-        return null;
+        throw new Error('Invalid horseId: ' + horseId);
     }
 
     getSelectedHorse(): Horse {
@@ -282,32 +284,32 @@ export class CommonService {
     getRace(raceId: number): Race {
         for (const raceLeague of this.gameInstance.leagues) {
             for (const race of raceLeague.races) {
-                if (race.id == raceId) {
+                if (race.id === raceId) {
                     return race;
                 }
             }
         }
-        return null;
+        throw new Error('Invalid raceId: ' + raceId);
     }
 
     getLeague(raceId: number): League {
         for (const raceLeague of this.gameInstance.leagues) {
             for (const race of raceLeague.races) {
-                if (race.id == raceId) {
+                if (race.id === raceId) {
                     return raceLeague;
                 }
             }
         }
-        return null;
+        throw new Error('Invalid league for raceId: ' + raceId);
     }
 
     getCurrentLeague(): League {
         for (const league of this.gameInstance.leagues) {
-            if (league.id == this.getPlayer().leagueId) {
+            if (league.id === this.getPlayer().leagueId) {
                 return league;
             }
         }
-        return null;
+        throw new Error('Invalid current league');
     }
 
     getRandomDifferentItems(numberOfItems: number, baseItems: string[]): string[] {
@@ -350,10 +352,10 @@ export class CommonService {
     }
 
     buyHorseSkill(player: Player, horse: TrainingHorse, trainType: number): boolean {
-        const price: number = trainType == HorseSkills.SPEED ? horse.trainSpeedPrice : horse.trainEndurancePrice;
+        const price: number = trainType === HorseSkills.SPEED ? horse.trainSpeedPrice : horse.trainEndurancePrice;
         if (player.money >= price) {
             player.money -= price;
-            trainType == HorseSkills.SPEED ? horse.baseHorse.speed++ : horse.baseHorse.endurance++;
+            trainType = HorseSkills.SPEED ? horse.baseHorse.speed++ : horse.baseHorse.endurance++;
             return true;
         } else {
             return false;
@@ -404,12 +406,12 @@ export class CommonService {
             player.money += price;
             horseId = horse.id;
             for (const currTrainer of this.gameInstance.playerOne.trainers) {
-                if (currTrainer.trainingHorseId == horse.id) {
+                if (currTrainer.trainingHorseId === horse.id) {
                     currTrainer.trainingHorseId = -1;
                 }
             }
         }
-        if (player.selectedHorseId == horseId) {
+        if (player.selectedHorseId === horseId) {
             let newSelectedHorse = -1;
             if (player.horses.length >= 1) {
                 newSelectedHorse = player.horses[0].id;
@@ -419,7 +421,7 @@ export class CommonService {
     }
 
     calculateAuctionHorse(): void {
-        const horses: Horse[] = this.getCurrentLeague().teamsInLeague.map(team => team.horse).filter(h => h != undefined);
+        const horses: Horse[] = this.getCurrentLeague().teamsInLeague.map(team => team.horse).filter(h => h !== null);
         const index = Utils.getRandomInt(0, horses.length - 1);
         this.auctionHorse = horses[index];
     }

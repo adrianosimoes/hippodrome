@@ -14,7 +14,8 @@ export class Trainer {
     description: string;
     trainingHorseId: number;
 
-    constructor( id: number, name: string, trainerPrice: number, salary: number, trainerType: HorseSkills, trainerSpeed: number, trainerQuality: number, description: string ) {
+    constructor( id: number, name: string, trainerPrice: number, salary: number, trainerType: HorseSkills, trainerSpeed: number,
+        trainerQuality: number, description: string ) {
         this.id = id;
         this.name = name;
         this.price = trainerPrice;

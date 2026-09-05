@@ -16,7 +16,7 @@ describe( 'RaceInstance', () => {
         jasmine.clock().install();
         jasmine.clock().mockDate();
         commonService = new CommonService( null, null );
-        utils = new TrackingUtils(null);
+        utils = new TrackingUtils();
 
         testRace = new Race( 1, 2, 'Colwall Park', 400, '#338833', 100, 6, [500, 220, 100] );
     } );
@@ -137,7 +137,7 @@ describe( 'RaceInstance', () => {
             jasmine.clock().tick( 1600 );
             expect( raceInstance.state ).toBe( RaceState.RaceFinished );
 
-            if ( raceInstance.place == 1 ) {
+            if ( raceInstance.place === 1 ) {
                 numWin++;
             } else {
                 numLost++;

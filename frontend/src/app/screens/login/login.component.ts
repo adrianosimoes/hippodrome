@@ -25,7 +25,7 @@ export class LoginComponent implements OnInit {
     }
 
     saveForm(): void {
-        if (this.player.name == ''){
+        if (this.player.name === ''){
             this.player.name = 'The McCoys';
         }
         this.utils.trackEvent( 'startGame', 'Start Game: ' + this.player.name + ' silk:' + this.player.calculateBackground);

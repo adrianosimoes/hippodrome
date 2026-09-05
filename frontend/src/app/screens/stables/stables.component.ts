@@ -11,7 +11,7 @@ import { Utils } from '../../model/utils';
     styleUrls: ['./stables.component.css']
 } )
 export class StablesComponent implements OnInit {
-    currPlayer: Player;
+    currPlayer?: Player;
 
     constructor( private router: Router, public commonService: CommonService ) { }
 

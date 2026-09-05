@@ -1,4 +1,14 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+
+const DEFAULT_CMP: Comparator<any> = (a, b) => {
+    if (a < b) {
+        return -1;
+    }
+    if (a > b) {
+        return 1;
+    }
+    return 0;
+};
 
 @Injectable({
     providedIn: 'root'
@@ -16,18 +26,22 @@ export class Utils {
         return Math.floor((Math.random() * (max - initial + 1)) + initial);
     }
 
-    static randomizeArray(a): void {
+    static randomizeArray(a: any[]): void {
         let b, c, d;
-        c = a.length; while (c) {
-            b = Math.random() * (--c + 1) | 0, d = a[c], a[c] = a[b], a[b] = d;
+        c = a.length;
+        while (c) {
+            b = Math.random() * (--c + 1) | 0; // eslint-disable-line no-bitwise
+            d = a[c];
+            a[c] = a[b];
+            a[b] = d;
         }
     }
 
-    static stableSort<T>(self: T[], cmp: Comparator<T> = defaultCmp): T[] {
+    static stableSort<T>(self: T[], cmp: Comparator<T> = DEFAULT_CMP): T[] {
         const stabilized = self.map((el, index) => <[T, number]>[el, index]);
         const stableCmp: Comparator<[T, number]> = (a, b) => {
             const order = cmp(a[0], b[0]);
-            if (order != 0) {
+            if (order !== 0) {
                 return order;
             }
             return a[1] - b[1];
@@ -57,48 +71,48 @@ export class Utils {
     }
 
     static getCssBackground(color: string, secColor: string, silkType: number): string {
-        if (silkType == 2) {
+        if (silkType === 2) {
             return color; // use simple color.
-        } else if (silkType == 0) {
+        } else if (silkType === 0) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if (silkType == 1) {
+        } else if (silkType === 1) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 38px, ' + secColor + ' 38px , ' + secColor + ' 80px )';
-        } else if (silkType == 3) {
+        } else if (silkType === 3) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if (silkType == 4) {
+        } else if (silkType === 4) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 40px, ' + secColor + ' 40px , ' + secColor + ' 80px )';
-        } else if (silkType == 5) {
+        } else if (silkType === 5) {
             return 'repeating-radial-gradient( circle, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 120px )';
-        } else if (silkType == 6) {
+        } else if (silkType === 6) {
             return 'repeating-radial-gradient( circle, ' +
                 color + ' , ' + color + ' 45px, ' + secColor + ' 45px , ' + secColor + ' 120px )';
-        } else if (silkType == 7) {
+        } else if (silkType === 7) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if (silkType == 8) {
+        } else if (silkType === 8) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if (silkType == 9) {
+        } else if (silkType === 9) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if (silkType == 10) {
+        } else if (silkType === 10) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 100px, ' + secColor + ' 100px , ' + secColor + ' 200px )';
-        } else if (silkType == 11) {
+        } else if (silkType === 11) {
             return 'repeating-linear-gradient( 90deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if (silkType == 12) {
+        } else if (silkType === 12) {
             return 'repeating-linear-gradient( 0deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if (silkType == 13) {
+        } else if (silkType === 13) {
             return 'repeating-linear-gradient( 45deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
-        } else if (silkType == 12) {
+        } else if (silkType === 12) {
             return 'repeating-linear-gradient( 135deg, ' +
                 color + ' , ' + color + ' 20px, ' + secColor + ' 20px , ' + secColor + ' 40px )';
         }
@@ -108,21 +122,12 @@ export class Utils {
 
 type Comparator<T> = (a: T, b: T) => number;
 
-const defaultCmp: Comparator<any> = (a, b) => {
-    if (a < b) {
-        return -1;
-    }
-    if (a > b) {
-        return 1;
-    }
-    return 0;
-};
-
 export class StaticData {
-    static horseNames: string[] = ['Annabel', 'Adagio', 'Aida', 'Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt', 'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby',
-        'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel', 'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan',
-        'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed', 'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand',
-        'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso', 'Giacomo', 'Velvet', 'Verona', 'Vegas', 'Virgo'];
+    static horseNames: string[] = ['Annabel', 'Adagio', 'Aida', 'Dale', 'Lacey', 'Russel', 'Spirit', 'Onyx', 'Swiftbolt',
+        'Pocaroo', 'Graceland', 'Darkheart', 'Sugarbolt', 'Colby', 'Shah', 'Sancho', 'Brandy', 'Webster', 'Galadriel',
+        'Logan', 'Watson', 'Fidget', 'Explorer', 'Wiley', 'Khan', 'Sid', 'Izzy', 'Ishtar', 'Frendor', 'Mikan', 'Creed',
+        'Fafnir', 'Andana', 'Hindoo', 'Agile', 'Ferdinand', 'Donerail', 'Donau', 'Meridian', 'Azra', 'Worth', 'Fonso',
+        'Giacomo', 'Velvet', 'Verona', 'Vegas', 'Virgo'];
 
     static colors: string[] = [
         /* Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800080', '#ff6600', '#9e0000',

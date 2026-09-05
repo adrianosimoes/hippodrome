@@ -83,7 +83,7 @@ export class InitService {
     static initXPPerLevel( xpPerLevel: number[] ) {
         let sum = 0;
         for ( let i = 0; i < 200; i++ ) {
-            if ( i == 1 ) {
+            if ( i === 1 ) {
                 sum = GameConstants.BASE_XP;
             } else {
                 sum += GameConstants.BASE_XP * i * 1.20;

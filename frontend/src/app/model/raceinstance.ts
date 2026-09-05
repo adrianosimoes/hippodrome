@@ -29,7 +29,7 @@ export class Comment {
     message: string;
     color: string;
 
-    constructor( message: string, color: string ) {
+    constructor(message: string, color: string) {
         this.message = message;
         this.color = color;
     }
@@ -40,7 +40,7 @@ export class RaceInstance {
     baseRace: Race;
     simulate: boolean;
     player: Player;
-    playerHorse: HorseInRace;
+    playerHorse: HorseInRace | null;
     horses: HorseInRace[];
     sortedHorses: HorseInRace[];
     numberOfHorses: number;
@@ -66,18 +66,20 @@ export class RaceInstance {
     tickTime: number = TICK_MILLISECONDS;
     bonusText: string;
 
-    constructor( race: Race, commonService: CommonService, private utils: TrackingUtils, teamsInLeague: TeamInLeague[], isOwnRace: boolean, simulate: boolean ) {
+    constructor(race: Race, commonService: CommonService, private utils: TrackingUtils, teamsInLeague: TeamInLeague[],
+        isOwnRace: boolean, simulate: boolean) {
         this.baseRace = race;
         this.commonService = commonService;
         this.player = this.commonService.getPlayer();
         this.horses = [];
         this.simulate = simulate;
-        if ( isOwnRace ) {
-            this.playerHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground, this.player.team );
-            this.horses.push( this.playerHorse );
-            this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
+        if (isOwnRace) {
+            this.playerHorse = new HorseInRace(this.commonService.getSelectedHorse(), this.player.color,
+                this.player.calculateBackground, this.player.team);
+            this.horses.push(this.playerHorse);
+            this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina(this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100);
         } else {
-            this.playerHorse == null;
+            this.playerHorse = null;
         }
 
         this.lastCommentHorses = [];
@@ -86,45 +88,47 @@ export class RaceInstance {
         this.state = RaceState.PreRace;
         this.debugMessage = '';
         this.baseRaceSpeed = this.baseRace.difficulty * 5;
-        this.cssBottom = ( ( this.baseRace.numHorses - 1 ) * Race.RACETRACK_HEIGHT ) + GameConstants.BORDER_HEIGHT * 2;
+        this.cssBottom = ((this.baseRace.numHorses - 1) * Race.RACETRACK_HEIGHT) + GameConstants.BORDER_HEIGHT * 2;
 
         this.roundTrack = race.distance > Race.CURVE_RACE_MIN_DISTANCE;
-        this.topDistance = race.distance - ( Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2 ) - this.roundTrackCurvePixels / 2;
+        this.topDistance = race.distance - (Race.ROUND_TRACK_BOTTOM_DISTANCE - this.roundTrackCurvePixels / 2)
+            - this.roundTrackCurvePixels / 2;
 
-        for ( let i = 0; i < teamsInLeague.length; i++ ) {
-            if ( !teamsInLeague[i].isPlayer ) {
-                this.addHorse( new HorseInRace( teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color, teamsInLeague[i] ) );
+        for (let i = 0; i < teamsInLeague.length; i++) {
+            if (!teamsInLeague[i].isPlayer) {
+                this.addHorse(new HorseInRace(teamsInLeague[i].horse, teamsInLeague[i].color, teamsInLeague[i].color, teamsInLeague[i]));
             }
         }
 
         this.numberOfHorses = this.horses.length;
-        Utils.randomizeArray( this.horses );
+        Utils.randomizeArray(this.horses);
         this.sortedHorses = this.horses.slice();
 
-        for ( let i = 0; i < this.horses.length; i++ ) {
-            this.horses[i].setTrack( i + 1 );
+        for (let i = 0; i < this.horses.length; i++) {
+            this.horses[i].setTrack(i + 1);
         }
 
     }
 
-    addHorse( horse: HorseInRace ): void {
-        this.horses.push( horse );
+    addHorse(horse: HorseInRace): void {
+        this.horses.push(horse);
     }
 
     updateSelectedHorse(): void {
         const currStrategy: RaceEffort = this.playerHorse.raceEffort;
         const currTactic: RaceTactic = this.playerHorse.tactic;
-        const currHorse = new HorseInRace( this.commonService.getSelectedHorse(), this.player.color, this.player.calculateBackground, this.player.team );
-        for ( let i = 0; i < this.horses.length; i++ ) {
-            if ( this.horses[i] == this.playerHorse ) {
+        const currHorse = new HorseInRace(this.commonService.getSelectedHorse(), this.player.color,
+            this.player.calculateBackground, this.player.team);
+        for (let i = 0; i < this.horses.length; i++) {
+            if (this.horses[i] === this.playerHorse) {
                 this.horses[i] = currHorse;
-                currHorse.setTrack( i + 1 );
+                currHorse.setTrack(i + 1);
             }
         }
         this.playerHorse = currHorse;
         this.playerHorse.raceEffort = currStrategy;
         this.playerHorse.tactic = currTactic;
-        this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina( this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100 );
+        this.playerHorse.staminaDisplay = Utils.calculateDisplayStamina(this.playerHorse.speed, this.playerHorse.baseHorse.speed, 100);
         this.sortedHorses = this.horses.slice();
     }
 
@@ -134,117 +138,119 @@ export class RaceInstance {
         this.raceTimer = 0;
 
         /* Order by speed on live tracking: */
-        Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.speed - h1.speed );
+        Utils.stableSort(this.sortedHorses, (h1, h2) => h2.speed - h1.speed);
 
         this.state = RaceState.Racing;
-        this.comments.push( new Comment( 'Read. Set.', '#ffffff' ) );
-        if ( this.simulate ) {
+        this.comments.push(new Comment('Read. Set.', '#ffffff'));
+        if (this.simulate) {
             this.raceStart = new Date();
             this.updateRace();
         } else {
             setTimeout(() => {
                 this.raceStart = new Date(); this.comments[0].message += ' Go!'; this.updateRace();
-            }, this.startTimeout );
+            }, this.startTimeout);
         }
     }
 
     updateRace(): void {
         let allFinished = true;
         // console.log("update");
-        if ( this.canceled ) {
+        if (this.canceled) {
             return;
         }
 
         // Update movement:
-        for ( const currHorse of this.horses ) {
-            if ( ( !this.roundTrack && currHorse.cssLeft >= this.baseRace.distance + Race.AFTER_END_RACE_PIXELS ) ||
-                ( this.roundTrack && currHorse.distanceDone >= this.baseRace.distance && currHorse.cssLeft < - ( ( 155 - ( ( this.baseRace.distance / 2 - Race.ROUND_TRACK_BOTTOM_DISTANCE ) * 2 ) ) - 52 - 10 ) ) ) {
+        for (const currHorse of this.horses) {
+            if ((!this.roundTrack && currHorse.cssLeft >= this.baseRace.distance + Race.AFTER_END_RACE_PIXELS) ||
+                (this.roundTrack && currHorse.distanceDone >= this.baseRace.distance && currHorse.cssLeft <
+                    - ((155 - ((this.baseRace.distance / 2 - Race.ROUND_TRACK_BOTTOM_DISTANCE) * 2)) - 52 - 10))) {
                 continue;
             } else {
                 allFinished = false;
             }
 
-            const step: number = this.getMovementStep( currHorse );
-            this.moveHorse( currHorse, step );
+            const step: number = this.getMovementStep(currHorse);
+            this.moveHorse(currHorse, step);
 
-            if ( currHorse.distanceDone > this.baseRace.distance ) {
+            if (currHorse.distanceDone > this.baseRace.distance) {
                 this.state = RaceState.WinnerFinished;
                 currHorse.distanceDone = this.baseRace.distance;
             }
 
         }
 
-        this.raceTimer = ( new Date().getTime() - this.raceStart.getTime() ) / 1000;
+        this.raceTimer = (new Date().getTime() - this.raceStart.getTime()) / 1000;
 
-        Utils.stableSort( this.sortedHorses, ( h1, h2 ) => h2.distanceDone - h1.distanceDone );
+        Utils.stableSort(this.sortedHorses, (h1, h2) => h2.distanceDone - h1.distanceDone);
 
         this.updateComments();
         this.totalTicks++;
 
-        if ( allFinished ) {
+        if (allFinished) {
             this.finishRace();
             return;
         }
 
-        if ( this.simulate ) {
+        if (this.simulate) {
             this.updateRace();
         } else {
             setTimeout(() => {
                 this.updateRace();
-            }, this.tickTime );
+            }, this.tickTime);
         }
     }
 
-    moveHorse( currHorse: HorseInRace, step: number ): void {
-        if ( !this.roundTrack || currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) ) {
+    moveHorse(currHorse: HorseInRace, step: number): void {
+        if (!this.roundTrack || currHorse.distanceDone <= this.topDistance - (this.roundTrackCurvePixels / 2)) {
             currHorse.cssLeft += step;
             currHorse.distanceDone += step;
-            if ( this.roundTrack && currHorse.cssTop < this.cssBottom - 5 ) {
-                if ( currHorse.track <= 3 ) {
+            if (this.roundTrack && currHorse.cssTop < this.cssBottom - 5) {
+                if (currHorse.track <= 3) {
                     currHorse.cssTop += step / 2.5;
                 } else {
                     currHorse.cssTop += step / 3.5;
                 }
             } else {
-                this.changeRandomLane( currHorse, true );
+                this.changeRandomLane(currHorse, true);
             }
             currHorse.cssBaseTop = currHorse.cssTop;
-        } else if ( currHorse.distanceDone <= this.topDistance - ( this.roundTrackCurvePixels / 2 ) + ( 2 * Race.ROUND_TRACK_HORSE_CURVE ) ) {
-            const curveDone: number = currHorse.distanceDone - ( this.topDistance - this.roundTrackCurvePixels / 2 );
-            currHorse.cssTop = currHorse.cssBaseTop + GameConstants.BORDER_HEIGHT + Race.ROUND_TRACK_HORSE_CURVE - ( Race.ROUND_TRACK_HORSE_CURVE * Math.cos(( curveDone * Math.PI ) / ( Race.ROUND_TRACK_HORSE_CURVE * 2 ) ) );
-            currHorse.cssLeft += step * Math.cos(( curveDone * Math.PI ) / ( ( Race.ROUND_TRACK_HORSE_CURVE - 4 ) * 2 ) );
+        } else if (currHorse.distanceDone <= this.topDistance - (this.roundTrackCurvePixels / 2) + (2 * Race.ROUND_TRACK_HORSE_CURVE)) {
+            const curveDone: number = currHorse.distanceDone - (this.topDistance - this.roundTrackCurvePixels / 2);
+            currHorse.cssTop = currHorse.cssBaseTop + GameConstants.BORDER_HEIGHT + Race.ROUND_TRACK_HORSE_CURVE
+            - (Race.ROUND_TRACK_HORSE_CURVE * Math.cos((curveDone * Math.PI) / (Race.ROUND_TRACK_HORSE_CURVE * 2)));
+            currHorse.cssLeft += step * Math.cos((curveDone * Math.PI) / ((Race.ROUND_TRACK_HORSE_CURVE - 4) * 2));
             currHorse.distanceDone += step / 1.2;
         } else {
-            this.changeRandomLane( currHorse, false );
+            this.changeRandomLane(currHorse, false);
             currHorse.cssLeft -= step;
             currHorse.distanceDone += step;
         }
     }
 
-    changeRandomLane( currHorse: HorseInRace, begin: boolean ): void {
-        if ( this.roundTrack && currHorse.sinceLastLaneChange > 100 ) {
-            if ( begin ) {
-                var rnd: number = Utils.getRandomInt( 0, 20 );
-                if ( rnd == 0 && currHorse.cssTop < this.cssBottom ) {
+    changeRandomLane(currHorse: HorseInRace, begin: boolean): void {
+        if (this.roundTrack && currHorse.sinceLastLaneChange > 100) {
+            if (begin) {
+                const rnd: number = Utils.getRandomInt(0, 20);
+                if (rnd === 0 && currHorse.cssTop < this.cssBottom) {
                     currHorse.cssTop += 1;
                     currHorse.sinceLastLaneChange = 0;
-                } else if ( rnd == 1 && currHorse.cssTop > this.cssBottom - 6 ) {
+                } else if (rnd === 1 && currHorse.cssTop > this.cssBottom - 6) {
                     currHorse.cssTop -= 1;
                     currHorse.sinceLastLaneChange = 0;
                 }
             } else {
                 const minCssTop: number = this.cssBottom + 68 + GameConstants.BORDER_HEIGHT;
-                if ( currHorse.cssTop > minCssTop ) {
-                    var rnd: number = Utils.getRandomInt( 0, 70 );
-                    const avoidedClostestHorse: boolean = this.avoidClosestHorse( currHorse, minCssTop );
-                    if ( avoidedClostestHorse ) {
+                if (currHorse.cssTop > minCssTop) {
+                    const rnd: number = Utils.getRandomInt(0, 70);
+                    const avoidedClostestHorse: boolean = this.avoidClosestHorse(currHorse, minCssTop);
+                    if (avoidedClostestHorse) {
                         // Change lane faster if horse on the way:
                         currHorse.sinceLastLaneChange = 40;
                     } else {
-                        if ( rnd == 0 ) {
+                        if (rnd === 0) {
                             currHorse.cssTop += 2;
                             currHorse.sinceLastLaneChange = 0;
-                        } else if ( rnd == 1 && currHorse.cssTop > minCssTop + 2 ) {
+                        } else if (rnd === 1 && currHorse.cssTop > minCssTop + 2) {
                             currHorse.cssTop -= 2;
                             currHorse.sinceLastLaneChange = 0;
                         }
@@ -256,20 +262,20 @@ export class RaceInstance {
         }
     }
 
-    avoidClosestHorse( currHorse: HorseInRace, minCssTop: number ): boolean {
-        let frontHorse: HorseInRace = null;
-        for ( const i of this.sortedHorses ) {
-            if ( currHorse == i ) {
+    avoidClosestHorse(currHorse: HorseInRace, minCssTop: number): boolean {
+        let frontHorse: HorseInRace | null = null;
+        for (const i of this.sortedHorses) {
+            if (currHorse === i) {
                 break;
             }
             frontHorse = i;
         }
 
-        if ( frontHorse != null && frontHorse.distanceDone < currHorse.distanceDone + 30 ) {
-            if ( Math.abs( frontHorse.cssTop - currHorse.cssTop ) < 12 ) {
-                if ( frontHorse.cssTop <= currHorse.cssTop ) {
+        if (frontHorse != null && frontHorse.distanceDone < currHorse.distanceDone + 30) {
+            if (Math.abs(frontHorse.cssTop - currHorse.cssTop) < 12) {
+                if (frontHorse.cssTop <= currHorse.cssTop) {
                     currHorse.cssTop += 2;
-                } else if ( currHorse.cssTop > minCssTop + 2 ) {
+                } else if (currHorse.cssTop > minCssTop + 2) {
                     currHorse.cssTop -= 2;
                 }
                 return true;
@@ -279,47 +285,47 @@ export class RaceInstance {
     }
 
     updateComments(): void {
-        if ( this.state === RaceState.WinnerFinished ) {
-            if ( this.lastCommentHorses[0].track != this.sortedHorses[0].track ) {
+        if (this.state === RaceState.WinnerFinished) {
+            if (this.lastCommentHorses[0].track !== this.sortedHorses[0].track) {
                 this.addCommentIfNotRepeated(
-                    new Comment( 'Amazing! ' + this.sortedHorses[0].baseHorse.name + ' wins the race in the finish line.',
-                        this.sortedHorses[0].color ) );
+                    new Comment('Amazing! ' + this.sortedHorses[0].baseHorse.name + ' wins the race in the finish line.',
+                        this.sortedHorses[0].color));
             } else {
                 this.addCommentIfNotRepeated(
-                    new Comment( 'It\'s over. ' + this.sortedHorses[0].baseHorse.name + ' wins the race.',
-                        this.sortedHorses[0].color ) );
+                    new Comment('It\'s over. ' + this.sortedHorses[0].baseHorse.name + ' wins the race.',
+                        this.sortedHorses[0].color));
             }
             this.state = RaceState.WaitingFinish;
             return;
         }
 
-        if ( this.state === RaceState.Racing ) {
-            if ( this.totalTicks == FIRST_TICK_COMMENT ) {
-                if ( this.lastCommentHorses.length == 0 ) {
+        if (this.state === RaceState.Racing) {
+            if (this.totalTicks === FIRST_TICK_COMMENT) {
+                if (this.lastCommentHorses.length === 0) {
                     this.comments.push(
-                        new Comment( 'In the first yards ' + this.sortedHorses[0].baseHorse.name + ' is in front.',
-                            this.sortedHorses[0].color ) );
+                        new Comment('In the first yards ' + this.sortedHorses[0].baseHorse.name + ' is in front.',
+                            this.sortedHorses[0].color));
                 }
 
                 this.lastCommentHorses = [];
                 this.lastCommentHorses[0] = this.sortedHorses[0];
             }
 
-            if ( this.totalTicks > COMMENT_EVERY_TICKS && this.totalTicks % COMMENT_EVERY_TICKS == FIRST_TICK_COMMENT ) {
-                if ( this.lastCommentHorses[0].track == this.sortedHorses[0].track ) {
+            if (this.totalTicks > COMMENT_EVERY_TICKS && this.totalTicks % COMMENT_EVERY_TICKS === FIRST_TICK_COMMENT) {
+                if (this.lastCommentHorses[0].track === this.sortedHorses[0].track) {
                     this.addCommentIfNotRepeated(
-                        new Comment( this.sortedHorses[0].baseHorse.name + ' remains in the lead.',
-                            this.sortedHorses[0].color ) );
+                        new Comment(this.sortedHorses[0].baseHorse.name + ' remains in the lead.',
+                            this.sortedHorses[0].color));
                 } else {
-                    if ( this.comments.length >= 2 &&
-                        this.comments[this.comments.length - 2].message.indexOf( this.sortedHorses[0].baseHorse.name, 0 ) >= 0 ) {
+                    if (this.comments.length >= 2 &&
+                        this.comments[this.comments.length - 2].message.indexOf(this.sortedHorses[0].baseHorse.name, 0) >= 0) {
                         this.comments.push(
-                            new Comment( 'Here goes ' + this.sortedHorses[0].baseHorse.name + ', he recovers the lead!',
-                                this.sortedHorses[0].color ) );
+                            new Comment('Here goes ' + this.sortedHorses[0].baseHorse.name + ', he recovers the lead!',
+                                this.sortedHorses[0].color));
                     } else {
                         this.comments.push(
-                            new Comment( this.sortedHorses[0].baseHorse.name + ' takes the lead.',
-                                this.sortedHorses[0].color ) );
+                            new Comment(this.sortedHorses[0].baseHorse.name + ' takes the lead.',
+                                this.sortedHorses[0].color));
                     }
                 }
 
@@ -329,39 +335,39 @@ export class RaceInstance {
         }
     }
 
-    addCommentIfNotRepeated( comment: Comment ) {
-        if ( this.comments[this.comments.length - 1].message !== comment.message ) {
-            this.comments.push( comment );
+    addCommentIfNotRepeated(comment: Comment) {
+        if (this.comments[this.comments.length - 1].message !== comment.message) {
+            this.comments.push(comment);
         }
     }
 
     /* With Stamina calculation */
-    getMovementStep( horse: HorseInRace ): number {
-        let maxSpeed: number = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
-        if ( horse == this.playerHorse ) {
-            if ( this.playerHorse.raceEffort == RaceEffort.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2 ) {
+    getMovementStep(horse: HorseInRace): number {
+        let maxSpeed: number = Utils.precisionRound((horse.speed * horse.baseHorse.form) / HorseForm.AVERAGE, 2);
+        if (horse === this.playerHorse) {
+            if (this.playerHorse.raceEffort === RaceEffort.HalfWay && this.playerHorse.distanceDone < this.baseRace.distance / 2) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.85 * maxSpeed;
-            } else if ( this.playerHorse.raceEffort == RaceEffort.End && this.playerHorse.distanceDone < ( this.baseRace.distance * 2 ) / 3 ) {
+            } else if (this.playerHorse.raceEffort === RaceEffort.End && this.playerHorse.distanceDone < (this.baseRace.distance * 2) / 3) {
                 maxSpeed = horse.speed >= 20 ? 0.8 * maxSpeed : 0.85 * maxSpeed;
             }
         }
 
-        if ( this.totalTicks <= ACCELERATION_UNTIL_TICKS ) {
+        if (this.totalTicks <= ACCELERATION_UNTIL_TICKS) {
             maxSpeed *= horse.currentAcceleration;
         }
 
-        let step = Utils.getRandomInt( 0, maxSpeed - 1 );
+        let step = Utils.getRandomInt(0, maxSpeed - 1);
 
         // If speed is bigger than 80%, reduce stamina. If slow speed(>20, reduce stamina when speed bigger than 90%):
         const speedReduction = horse.speed >= 20 ? 0.8 : 0.9;
-        const formSpeed = Utils.precisionRound(( horse.speed * horse.baseHorse.form ) / HorseForm.AVERAGE, 2 );
-        if ( this.totalTicks > STAMINA_STARTS_TICKS && step >= formSpeed * speedReduction ) {
+        const formSpeed = Utils.precisionRound((horse.speed * horse.baseHorse.form) / HorseForm.AVERAGE, 2);
+        if (this.totalTicks > STAMINA_STARTS_TICKS && step >= formSpeed * speedReduction) {
             horse.currentStamina--;
-            if ( horse.currentStamina < 0 ) {
-                if ( Math.floor( horse.speed ) > this.baseRaceSpeed ) {
+            if (horse.currentStamina < 0) {
+                if (Math.floor(horse.speed) > this.baseRaceSpeed) {
                     horse.speed -= 0.85;
-                    if ( horse == this.playerHorse ) {
-                        horse.staminaDisplay = Utils.calculateDisplayStamina( horse.speed, horse.baseHorse.speed, 100 );
+                    if (horse === this.playerHorse) {
+                        horse.staminaDisplay = Utils.calculateDisplayStamina(horse.speed, horse.baseHorse.speed, 100);
                     }
                 }
                 horse.currentStamina = horse.fullStamina;
@@ -369,50 +375,50 @@ export class RaceInstance {
         }
 
         // Do Race Tactic Bonus:
-        const bonusMultiply = this.applyRaceTacticBonus( horse, step );
-        if ( bonusMultiply != null ) {
-            if ( bonusMultiply != 0 ) {
+        const bonusMultiply = this.applyRaceTacticBonus(horse, step);
+        if (bonusMultiply != null) {
+            if (bonusMultiply !== 0) {
                 step += step * bonusMultiply;
             }
-            this.displayBonus( bonusMultiply );
+            this.displayBonus(bonusMultiply);
         }
 
-        if ( step > 0 ) {
-            step = Math.log( step );
+        if (step > 0) {
+            step = Math.log(step);
         }
         return step / 2;
     }
 
-    applyRaceTacticBonus( horse: HorseInRace, step: number ): number {
-        if ( horse == this.playerHorse && this.totalTicks > ( ACCELERATION_UNTIL_TICKS / 3 ) && this.totalTicks % 2 == 0 ) {
-            switch ( this.playerHorse.tactic ) {
+    applyRaceTacticBonus(horse: HorseInRace, step: number): number {
+        if (horse === this.playerHorse && this.totalTicks > (ACCELERATION_UNTIL_TICKS / 3) && this.totalTicks % 2 === 0) {
+            switch (this.playerHorse.tactic) {
                 case RaceTactic.None:
                     break;
                 case RaceTactic.Lead:
-                    if ( this.sortedHorses[0] == this.playerHorse ) {
+                    if (this.sortedHorses[0] === this.playerHorse) {
                         return BIG_BONUS_VALUE;
-                    } else if ( this.sortedHorses[1] == this.playerHorse ) {
+                    } else if (this.sortedHorses[1] === this.playerHorse) {
                         return 0;
                     } else {
                         return - BIG_BONUS_VALUE;
                     }
                 case RaceTactic.Pursuit:
-                    if ( this.sortedHorses[1] == this.playerHorse ) {
+                    if (this.sortedHorses[1] === this.playerHorse) {
                         return BIG_BONUS_VALUE;
-                    } else if ( this.sortedHorses[2] == this.playerHorse ) {
+                    } else if (this.sortedHorses[2] === this.playerHorse) {
                         return SMALL_BONUS_VALUE;
-                    } else if ( this.sortedHorses[0] == this.playerHorse || this.sortedHorses[3] == this.playerHorse ) {
+                    } else if (this.sortedHorses[0] === this.playerHorse || this.sortedHorses[3] === this.playerHorse) {
                         return 0;
                     } else {
                         return - BIG_BONUS_VALUE;
                     }
                 case RaceTactic.InThePack:
-                    if ( this.sortedHorses[0] == this.playerHorse || this.sortedHorses[1] == this.playerHorse ||
-                        this.sortedHorses[2] == this.playerHorse ) {
+                    if (this.sortedHorses[0] === this.playerHorse || this.sortedHorses[1] === this.playerHorse ||
+                        this.sortedHorses[2] === this.playerHorse) {
                         return - BIG_BONUS_VALUE;
-                    } else if ( this.sortedHorses[3] == this.playerHorse ) {
+                    } else if (this.sortedHorses[3] === this.playerHorse) {
                         return 0;
-                    } else if ( this.sortedHorses[4] == this.playerHorse ) {
+                    } else if (this.sortedHorses[4] === this.playerHorse) {
                         return SMALL_BONUS_VALUE;
                     } else {
                         return BIG_BONUS_VALUE;
@@ -421,8 +427,8 @@ export class RaceInstance {
         }
     }
 
-    displayBonus( bonusMultiply: number ) {
-        switch ( bonusMultiply ) {
+    displayBonus(bonusMultiply: number) {
+        switch (bonusMultiply) {
             case 0:
                 this.bonusText = '';
                 break;
@@ -443,9 +449,9 @@ export class RaceInstance {
         }
     }
 
-    getPlace( horse: HorseInRace, horses: HorseInRace[] ): number {
-        for ( let i = 0; i <= this.horses.length; i++ ) {
-            if ( horse === horses[i] ) {
+    getPlace(horse: HorseInRace, horses: HorseInRace[]): number {
+        for (let i = 0; i <= this.horses.length; i++) {
+            if (horse === horses[i]) {
                 return i + 1;
             }
         }
@@ -453,41 +459,42 @@ export class RaceInstance {
     }
 
     finishRace(): void {
-        if ( this.playerHorse ) {
+        if (this.playerHorse) {
             this.playerHorse.baseHorse.staminaSpeed = this.playerHorse.speed;
             this.playerHorse.baseHorse.calculateStaminaDisplay();
             this.player.totalRaces++;
-            this.place = this.getPlace( this.playerHorse, this.sortedHorses );
-            this.baseXpPoints = ( this.baseRace.difficulty - 1 );
-            this.placeXpPoints = ( this.baseRace.difficulty - 1 ) * this.getPlaceMultiplier( this.place );
+            this.place = this.getPlace(this.playerHorse, this.sortedHorses);
+            this.baseXpPoints = (this.baseRace.difficulty - 1);
+            this.placeXpPoints = (this.baseRace.difficulty - 1) * this.getPlaceMultiplier(this.place);
             this.player.xpPoints += this.baseXpPoints + this.placeXpPoints;
-            if ( this.baseRace.prizes.length >= this.place ) {
+            if (this.baseRace.prizes.length >= this.place) {
                 this.wonPrize = this.baseRace.prizes[this.place - 1];
                 this.player.money += this.wonPrize;
-                if ( this.place == 1 ) {
+                if (this.place === 1) {
                     this.player.victories++;
-                    if ( this.baseRace.difficulty == 9 ) {
+                    if (this.baseRace.difficulty === 9) {
                         this.worldChampion = true;
                     }
                 }
             }
-            this.utils.trackEvent( 'finishRace', '?race=' +  this.baseRace.id + '&place=' + this.place, 'Finished Race:' + this.baseRace.id + ' place:' + this.place
-                + ' form' + this.playerHorse.baseHorse.form + ' tactic:' + this.playerHorse.tactic + ' strategy:' + this.playerHorse.raceEffort
-                + ' points:' + this.player.xpPoints );
+            this.utils.trackEvent('finishRace', '?race=' + this.baseRace.id + '&place=' + this.place, 'Finished Race:'
+                + this.baseRace.id + ' place:' + this.place
+                + ' form' + this.playerHorse.baseHorse.form + ' tactic:' + this.playerHorse.tactic
+                + ' strategy:' + this.playerHorse.raceEffort + ' points:' + this.player.xpPoints);
         }
         this.givePoints();
         this.state = RaceState.RaceFinished;
     }
 
     givePoints() {
-        for ( let i = 0; i < this.sortedHorses.length; i++ ) {
-            const points = 1 + this.getPlaceMultiplier( i + 1 );
+        for (let i = 0; i < this.sortedHorses.length; i++) {
+            const points = 1 + this.getPlaceMultiplier(i + 1);
             this.sortedHorses[i].team.points += points;
         }
     }
 
-    getPlaceMultiplier( place: number ): number {
-        switch ( place ) {
+    getPlaceMultiplier(place: number): number {
+        switch (place) {
             case 1:
                 return 15;
             case 2:
