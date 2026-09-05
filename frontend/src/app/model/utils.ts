@@ -1,18 +1,13 @@
 import { Injectable } from "@angular/core";
-import { CustomEventsService } from "@piwikpro/ngx-piwik-pro";
 
 @Injectable({
     providedIn: 'root'
 })
 export class TrackingUtils {
-    constructor(private customEventsService: CustomEventsService) { }
+    constructor() { }
 
     trackEvent(type: string, firstValue: string, secondValue?: string) {
-        try {
-            this.customEventsService.trackEvent(type, firstValue, secondValue);
-        } catch (e) {
-            // Analytics not available
-        }
+        // TODO: Do the tracking here.
     }
 }
 
