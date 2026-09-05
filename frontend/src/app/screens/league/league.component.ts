@@ -17,8 +17,7 @@ export class LeagueComponent implements OnInit {
     currPlayer: Player;
     currLeague: League;
     nextAction: string;
-    debug: boolean = Utils.devMode();
-    racedToday: boolean = false;
+    racedToday = false;
 
     constructor( private router: Router, public commonService: CommonService, public activeRoute: ActivatedRoute ) { }
 

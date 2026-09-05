@@ -17,7 +17,6 @@ export class AuctionComponent implements OnInit {
     auctionResult: string;
     auctionEnded: boolean;
 
-    debug: boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService) { }
 

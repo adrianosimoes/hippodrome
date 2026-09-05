@@ -12,7 +12,6 @@ import { Utils } from '../../model/utils';
 } )
 export class StablesComponent implements OnInit {
     currPlayer: Player;
-    debug: boolean = Utils.devMode();
 
     constructor( private router: Router, public commonService: CommonService ) { }
 

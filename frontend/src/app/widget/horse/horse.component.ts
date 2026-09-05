@@ -18,12 +18,12 @@ export class HorseComponent implements OnInit {
     @Input() auction: boolean;
     @Input() selectable: boolean;
     @Input() editable: boolean;
-    
+
     playerMoney: number;
 
     public commonService: CommonService;
 
-    constructor( private router: Router, private commService: CommonService, private trackingUtils:TrackingUtils) { }
+    constructor( private router: Router, private commService: CommonService, private trackingUtils: TrackingUtils) { }
 
     ngOnInit() {
         this.commonService = this.commService;
