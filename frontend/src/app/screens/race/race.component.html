@@ -1,7 +1,6 @@
 <div id="race" *ngIf="currRace" class="screen">
-<h3>{{currRace.baseRace.name}}</h3>
-
 	<div *ngIf="currRace.state === RaceState.PreRace">
+		<h3>{{currRace.baseRace.name}}</h3>
 		<div class="props">
 			<div class="tableProps">
 			<div class="label">Distance:</div><div class="value">{{currRace.baseRace.distance/100}} Furlongs</div>
@@ -44,17 +43,29 @@
 		<button (click)="skipRace()" class="skip">Skip Race</button>
 		</div> 		
 	</div>
-	<div class="margintop" *ngIf="currRace.state !== RaceState.PreRace">
-		<div class="raceTextContainer header">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
-		<div class="raceTextContainer header">
-			<span class="staminaLabel">Stamina:</span> <div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="currRace.playerHorse.staminaDisplay"  [ngClass]="{'noBorder': currRace.playerHorse.staminaDisplay==0}"></div></div>
-		</div>
-		<div class="raceTextContainer header tactic">
-			<span class="staminaLabel">Tactic ({{currRace.playerHorse.tactic}}) Speed Bonus: </span> <span class="bonusValue" [innerHTML]="currRace.bonusText" ></span>
-		</div>
-		<div *ngIf="debug">{{currRace.debugMessage}}</div>
+	<div *ngIf="currRace.state !== RaceState.PreRace">
 		<div class="clear"></div>
-		<div [class]="currRace.state === RaceState.RaceFinished && !currRace.worldChampion ? 'hideRaceStadium' : 'raceStadium' " [ngStyle]="{'width.px': !currRace.roundTrack ? currRace.baseRace.distance  + 80 : curveRaceMinDistance + 40}" [style.backgroundColor]="currRace.baseRace.color" >
+		<div [class]="currRace.state === RaceState.RaceFinished && !currRace.worldChampion ? 'hideRaceStadium' : 'raceStadium' " [style.backgroundColor]="currRace.baseRace.color" >
+			<div class="raceInfo">
+				<h3>{{currRace.baseRace.name}}</h3>
+				<div *ngIf="debug">{{currRace.debugMessage}}</div>
+				<div class="raceTextContainer header">Race Time: {{currRace.raceTimer | number:'2.1-1'}}</div>
+				<div class="raceTextContainer header">
+					<span class="staminaLabel">Stamina:</span> <div class="fullStaminaBar"><div class="usedStamina" [style.width.px]="currRace.playerHorse.staminaDisplay"  [ngClass]="{'noBorder': currRace.playerHorse.staminaDisplay==0}"></div></div>
+				</div>
+				<div class="raceTextContainer header tactic">
+					<span class="staminaLabel">Tactic ({{currRace.playerHorse.tactic}}) Speed Bonus: </span><div class="bonusValue" [innerHTML]="currRace.bonusText" ></div>
+				</div>
+			</div>
+			<div class="stadiumBackdrop margintop">
+				<div class="grandstand grandstandTop">
+					<div class="grandstandRoof"></div>
+					<div class="grandstandSeats"><span></span><span></span><span></span><span></span><span></span></div>
+				</div>
+				<div class="tree treeLeft"><div class="treeCanopy"></div><div class="treeTrunk"></div></div>
+				<div class="tree treeRight"><div class="treeCanopy"></div><div class="treeTrunk"></div></div>
+				<div class="tree treeSecondRight"><div class="treeCanopy"></div><div class="treeTrunk"></div></div>
+			</div>
 			<div class="specialCongrats" *ngIf="currRace.worldChampion">WORLD CHAMPION!</div>
 			<div class="silks" *ngIf="currRace.state !== RaceState.RaceFinished || currRace.worldChampion"  [ngStyle]="{'margin-left.px': !currRace.roundTrack ? 0 : 115 - ((currRace.baseRace.distance/2 - roundTrackBottomDistance) * 2) }">
 				<span *ngFor="let currHorse of currRace.horses">

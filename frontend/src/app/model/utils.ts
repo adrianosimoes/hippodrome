@@ -132,9 +132,9 @@ export class StaticData {
     static colors: string[] = [
         /* Reds:*/ '#ff0000', '#ff00ff', '#FA8072', '#800080', '#ff6600', '#9e0000',
         /* Yellows */ '#d0b93d', '#FBB117', '#C58917',
-        /* Greens */ '#00ff00', '#00dddd', '#556B2F', '#6B8E23',
-        /* Blues */  '#2f2fc7',
-        /* Grey and Brown */ '#000000', '#999999'];
+        /* Greens */ '#00ff00', '#6B8E23',
+        /* Blues */  '#2f2fc7', '#00dddd',
+        /* Black and Grey */ '#000000', '#999999'];
 
     static teamNames: string[] = ['Racing', 'Stables', 'Team'];
 

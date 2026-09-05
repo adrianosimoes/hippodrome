@@ -136,6 +136,7 @@ export class RaceInstance {
 
         this.state = RaceState.PreRace;
         this.raceTimer = 0;
+        this.displayBonus(0);
 
         /* Order by speed on live tracking: */
         Utils.stableSort(this.sortedHorses, (h1, h2) => h2.speed - h1.speed);
@@ -393,7 +394,7 @@ export class RaceInstance {
         if (horse === this.playerHorse && this.totalTicks > (ACCELERATION_UNTIL_TICKS / 3) && this.totalTicks % 2 === 0) {
             switch (this.playerHorse.tactic) {
                 case RaceTactic.None:
-                    break;
+                    return 0;
                 case RaceTactic.Lead:
                     if (this.sortedHorses[0] === this.playerHorse) {
                         return BIG_BONUS_VALUE;
@@ -430,7 +431,7 @@ export class RaceInstance {
     displayBonus(bonusMultiply: number) {
         switch (bonusMultiply) {
             case 0:
-                this.bonusText = '';
+                this.bonusText = '&nbsp;';
                 break;
             case BIG_BONUS_VALUE:
                 this.bonusText = '<font color=\'#04c904\'>++</font>';
@@ -445,7 +446,7 @@ export class RaceInstance {
                 this.bonusText = '<font color=\'#b54c4c\'>-</font>';
                 break;
             default:
-                this.bonusText = '';
+                this.bonusText = '&nbsp;';
         }
     }
 

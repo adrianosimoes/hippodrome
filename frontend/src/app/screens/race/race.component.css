@@ -190,7 +190,7 @@ input[type=radio]:focus {
 }
 
 .raceTextContainer.header.tactic{
-	width: 320px;
+	width: 340px;
 	font-size: 23px;
 }
 
@@ -202,18 +202,114 @@ input[type=radio]:focus {
 	width: 100px;	
 }
 
-.bonusValue{
-	padding-left: 5px;
+.bonusValue {
+	float: left;
+	margin-left: 8px;
+	border: 2px solid #777;
+	background-color: #fff;
+	padding: 0 5px;
+	width: 22px;
 	font-size: 25px;
 }
 
+.raceInfo {
+	position: absolute;
+	inset: 0;
+	padding-left: 10px;
+	color: #000;
+}
 
 .raceStadium{
-	margin: 0 auto;
-	margin-top: 5px;
-	padding-top: 20px;
+	position: relative;
+	margin-left: -10px;
+	padding-top: 200px;
 	padding-bottom: 20px;
 	color: #fff;
+	overflow: hidden;
+	border-bottom: 4px solid #999;
+	background-image: linear-gradient(to bottom, rgba(113, 180, 205, 0.98) 0, rgba(186, 218, 208, 0.98) 156px, rgba(37, 104, 53, 0.16) 5px, rgba(0, 0, 0, 0) 100%);
+}
+
+.stadiumBackdrop {
+	position: absolute;
+	padding-left: 10px;
+	inset: 0;
+	overflow: hidden;
+	pointer-events: none;
+}
+
+.grandstand {
+	position: absolute;
+	top: 110px;
+	bottom: auto;
+	left: 50%;
+	width: 270px;
+	height: 60px;
+	transform: translateX(-50%);
+	background: repeating-linear-gradient(to bottom, #e9d3a3 0, #e9d3a3 8px, #aa754e 8px, #aa754e 11px);
+	border: 4px solid #6b4639;
+	box-shadow: 5px 5px rgba(25, 59, 47, 0.35);
+	z-index: 2;
+}
+
+.grandstandRoof {
+	position: absolute;
+	top: -13px;
+	left: -12px;
+	width: calc(100% + 24px);
+	height: 13px;
+	background: #d7553d;
+	border: 4px solid #6b4639;
+	border-bottom: 0;
+}
+
+.grandstandSeats {
+	display: flex;
+	justify-content: space-around;
+	padding-top: 16px;
+}
+
+.grandstandSeats span {
+	display: block;
+	width: 8px;
+	height: 8px;
+	border-radius: 50%;
+	background: #385c71;
+	box-shadow: 0 12px #385c71, 0 24px #385c71;
+}
+
+.tree {
+	position: absolute;
+	top: 108px;
+	bottom: auto;
+	width: 48px;
+	height: 78px;
+	z-index: 5;
+}
+
+.treeLeft { left: 50px; }
+.treeRight { right: 20px; transform: scale(0.8); }
+.treeSecondRight { top: 138px; right: 70px; transform: scale(0.6); }
+
+.treeTrunk {
+	position: absolute;
+	bottom: 0;
+	left: 20px;
+	width: 10px;
+	height: 34px;
+	background: #6e4935;
+	border: 2px solid #4b352d;
+}
+
+.treeCanopy {
+	position: absolute;
+	bottom: 23px;
+	left: 0;
+	width: 48px;
+	height: 48px;
+	border-radius: 50%;
+	background: #2f784d;
+	box-shadow: -13px 9px #3e8a51, 13px 9px #286642, 0 -14px #4c9958;
 }
 
 .hideRaceStadium{
@@ -226,6 +322,8 @@ input[type=radio]:focus {
 }
 
 .raceTrack{
+	position: relative;
+	z-index: 10;
 	margin-left: 40px;
 	margin-top: 7px;
 	margin-right: 40px;
@@ -241,6 +339,8 @@ input[type=radio]:focus {
 }
 
 .roundRaceTrack{
+	position: relative;
+	z-index: 10;
 	margin-top: 7px;
 	border: 3px solid #fff;	
 	border-bottom: none;
@@ -259,6 +359,8 @@ input[type=radio]:focus {
 }
 
 .roundRaceTrackSecond{
+	position: relative;
+	z-index: 10;
 	margin-left: 52px;
 	border: 3px solid #fff;	
 	border-top: none;
@@ -316,6 +418,8 @@ input[type=radio]:focus {
 }
 
 .silks {
+	position: relative;
+	z-index: 20;
 	float: left;
 	margin-top: 10px;
 }
@@ -380,6 +484,8 @@ input[type=radio]:focus {
 }
 
 .raceStadium .specialCongrats{
+	position: relative;
+	z-index: 20;
 	margin-left: 20px;
 	font-size: 62px;
 	animation: blinker 0.6s cubic-bezier(1, 0, 0, 0) infinite alternate;  
