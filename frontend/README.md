@@ -20,6 +20,9 @@ npm start          # usually runs `ng serve` defined in package.json
 npx ng serve --open
 ```
 
+# Building for itch.io:
+ng build --base-href hippodrome
+
 If TypeScript/Angular errors appear, run the compiler or lint as configured in the repo.
 
 ## Project structure (important files)
